@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <the-header></the-header>
-  </div>
+  <the-header></the-header>
   <div class="flex flex-col">
     <div class="h-[720px] bg-black flex">
       <div class="m-auto flex flex-col">
@@ -69,8 +67,10 @@
       </div>
     </div>
   </div>
+  <the-footer></the-footer>
 </template>
 
 <script setup>
 import TheHeader from "@/components/TheHeader.vue";
+import TheFooter from "@/components/TheFooter.vue";
 </script>
