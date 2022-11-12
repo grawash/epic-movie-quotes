@@ -2,8 +2,72 @@
   <div>
     <the-header></the-header>
   </div>
-  <div>
-    <p>CONTENT</p>
+  <div class="flex flex-col">
+    <div class="h-[720px] bg-black flex">
+      <div class="m-auto flex flex-col">
+        <p class="text-center text-[#DDCCAA] font-bold text-[60px]">
+          Find any quote in <br />
+          millions of movie lines
+        </p>
+        <button
+          class="text-white p-2 pl-4 pr-4 text-xl font-normal mt-6 bg-[#E31221] ml-auto mr-auto rounded-lg"
+        >
+          Get started
+        </button>
+      </div>
+    </div>
+    <div
+      class="min-h-[1200px] bg-fixed bg-movie-cover-2 bg-auto grow items-center flex"
+    >
+      <div
+        class="h-[1200px] w-full absolute z-10 bg-gradient-to-r from-black via-transparent to-transparent"
+      ></div>
+      <div class="text-white flex z-20 pl-40">
+        <div class="w-[53px] h-[2px] bg-white mt-9 mr-4"></div>
+        <div>
+          <p class="font-bold text-[50px] max-w-[50%]">
+            “You have to leave somethig behind to go forward”
+          </p>
+          <p class="font-bold text-[30px] text-[#D9D9D9]">
+            The Royal Tenenbaums,2001
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="min-h-[1200px] bg-fixed bg-movie-cover grow items-center flex">
+      <div
+        class="h-[1200px] w-full absolute z-10 bg-gradient-to-r from-black via-transparent to-transparent"
+      ></div>
+      <div class="text-white flex z-20 pl-40">
+        <div class="w-[53px] h-[2px] bg-white mt-9 mr-4"></div>
+        <div>
+          <p class="font-bold text-[50px] max-w-[50%]">
+            “You have to leave somethig behind to go forward”
+          </p>
+          <p class="font-bold text-[30px] text-[#D9D9D9]">
+            The Royal Tenenbaums,2001
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="min-h-[1200px] bg-fixed bg-movie-cover-2 grow items-center flex"
+    >
+      <div
+        class="h-[1200px] w-full absolute z-10 bg-gradient-to-r from-black via-transparent to-transparent"
+      ></div>
+      <div class="text-white flex z-20 pl-40">
+        <div class="w-[53px] h-[2px] bg-white mt-9 mr-4"></div>
+        <div>
+          <p class="font-bold text-[50px] max-w-[50%]">
+            “You have to leave somethig behind to go forward”
+          </p>
+          <p class="font-bold text-[30px] text-[#D9D9D9]">
+            The Royal Tenenbaums,2001
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
