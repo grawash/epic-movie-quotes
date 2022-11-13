@@ -50,6 +50,7 @@
         Get started
       </button>
       <button
+        type="button"
         class="text-white mt-6 rounded border-[#CED4DA] border w-[360px] h-[38px]"
       >
         Sign up with Google
