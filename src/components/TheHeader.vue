@@ -5,7 +5,10 @@
       <button class="text-white ml-4 p-2 pl-6 pr-6">
         Eng <button-arrow class="inline ml-[10px]" />
       </button>
-      <button class="text-white ml-4 p-2 pl-6 pr-6 bg-[#E31221] rounded-lg">
+      <button
+        @click="$emit('toggleSignUp')"
+        class="text-white ml-4 p-2 pl-6 pr-6 bg-[#E31221] rounded-lg"
+      >
         Sign Up
       </button>
       <button class="text-white ml-4 p-2 pl-6 pr-6 border rounded-lg">
@@ -16,4 +19,11 @@
 </template>
 <script setup>
 import ButtonArrow from "@/components/icons/ButtonArrow.vue";
+// import { ref } from "vue";
+
+// const SignUpModal = ref(false);
+
+// function SignUpModalToggle() {
+//   SignUpModal.value = !SignUpModal.value;
+// }
 </script>
