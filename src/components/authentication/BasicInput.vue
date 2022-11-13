@@ -10,7 +10,6 @@
       :id="id"
       :name="name"
       :rules="rule"
-      :value="value"
       :placeholder="placeholder"
       class="border border-black bg-[#CED4DA] placeholder-[#6C757D] h-[38px] w-[360px] rounded p-2 pl-3 pr-3 mt-2"
     />

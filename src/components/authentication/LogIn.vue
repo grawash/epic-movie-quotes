@@ -9,19 +9,11 @@
       @click.stop=""
     >
       <p class="font-medium text-[32px] text-white text-center">
-        Create an account
+        Log in to your account
       </p>
       <p class="font-normal text-base text-[#6C757D] text-center pb-6">
-        Start your journey!
+        Welcome back! Please enter your details.
       </p>
-      <basic-input
-        name="name"
-        type="text"
-        id="name"
-        rule="required|min:2"
-        placeholder="At least 3 & max.15 lower case characters"
-        label="Name"
-      ></basic-input>
       <basic-input
         name="email"
         type="email"
@@ -35,19 +27,11 @@
         type="password"
         id="password"
         rule="required|min:2"
-        placeholder="At least 8 & max.15 lower case characters"
+        placeholder="Password"
         label="Password"
       ></basic-input>
-      <basic-input
-        name="confirm_password"
-        type="password"
-        id="confirm_password"
-        rule="required|min:2"
-        placeholder="Confirm password"
-        label="Confirm password"
-      ></basic-input>
       <button class="text-white mt-6 bg-[#E31221] rounded w-[360px] h-[38px]">
-        Get started
+        Sign in
       </button>
       <button
         type="button"
@@ -61,8 +45,8 @@
         Sign up with Google
       </button>
       <p class="pt-8 text-white text-center">
-        Already have an account?
-        <a href="" class="text-blue-600 underline">Log in</a>
+        Don't have an account yet?
+        <a href="" class="text-blue-600 underline">Sign up</a>
       </p>
     </Form>
   </div>

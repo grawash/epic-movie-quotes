@@ -1,6 +1,10 @@
 <template>
   <sign-up v-if="SignUpModal" @closeModals="closeModals" />
-  <the-header @toggleSignUp="SignUpModalToggle"></the-header>
+  <log-in v-if="LogInModal" @closeModals="closeModals" />
+  <the-header
+    @toggleSignUp="SignUpModalToggle"
+    @toggleLogIn="LogInModalToggle"
+  ></the-header>
   <div class="flex flex-col">
     <div class="h-[720px] bg-black flex">
       <div class="m-auto flex flex-col">
@@ -75,14 +79,20 @@
 import TheHeader from "@/components/TheHeader.vue";
 import TheFooter from "@/components/TheFooter.vue";
 import SignUp from "@/components/authentication/SignUp.vue";
+import LogIn from "@/components/authentication/LogIn.vue";
 import { ref } from "vue";
 
 const SignUpModal = ref(false);
+const LogInModal = ref(false);
 
 function SignUpModalToggle() {
   SignUpModal.value = true;
 }
-function closeModals(){
+function LogInModalToggle() {
+  LogInModal.value = true;
+}
+function closeModals() {
   SignUpModal.value = false;
+  LogInModal.value = false;
 }
 </script>

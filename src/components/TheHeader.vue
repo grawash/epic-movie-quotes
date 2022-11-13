@@ -11,7 +11,10 @@
       >
         Sign Up
       </button>
-      <button class="text-white ml-4 p-2 pl-6 pr-6 border rounded-lg">
+      <button
+        @click="$emit('toggleLogIn')"
+        class="text-white ml-4 p-2 pl-6 pr-6 border rounded-lg"
+      >
         Log In
       </button>
     </div>
