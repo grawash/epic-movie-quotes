@@ -2,6 +2,7 @@
   <sign-up v-if="SignUpModal" @closeModals="closeModals" />
   <log-in v-if="LogInModal" @closeModals="closeModals" />
   <the-header
+    page="landing"
     @toggleSignUp="SignUpModalToggle"
     @toggleLogIn="LogInModalToggle"
   ></the-header>
