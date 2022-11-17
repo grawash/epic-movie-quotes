@@ -72,23 +72,15 @@
 <script setup>
 import { Form } from "vee-validate";
 import BasicInput from "@/components/authentication/BasicInput.vue";
-import axios from "axios";
+import axios from "@/config/axios/index.js";
 const emit = defineEmits(["closeModals"]);
 
 function onSubmit(values) {
   let data = { ...values };
   axios
-    .post(
-      "http://127.0.0.1:8000/api/register",
-      {
-        ...data,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    .post("register", {
+      ...data,
+    })
     .then((response) => {
       console.log(response);
       emit("closeModals");

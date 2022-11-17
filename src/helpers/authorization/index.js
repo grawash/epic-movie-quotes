@@ -1,21 +1,8 @@
-import axios from "axios";
-import { getJwtToken } from "@/helpers/jwtToken/index.js";
-
-let token = getJwtToken();
+import axios from "@/config/axios/index.js";
 
 export function userLoggedIn() {
   return axios
-    .post(
-      "http://127.0.0.1:8000/api/authorized-user",
-      {
-        token,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    .get("user")
     .then((response) => {
       console.log(response);
       return true;
@@ -24,4 +11,10 @@ export function userLoggedIn() {
       console.log(error);
       return false;
     });
+}
+export async function isAuthenticaded() {
+  const result = await userLoggedIn();
+  if (result === false) {
+    return "/";
+  }
 }

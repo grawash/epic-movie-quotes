@@ -56,30 +56,19 @@
 <script setup>
 import { Form } from "vee-validate";
 import BasicInput from "@/components/authentication/BasicInput.vue";
-import axios from "axios";
-import { inject } from "vue";
+import { setJwtToken } from "@/helpers/jwtToken/index.js";
+import axios from "@/config/axios/index.js";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-// const route = useRoute();
 const emit = defineEmits(["closeModals"]);
-
-const setJwtToken = inject("setJwtToken");
 
 function onSubmit(values) {
   let data = { ...values };
   axios
-    .post(
-      "http://127.0.0.1:8000/api/login",
-      {
-        ...data,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    .post("login", {
+      ...data,
+    })
     .then((response) => {
       console.log(response);
       setJwtToken(response.data.access_token, response.data.expires_in);

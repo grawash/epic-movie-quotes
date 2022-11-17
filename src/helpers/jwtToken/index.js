@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@/config/axios/index.js";
 
 export const getJwtToken = () => {
   const value = `; ${document.cookie}`;

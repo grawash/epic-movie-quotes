@@ -41,30 +41,17 @@ import TheHeader from "@/components/TheHeader.vue";
 import HomeIcon from "@/components/icons/HomeIcon.vue";
 import MoviesIcon from "@/components/icons/MoviesIcon.vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
-import { inject } from "vue";
+import axios from "@/config/axios/index.js";
 
 const router = useRouter();
 
-const getJwtToken = inject("getJwtToken");
-let token = getJwtToken();
 import { ref } from "vue";
 
 const name = ref("Your Name");
 
 function logOut() {
   axios
-    .post(
-      "http://127.0.0.1:8000/api/logout",
-      {
-        token,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    .post("logout")
     .then((response) => {
       console.log(response);
       router.push({ name: "landing" });
@@ -75,17 +62,7 @@ function logOut() {
 }
 
 axios
-  .post(
-    "http://127.0.0.1:8000/api/authorized-user",
-    {
-      token,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  )
+  .get("user")
   .then((response) => {
     console.log(response);
     name.value = response.data.name;
