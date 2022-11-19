@@ -42,6 +42,8 @@ import HomeIcon from "@/components/icons/HomeIcon.vue";
 import MoviesIcon from "@/components/icons/MoviesIcon.vue";
 import { useRouter } from "vue-router";
 import axios from "@/config/axios/index.js";
+import { getJwtToken } from "@/helpers/jwtToken/index.js";
+import { setJwtToken } from "@/helpers/jwtToken/index.js";
 
 const router = useRouter();
 
@@ -54,6 +56,7 @@ function logOut() {
     .post("logout")
     .then((response) => {
       console.log(response);
+      setJwtToken(getJwtToken(), 0);
       router.push({ name: "landing" });
     })
     .catch((error) => {

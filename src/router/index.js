@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LandingPage from "@/pages/LandingPage.vue";
 import NewsFeed from "@/pages/NewsFeed.vue";
-import { isAuthenticaded } from "@/helpers/authorization/index.js";
+import { isAuthenticated } from "@/helpers/authorization/index.js";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,7 +15,7 @@ const router = createRouter({
       path: "/news-feed",
       name: "news-feed",
       component: NewsFeed,
-      beforeEnter: [isAuthenticaded],
+      beforeEnter: [isAuthenticated],
     },
   ],
 });
