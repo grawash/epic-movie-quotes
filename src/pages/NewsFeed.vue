@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="basis-0 grow-[3]">
-          <p class="font-normal text-2xl leading-[36px]">{{ name }}</p>
+          <p class="font-normal text-2xl leading-[36px]">{{ user.name }}</p>
           <a href="" class="text-[#CED4DA] text-base font-normal"
             >Edit your profile</a
           >
@@ -44,12 +44,14 @@ import { useRouter } from "vue-router";
 import axios from "@/config/axios/index.js";
 import { getJwtToken } from "@/helpers/jwtToken/index.js";
 import { setJwtToken } from "@/helpers/jwtToken/index.js";
+import { useUserStore } from "@/stores/user.js";
 
 const router = useRouter();
 
-import { ref } from "vue";
-
-const name = ref("Your Name");
+const user = useUserStore();
+if (user.name === "") {
+  user.fetchUser();
+}
 
 function logOut() {
   axios
@@ -63,14 +65,4 @@ function logOut() {
       console.log(error);
     });
 }
-
-axios
-  .get("user")
-  .then((response) => {
-    console.log(response);
-    name.value = response.data.name;
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
 </script>
