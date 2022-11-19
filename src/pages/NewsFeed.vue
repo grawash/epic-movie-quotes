@@ -41,6 +41,7 @@ import TheHeader from "@/components/TheHeader.vue";
 import HomeIcon from "@/components/icons/HomeIcon.vue";
 import MoviesIcon from "@/components/icons/MoviesIcon.vue";
 import { useRouter } from "vue-router";
+import { computed } from "vue";
 import axios from "@/config/axios/index.js";
 import { getJwtToken } from "@/helpers/jwtToken/index.js";
 import { setJwtToken } from "@/helpers/jwtToken/index.js";
@@ -48,8 +49,9 @@ import { useUserStore } from "@/stores/user.js";
 
 const router = useRouter();
 
-const user = useUserStore();
-
+const user = computed(() => {
+  return useUserStore();
+});
 function logOut() {
   axios
     .post("logout")
