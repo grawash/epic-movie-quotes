@@ -49,9 +49,6 @@ import { useUserStore } from "@/stores/user.js";
 const router = useRouter();
 
 const user = useUserStore();
-if (user.name === "") {
-  user.fetchUser();
-}
 
 function logOut() {
   axios
