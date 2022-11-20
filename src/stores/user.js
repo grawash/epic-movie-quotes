@@ -10,7 +10,7 @@ export const useUserStore = defineStore("user", () => {
       .get("user")
       .then((response) => {
         console.log(response);
-        name.value = response.data.name;
+        name.value = response.data.user.name;
         // email.value = response.data.email;
       })
       .catch((error) => {
