@@ -7,6 +7,7 @@
       action=""
       class="ml-auto mr-auto bg-[#222030] rounded-xl flex flex-col pl-[120px] pr-[120px] pt-[53px] pb-[53px]"
       @click.stop=""
+      @submit="onSubmit"
     >
       <p class="font-medium text-[32px] text-white text-center">
         Log in to your account
@@ -55,4 +56,27 @@
 <script setup>
 import { Form } from "vee-validate";
 import BasicInput from "@/components/authentication/BasicInput.vue";
+import { setJwtToken } from "@/helpers/jwtToken/index.js";
+import axios from "@/config/axios/index.js";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const emit = defineEmits(["closeModals"]);
+
+function onSubmit(values) {
+  let data = { ...values };
+  axios
+    .post("login", {
+      ...data,
+    })
+    .then((response) => {
+      console.log(response);
+      setJwtToken(response.data.access_token, response.data.expires_in);
+      router.push({ name: "news-feed" });
+      emit("closeModals");
+    })
+    .catch((error) => {
+      alert(error.response.data.error);
+    });
+}
 </script>

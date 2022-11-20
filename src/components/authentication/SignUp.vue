@@ -7,6 +7,7 @@
       action=""
       class="ml-auto mr-auto bg-[#222030] rounded-xl flex flex-col pl-[120px] pr-[120px] pt-[53px] pb-[53px]"
       @click.stop=""
+      @submit="onSubmit"
     >
       <p class="font-medium text-[32px] text-white text-center">
         Create an account
@@ -71,4 +72,21 @@
 <script setup>
 import { Form } from "vee-validate";
 import BasicInput from "@/components/authentication/BasicInput.vue";
+import axios from "@/config/axios/index.js";
+const emit = defineEmits(["closeModals"]);
+
+function onSubmit(values) {
+  let data = { ...values };
+  axios
+    .post("register", {
+      ...data,
+    })
+    .then((response) => {
+      console.log(response);
+      emit("closeModals");
+    })
+    .catch((error) => {
+      alert(error.response.data.error);
+    });
+}
 </script>
