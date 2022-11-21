@@ -1,7 +1,8 @@
-import { getJwtToken } from "@/helpers/jwtToken/index.js";
+import { useAuthStore } from "@/stores/auth";
 
 export function isAuthenticated() {
-  if (!getJwtToken()) {
+  const authStore = useAuthStore();
+  if (!authStore.authenticated) {
     return "/";
   }
 }

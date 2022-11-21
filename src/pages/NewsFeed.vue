@@ -43,25 +43,24 @@ import MoviesIcon from "@/components/icons/MoviesIcon.vue";
 import { useRouter } from "vue-router";
 import { computed } from "vue";
 import axios from "@/config/axios/index.js";
-import { getJwtToken } from "@/helpers/jwtToken/index.js";
-import { setJwtToken } from "@/helpers/jwtToken/index.js";
 import { useUserStore } from "@/stores/user.js";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
 
 const router = useRouter();
 
 const user = computed(() => {
   return useUserStore();
 });
-function logOut() {
-  axios
-    .post("logout")
-    .then((response) => {
-      console.log(response);
-      setJwtToken(getJwtToken(), 0);
-      router.push({ name: "landing" });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
+const logOut = async () => {
+  try {
+    await axios.get("/logout");
+    authStore.authenticated = false;
+  } catch (err) {
+    console.log(err);
+  } finally {
+    router.push("/");
+  }
+};
 </script>

@@ -54,12 +54,13 @@
 </template>
 
 <script setup>
+//implement login
 import { Form } from "vee-validate";
 import BasicInput from "@/components/authentication/BasicInput.vue";
-import { setJwtToken } from "@/helpers/jwtToken/index.js";
 import axios from "@/config/axios/index.js";
 import { useRouter } from "vue-router";
-
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 const router = useRouter();
 const emit = defineEmits(["closeModals"]);
 
@@ -71,8 +72,8 @@ function onSubmit(values) {
     })
     .then((response) => {
       console.log(response);
-      setJwtToken(response.data.access_token, response.data.expires_in);
       router.push({ name: "news-feed" });
+      authStore.authenticated = true;
       emit("closeModals");
     })
     .catch((error) => {
