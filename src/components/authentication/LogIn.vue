@@ -5,13 +5,11 @@
   >
     <Form
       action=""
-      class="ml-auto mr-auto bg-[#222030] rounded-xl flex flex-col pl-[120px] pr-[120px] pt-[53px] pb-[53px]"
+      class="ml-auto text-white mr-auto bg-[#222030] rounded-xl flex flex-col pl-[120px] pr-[120px] pt-[53px] pb-[53px]"
       @click.stop=""
       @submit="onSubmit"
     >
-      <p class="font-medium text-[32px] text-white text-center">
-        Log in to your account
-      </p>
+      <p class="font-medium text-[32px] text-center">Log in to your account</p>
       <p class="font-normal text-base text-[#6C757D] text-center pb-6">
         Welcome back! Please enter your details.
       </p>
@@ -31,6 +29,20 @@
         placeholder="Password"
         label="Password"
       ></basic-input>
+      <div class="mt-4 flex">
+        <Field name="remember" type="checkbox" :value="false">
+          <label class="font-normal text-base">
+            <input type="checkbox" name="remember" :value="false" />
+            Rememer me
+          </label>
+        </Field>
+        <button
+          type="button"
+          class="underline font-normal text-base text-[#0D6EFD] ml-auto"
+        >
+          Forgot password
+        </button>
+      </div>
       <button class="text-white mt-6 bg-[#E31221] rounded w-[360px] h-[38px]">
         Sign in
       </button>
