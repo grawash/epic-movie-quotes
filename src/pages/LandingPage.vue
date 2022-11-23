@@ -11,6 +11,7 @@
     @toggleSignUp="SignUpModalToggle"
   />
   <verify-notice v-if="VerifyModal" @closeModals="closeModals" />
+  <verified-notice v-if="VerifiedModal" />
   <the-header
     page="landing"
     @toggleSignUp="SignUpModalToggle"
@@ -92,6 +93,8 @@ import TheFooter from "@/components/TheFooter.vue";
 import SignUp from "@/components/authentication/SignUp.vue";
 import LogIn from "@/components/authentication/LogIn.vue";
 import VerifyNotice from "@/components/mailables/VerifyNotice.vue";
+import VerifiedNotice from "@/components/mailables/VerifiedNotice.vue";
+
 
 import { ref } from "vue";
 import { useRoute } from "vue-router";
@@ -101,6 +104,8 @@ const route = useRoute();
 const SignUpModal = ref(false);
 const LogInModal = ref(false);
 const VerifyModal = ref(false);
+const VerifiedModal = ref(false);
+
 
 if (route.query.verifyLink) {
   console.log(route.query.verifyLink);
@@ -109,6 +114,7 @@ if (route.query.verifyLink) {
     .then((response) => {
       console.log(response);
       VerifyModal.value = false;
+      VerifiedModal.value= true;
     })
     .catch((error) => {
       console.log(error.response.data);
