@@ -63,7 +63,12 @@
       </button>
       <p class="pt-8 text-white text-center">
         Already have an account?
-        <a href="" class="text-blue-600 underline">Log in</a>
+        <a
+          href="#"
+          class="text-blue-600 underline"
+          @click="$emit('toggleLogIn')"
+          >Log in</a
+        >
       </p>
     </Form>
   </div>
@@ -73,7 +78,7 @@
 import { Form } from "vee-validate";
 import BasicInput from "@/components/authentication/BasicInput.vue";
 import axios from "@/config/axios/index.js";
-const emit = defineEmits(["closeModals"]);
+const emit = defineEmits(["closeModals", "verifyNoticeModalOn"]);
 
 function onSubmit(values) {
   let data = { ...values };
@@ -84,6 +89,7 @@ function onSubmit(values) {
     .then((response) => {
       console.log(response);
       emit("closeModals");
+      emit("verifyNoticeModalOn");
     })
     .catch((error) => {
       alert(error.response.data.error);

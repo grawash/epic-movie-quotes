@@ -47,7 +47,12 @@
       </button>
       <p class="pt-8 text-white text-center">
         Don't have an account yet?
-        <a href="" class="text-blue-600 underline">Sign up</a>
+        <a
+          href="#"
+          class="text-blue-600 underline"
+          @click="$emit('toggleSignUp')"
+          >Sign up</a
+        >
       </p>
     </Form>
   </div>
