@@ -26,7 +26,6 @@ const authStore = useAuthStore();
 const router = useRouter();
 
 function GoToNewsFeed() {
-  console.log(router);
   authStore.authenticated = true;
   router.push({ name: "news-feed" });
 }

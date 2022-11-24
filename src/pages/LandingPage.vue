@@ -108,7 +108,6 @@ const VerifiedModal = ref(false);
 
 
 if (route.query.verifyLink) {
-  console.log(route.query.verifyLink);
   axios
     .get(route.query.verifyLink)
     .then((response) => {
