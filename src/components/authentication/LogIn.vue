@@ -30,7 +30,7 @@
         label="Password"
       ></basic-input>
       <div class="mt-4 flex">
-        <basic-checkbox name="remember" id="remember" label="Rememer me" />
+        <check-box name="remember" id="remember" label="Rememer me" />
         <button
           type="button"
           class="underline font-normal text-base text-[#0D6EFD] ml-auto"
@@ -68,8 +68,8 @@
 <script setup>
 //implement login
 import { Form } from "vee-validate";
-import BasicInput from "@/components/authentication/BasicInput.vue";
-import BasicCheckbox from "@/components/authentication/BasicCheckbox.vue";
+import BasicInput from "@/components/inputs/BasicInput.vue";
+import CheckBox from "@/components/inputs/CheckBox.vue";
 import axios from "@/config/axios/index.js";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";

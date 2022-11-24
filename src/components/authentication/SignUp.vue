@@ -76,7 +76,7 @@
 
 <script setup>
 import { Form } from "vee-validate";
-import BasicInput from "@/components/authentication/BasicInput.vue";
+import BasicInput from "@/components/inputs/BasicInput.vue";
 import axios from "@/config/axios/index.js";
 const emit = defineEmits(["closeModals", "verifyNoticeModalOn"]);
 
