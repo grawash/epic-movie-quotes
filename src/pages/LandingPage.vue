@@ -1,6 +1,17 @@
 <template>
-  <sign-up v-if="SignUpModal" @closeModals="closeModals" />
-  <log-in v-if="LogInModal" @closeModals="closeModals" />
+  <sign-up
+    v-if="SignUpModal"
+    @closeModals="closeModals"
+    @verifyNoticeModalOn="verifyNoticeModalOn"
+    @toggleLogIn="LogInModalToggle"
+  />
+  <log-in
+    v-if="LogInModal"
+    @closeModals="closeModals"
+    @toggleSignUp="SignUpModalToggle"
+  />
+  <verify-notice v-if="VerifyModal" @closeModals="closeModals" />
+  <verified-notice v-if="VerifiedModal" />
   <the-header
     page="landing"
     @toggleSignUp="SignUpModalToggle"
@@ -81,15 +92,43 @@ import TheHeader from "@/components/TheHeader.vue";
 import TheFooter from "@/components/TheFooter.vue";
 import SignUp from "@/components/authentication/SignUp.vue";
 import LogIn from "@/components/authentication/LogIn.vue";
+import VerifyNotice from "@/components/mailables/VerifyNotice.vue";
+import VerifiedNotice from "@/components/mailables/VerifiedNotice.vue";
+
+
 import { ref } from "vue";
+import { useRoute } from "vue-router";
+import axios from "@/config/axios/index.js";
+const route = useRoute();
 
 const SignUpModal = ref(false);
 const LogInModal = ref(false);
+const VerifyModal = ref(false);
+const VerifiedModal = ref(false);
 
+
+if (route.query.verifyLink) {
+  axios
+    .get(route.query.verifyLink)
+    .then((response) => {
+      console.log(response);
+      VerifyModal.value = false;
+      VerifiedModal.value= true;
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+}
+
+function verifyNoticeModalOn() {
+  VerifyModal.value = true;
+}
 function SignUpModalToggle() {
+  LogInModal.value = false;
   SignUpModal.value = true;
 }
 function LogInModalToggle() {
+  SignUpModal.value = false;
   LogInModal.value = true;
 }
 function closeModals() {

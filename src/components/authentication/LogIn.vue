@@ -9,9 +9,7 @@
       @click.stop=""
       @submit="onSubmit"
     >
-      <p class="font-medium text-[32px] text-white text-center">
-        Log in to your account
-      </p>
+      <p class="font-medium text-[32px] text-white text-center">Log in to your account</p>
       <p class="font-normal text-base text-[#6C757D] text-center pb-6">
         Welcome back! Please enter your details.
       </p>
@@ -31,6 +29,15 @@
         placeholder="Password"
         label="Password"
       ></basic-input>
+      <div class="mt-4 flex">
+        <check-box name="remember" id="remember" label="Rememer me" />
+        <button
+          type="button"
+          class="underline font-normal text-base text-[#0D6EFD] ml-auto"
+        >
+          Forgot password
+        </button>
+      </div>
       <button class="text-white mt-6 bg-[#E31221] rounded w-[360px] h-[38px]">
         Sign in
       </button>
@@ -47,7 +54,12 @@
       </button>
       <p class="pt-8 text-white text-center">
         Don't have an account yet?
-        <a href="" class="text-blue-600 underline">Sign up</a>
+        <a
+          href="#"
+          class="text-blue-600 underline"
+          @click="$emit('toggleSignUp')"
+          >Sign up</a
+        >
       </p>
     </Form>
   </div>
@@ -56,7 +68,8 @@
 <script setup>
 //implement login
 import { Form } from "vee-validate";
-import BasicInput from "@/components/authentication/BasicInput.vue";
+import BasicInput from "@/components/inputs/BasicInput.vue";
+import CheckBox from "@/components/inputs/CheckBox.vue";
 import axios from "@/config/axios/index.js";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
