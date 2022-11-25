@@ -26,12 +26,14 @@
         </p>
         <button
           class="text-white p-2 pl-4 pr-4 text-xl font-normal mt-6 bg-[#E31221] ml-auto mr-auto rounded-lg"
+          @click="scrollToFirst"
         >
           Get started
         </button>
       </div>
     </div>
     <div
+      ref="firstMovie"
       class="min-h-[1200px] bg-fixed bg-movie-cover-2 bg-auto grow items-center flex"
     >
       <div
@@ -95,8 +97,7 @@ import LogIn from "@/components/authentication/LogIn.vue";
 import VerifyNotice from "@/components/mailables/VerifyNotice.vue";
 import VerifiedNotice from "@/components/mailables/VerifiedNotice.vue";
 
-
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axios from "@/config/axios/index.js";
 const route = useRoute();
@@ -105,7 +106,7 @@ const SignUpModal = ref(false);
 const LogInModal = ref(false);
 const VerifyModal = ref(false);
 const VerifiedModal = ref(false);
-
+let firstMovie = ref(null);
 
 if (route.query.verifyLink) {
   axios
@@ -113,13 +114,20 @@ if (route.query.verifyLink) {
     .then((response) => {
       console.log(response);
       VerifyModal.value = false;
-      VerifiedModal.value= true;
+      VerifiedModal.value = true;
     })
     .catch((error) => {
       console.log(error.response.data);
     });
 }
-
+function scrollToFirst() {
+  let firstMovieOffsetTop = firstMovie.value.offsetTop;
+  window.scroll({
+    top: firstMovieOffsetTop,
+    left: 0,
+    behavior: "smooth",
+  });
+}
 function verifyNoticeModalOn() {
   VerifyModal.value = true;
 }
