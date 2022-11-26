@@ -69,7 +69,6 @@
 </template>
 
 <script setup>
-//implement login
 import { Form } from "vee-validate";
 import BasicInput from "@/components/inputs/BasicInput.vue";
 import CheckBox from "@/components/inputs/CheckBox.vue";

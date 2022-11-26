@@ -44,15 +44,10 @@
 </template>
 
 <script setup>
-//implement login
 import { Form } from "vee-validate";
 import BasicInput from "@/components/inputs/BasicInput.vue";
 import BackToLogin from "@/components/icons/BackToLogin.vue";
 import axios from "@/config/axios/index.js";
-// import { useRouter } from "vue-router";
-// import { useAuthStore } from "@/stores/auth";
-// const authStore = useAuthStore();
-// const router = useRouter();
 const emit = defineEmits(["closeModals", "toggleForgotPassword", "resetSent"]);
 
 function onSubmit(values) {

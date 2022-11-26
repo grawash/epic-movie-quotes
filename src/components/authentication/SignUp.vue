@@ -40,9 +40,9 @@
         label="Password"
       ></basic-input>
       <basic-input
-        name="confirm_password"
+        name="password_confirmation"
         type="password"
-        id="confirm_password"
+        id="password_confirmation"
         rule="required|min:2"
         placeholder="Confirm password"
         label="Confirm password"

@@ -7,9 +7,9 @@
       @click.stop=""
     >
       <successful-action class="self-center" />
-      <p class="text-[32px] font-medium text-center mt-5">Thank you</p>
+      <p class="text-[32px] font-medium text-center mt-5">Success!</p>
       <p class="text-base font-normal text-center mt-8">
-        Your account has been activated.
+        Your Email changed successfully
       </p>
       <button class="bg-[#E31221] rounded mt-10 h-[38px]" @click="GoToNewsFeed">
         Go to my news feed

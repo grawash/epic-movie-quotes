@@ -20,6 +20,12 @@
   <verify-notice v-if="VerifyModal" @closeModals="closeModals" />
   <verified-notice v-if="VerifiedModal" />
   <reset-sent v-if="ResetSentModal" @closeModals="closeModals" />
+  <new-password
+    v-if="NewPasswordModal"
+    @closeModals="closeModals"
+    @resetSuccess="ResetSuccessModal = true"
+  />
+  <reset-success v-if="ResetSuccessModal" />
   <the-header
     page="landing"
     @toggleSignUp="SignUpModalToggle"
@@ -103,10 +109,11 @@ import TheFooter from "@/components/TheFooter.vue";
 import SignUp from "@/components/authentication/SignUp.vue";
 import LogIn from "@/components/authentication/LogIn.vue";
 import ForgotPassword from "@/components/authentication/ForgotPassword.vue";
+import NewPassword from "@/components/authentication/NewPassword.vue";
 import VerifyNotice from "@/components/mailables/VerifyNotice.vue";
 import VerifiedNotice from "@/components/mailables/VerifiedNotice.vue";
 import ResetSent from "@/components/mailables/ResetSent.vue";
-
+import ResetSuccess from "@/components/mailables/ResetSuccess.vue";
 
 import { ref } from "vue";
 import { useRoute } from "vue-router";
@@ -119,10 +126,14 @@ const ForgotPasswordModal = ref(false);
 const VerifyModal = ref(false);
 const VerifiedModal = ref(false);
 const ResetSentModal = ref(false);
-// const ResetSuccessfulModal = ref(false);
+const NewPasswordModal = ref(false);
+const ResetSuccessModal = ref(false);
+
 let firstMovie = ref(null);
 
-console.log(route.query);
+if (route.query.token) {
+  NewPasswordModal.value = true;
+}
 if (route.query.verifyLink) {
   axios
     .get(route.query.verifyLink)
@@ -134,18 +145,6 @@ if (route.query.verifyLink) {
     .catch((error) => {
       console.log(error.response.data);
     });
-}
-if (route.query.token) {
-  // axios
-  //   .get(route.query.verifyLink)
-  //   .then((response) => {
-  //     console.log(response);
-  //     VerifyModal.value = false;
-  //     VerifiedModal.value = true;
-  //   })
-  //   .catch((error) => {
-  //     console.log(error.response.data);
-  //   });
 }
 function scrollToFirst() {
   let firstMovieOffsetTop = firstMovie.value.offsetTop;
@@ -175,5 +174,6 @@ function closeModals() {
   LogInModal.value = false;
   ForgotPasswordModal.value = false;
   ResetSentModal.value = false;
+  NewPasswordModal.value = false;
 }
 </script>

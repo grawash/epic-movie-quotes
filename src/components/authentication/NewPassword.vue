@@ -10,26 +10,33 @@
       @submit="onSubmit"
     >
       <p class="font-medium text-[32px] text-white text-center pb-3">
-        Forgot password?
+        Create new password
       </p>
       <p
         class="font-normal text-base text-[#6C757D] text-center pb-6 w-[360px]"
       >
-        Enter the email and we’ll send an email with instructions to reset your
-        password
+        Your new password must be different from previous used passwords
       </p>
       <basic-input
-        name="email"
-        type="email"
-        id="email"
+        name="password"
+        type="password"
+        id="password"
         rule="required|min:2"
-        placeholder="Enter your email"
-        label="Email"
+        placeholder="At least 8 & max.15 lower case characters"
+        label="Password"
+      ></basic-input>
+      <basic-input
+        name="password_confirmation"
+        type="password"
+        id="confirm_password"
+        rule="required|min:2"
+        placeholder="Confirm password"
+        label="Confirm password"
       ></basic-input>
       <button
         class="text-white mt-6 bg-[#E31221] rounded w-[360px] h-[38px] mb-8"
       >
-        Send instructions
+        Reset password
       </button>
       <button
         type="button"
@@ -44,26 +51,29 @@
 </template>
 
 <script setup>
-//implement login
 import { Form } from "vee-validate";
 import BasicInput from "@/components/inputs/BasicInput.vue";
 import BackToLogin from "@/components/icons/BackToLogin.vue";
 import axios from "@/config/axios/index.js";
-// import { useRouter } from "vue-router";
-// import { useAuthStore } from "@/stores/auth";
-// const authStore = useAuthStore();
-// const router = useRouter();
-const emit = defineEmits(["closeModals", "toggleForgotPassword"]);
+import { useRoute } from "vue-router";
+const route = useRoute();
+const emit = defineEmits([
+  "closeModals",
+  "toggleForgotPassword",
+  "resetSuccess",
+]);
 
 function onSubmit(values) {
-  let data = { ...values };
+  let data = { ...values, email: route.query.email, token: route.query.token };
+  console.log(data);
   axios
-    .post("forgot-password", {
+    .post("reset-password", {
       ...data,
     })
     .then((response) => {
       console.log(response);
       emit("closeModals");
+      emit("resetSuccess");
     })
     .catch((error) => {
       alert(error.response.data.error);
