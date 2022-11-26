@@ -9,7 +9,9 @@
       @click.stop=""
       @submit="onSubmit"
     >
-      <p class="font-medium text-[32px] text-white text-center">Log in to your account</p>
+      <p class="font-medium text-[32px] text-white text-center pb-3">
+        Log in to your account
+      </p>
       <p class="font-normal text-base text-[#6C757D] text-center pb-6">
         Welcome back! Please enter your details.
       </p>
@@ -34,6 +36,7 @@
         <button
           type="button"
           class="underline font-normal text-base text-[#0D6EFD] ml-auto"
+          @click="$emit('toggleForgotPassword')"
         >
           Forgot password
         </button>
@@ -75,7 +78,11 @@ import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
 const router = useRouter();
-const emit = defineEmits(["closeModals"]);
+const emit = defineEmits([
+  "closeModals",
+  "toggleSignUp",
+  "toggleForgotPassword",
+]);
 
 function onSubmit(values) {
   let data = { ...values };

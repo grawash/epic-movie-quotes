@@ -9,6 +9,12 @@
     v-if="LogInModal"
     @closeModals="closeModals"
     @toggleSignUp="SignUpModalToggle"
+    @toggleForgotPassword="ForgotModalToggle"
+  />
+  <forgot-password
+    v-if="ForgotPasswordModal"
+    @closeModals="closeModals"
+    @toggleForgotPassword="ForgotModalToggle"
   />
   <verify-notice v-if="VerifyModal" @closeModals="closeModals" />
   <verified-notice v-if="VerifiedModal" />
@@ -94,16 +100,18 @@ import TheHeader from "@/components/TheHeader.vue";
 import TheFooter from "@/components/TheFooter.vue";
 import SignUp from "@/components/authentication/SignUp.vue";
 import LogIn from "@/components/authentication/LogIn.vue";
+import ForgotPassword from "@/components/authentication/ForgotPassword.vue";
 import VerifyNotice from "@/components/mailables/VerifyNotice.vue";
 import VerifiedNotice from "@/components/mailables/VerifiedNotice.vue";
 
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useRoute } from "vue-router";
 import axios from "@/config/axios/index.js";
 const route = useRoute();
 
 const SignUpModal = ref(false);
 const LogInModal = ref(false);
+const ForgotPasswordModal = ref(false);
 const VerifyModal = ref(false);
 const VerifiedModal = ref(false);
 let firstMovie = ref(null);
@@ -139,8 +147,13 @@ function LogInModalToggle() {
   SignUpModal.value = false;
   LogInModal.value = true;
 }
+function ForgotModalToggle() {
+  LogInModal.value = !LogInModal.value;
+  ForgotPasswordModal.value = !ForgotPasswordModal.value;
+}
 function closeModals() {
   SignUpModal.value = false;
   LogInModal.value = false;
+  ForgotPasswordModal.value = false;
 }
 </script>
