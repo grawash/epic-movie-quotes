@@ -15,9 +15,11 @@
     v-if="ForgotPasswordModal"
     @closeModals="closeModals"
     @toggleForgotPassword="ForgotModalToggle"
+    @resetSent="ResetSentModal = true"
   />
   <verify-notice v-if="VerifyModal" @closeModals="closeModals" />
   <verified-notice v-if="VerifiedModal" />
+  <reset-sent v-if="ResetSentModal" @closeModals="closeModals" />
   <the-header
     page="landing"
     @toggleSignUp="SignUpModalToggle"
@@ -103,6 +105,8 @@ import LogIn from "@/components/authentication/LogIn.vue";
 import ForgotPassword from "@/components/authentication/ForgotPassword.vue";
 import VerifyNotice from "@/components/mailables/VerifyNotice.vue";
 import VerifiedNotice from "@/components/mailables/VerifiedNotice.vue";
+import ResetSent from "@/components/mailables/ResetSent.vue";
+
 
 import { ref } from "vue";
 import { useRoute } from "vue-router";
@@ -114,8 +118,11 @@ const LogInModal = ref(false);
 const ForgotPasswordModal = ref(false);
 const VerifyModal = ref(false);
 const VerifiedModal = ref(false);
+const ResetSentModal = ref(false);
+// const ResetSuccessfulModal = ref(false);
 let firstMovie = ref(null);
 
+console.log(route.query);
 if (route.query.verifyLink) {
   axios
     .get(route.query.verifyLink)
@@ -127,6 +134,18 @@ if (route.query.verifyLink) {
     .catch((error) => {
       console.log(error.response.data);
     });
+}
+if (route.query.token) {
+  // axios
+  //   .get(route.query.verifyLink)
+  //   .then((response) => {
+  //     console.log(response);
+  //     VerifyModal.value = false;
+  //     VerifiedModal.value = true;
+  //   })
+  //   .catch((error) => {
+  //     console.log(error.response.data);
+  //   });
 }
 function scrollToFirst() {
   let firstMovieOffsetTop = firstMovie.value.offsetTop;
@@ -155,5 +174,6 @@ function closeModals() {
   SignUpModal.value = false;
   LogInModal.value = false;
   ForgotPasswordModal.value = false;
+  ResetSentModal.value = false;
 }
 </script>

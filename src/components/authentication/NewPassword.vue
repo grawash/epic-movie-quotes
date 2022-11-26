@@ -53,7 +53,7 @@ import axios from "@/config/axios/index.js";
 // import { useAuthStore } from "@/stores/auth";
 // const authStore = useAuthStore();
 // const router = useRouter();
-const emit = defineEmits(["closeModals", "toggleForgotPassword", "resetSent"]);
+const emit = defineEmits(["closeModals", "toggleForgotPassword"]);
 
 function onSubmit(values) {
   let data = { ...values };
@@ -64,7 +64,6 @@ function onSubmit(values) {
     .then((response) => {
       console.log(response);
       emit("closeModals");
-      emit("resetSent");
     })
     .catch((error) => {
       alert(error.response.data.error);
