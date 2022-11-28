@@ -8,13 +8,15 @@
       @click.stop=""
     >
       <mail-sent-icon class="self-center" />
-      <p class="text-[32px] font-medium text-center mt-5">Thank you</p>
+      <p class="text-[32px] font-medium text-center mt-5">Check your email</p>
       <p class="text-base font-normal text-center mt-8">
-        Please check your email and follow the instructions to activate your
-        account.
+        We have sent a password recover instructions to your email
       </p>
       <button class="bg-[#E31221] rounded mt-10 h-[38px]">
         Go to my email
+      </button>
+      <button class="mt-10 h-[38px]" @click="$emit('closeModals')">
+        Skip, I’ll confirm later
       </button>
     </div>
   </div>

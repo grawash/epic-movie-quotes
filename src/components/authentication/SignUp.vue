@@ -4,7 +4,6 @@
     @click="$emit('closeModals')"
   >
     <Form
-      action=""
       class="ml-auto mr-auto bg-[#222030] rounded-xl flex flex-col pl-[120px] pr-[120px] pt-[53px] pb-[53px]"
       @click.stop=""
       @submit="onSubmit"
@@ -40,9 +39,9 @@
         label="Password"
       ></basic-input>
       <basic-input
-        name="confirm_password"
+        name="password_confirmation"
         type="password"
-        id="confirm_password"
+        id="password_confirmation"
         rule="required|min:2"
         placeholder="Confirm password"
         label="Confirm password"

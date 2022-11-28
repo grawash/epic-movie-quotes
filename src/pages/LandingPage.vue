@@ -9,9 +9,23 @@
     v-if="LogInModal"
     @closeModals="closeModals"
     @toggleSignUp="SignUpModalToggle"
+    @toggleForgotPassword="ForgotModalToggle"
+  />
+  <forgot-password
+    v-if="ForgotPasswordModal"
+    @closeModals="closeModals"
+    @toggleForgotPassword="ForgotModalToggle"
+    @resetSent="ResetSentModal = true"
   />
   <verify-notice v-if="VerifyModal" @closeModals="closeModals" />
   <verified-notice v-if="VerifiedModal" />
+  <reset-sent v-if="ResetSentModal" @closeModals="closeModals" />
+  <new-password
+    v-if="NewPasswordModal"
+    @closeModals="closeModals"
+    @resetSuccess="ResetSuccessModal = true"
+  />
+  <reset-success v-if="ResetSuccessModal" />
   <the-header
     page="landing"
     @toggleSignUp="SignUpModalToggle"
@@ -94,20 +108,32 @@ import TheHeader from "@/components/TheHeader.vue";
 import TheFooter from "@/components/TheFooter.vue";
 import SignUp from "@/components/authentication/SignUp.vue";
 import LogIn from "@/components/authentication/LogIn.vue";
+import ForgotPassword from "@/components/authentication/ForgotPassword.vue";
+import NewPassword from "@/components/authentication/NewPassword.vue";
 import VerifyNotice from "@/components/mailables/VerifyNotice.vue";
 import VerifiedNotice from "@/components/mailables/VerifiedNotice.vue";
+import ResetSent from "@/components/mailables/ResetSent.vue";
+import ResetSuccess from "@/components/mailables/ResetSuccess.vue";
 
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useRoute } from "vue-router";
 import axios from "@/config/axios/index.js";
 const route = useRoute();
 
 const SignUpModal = ref(false);
 const LogInModal = ref(false);
+const ForgotPasswordModal = ref(false);
 const VerifyModal = ref(false);
 const VerifiedModal = ref(false);
+const ResetSentModal = ref(false);
+const NewPasswordModal = ref(false);
+const ResetSuccessModal = ref(false);
+
 let firstMovie = ref(null);
 
+if (route.query.token) {
+  NewPasswordModal.value = true;
+}
 if (route.query.verifyLink) {
   axios
     .get(route.query.verifyLink)
@@ -139,8 +165,15 @@ function LogInModalToggle() {
   SignUpModal.value = false;
   LogInModal.value = true;
 }
+function ForgotModalToggle() {
+  LogInModal.value = !LogInModal.value;
+  ForgotPasswordModal.value = !ForgotPasswordModal.value;
+}
 function closeModals() {
   SignUpModal.value = false;
   LogInModal.value = false;
+  ForgotPasswordModal.value = false;
+  ResetSentModal.value = false;
+  NewPasswordModal.value = false;
 }
 </script>

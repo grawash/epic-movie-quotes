@@ -6,9 +6,9 @@
       class="ml-auto mr-auto w-[30%] text-white bg-[#222030] rounded-xl flex flex-col pl-[120px] pr-[120px] pt-[53px] pb-[53px]"
     >
       <successful-action-icon class="self-center" />
-      <p class="text-[32px] font-medium text-center mt-5">Thank you</p>
+      <p class="text-[32px] font-medium text-center mt-5">Success!</p>
       <p class="text-base font-normal text-center mt-8">
-        Your account has been activated.
+        Your Email changed successfully
       </p>
       <button class="bg-[#E31221] rounded mt-10 h-[38px]" @click="GoToNewsFeed">
         Go to my news feed
