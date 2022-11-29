@@ -52,6 +52,7 @@
       <button
         type="button"
         class="text-white mt-6 rounded border-[#CED4DA] border w-[360px] h-[38px] flex justify-center items-center gap-2"
+        @click="googleAuthentication"
       >
         <img
           src="@/components/icons/icons8-google.svg"
@@ -77,7 +78,10 @@
 import { Form } from "vee-validate";
 import BasicInput from "@/components/inputs/BasicInput.vue";
 import axios from "@/config/axios/index.js";
+import { useUserStore } from "@/stores/user.js";
 const emit = defineEmits(["closeModals", "verifyNoticeModalOn"]);
+
+const user = useUserStore();
 
 function onSubmit(values) {
   let data = { ...values };
@@ -87,8 +91,20 @@ function onSubmit(values) {
     })
     .then((response) => {
       console.log(response);
+      const getDomain = values.email.substring(values.email.indexOf('@') + 1);
+      user.mailDomain = getDomain;
       emit("closeModals");
       emit("verifyNoticeModalOn");
+    })
+    .catch((error) => {
+      alert(error.response.data.error);
+    });
+}
+function googleAuthentication() {
+  axios
+    .get("auth/redirect")
+    .then((response) => {
+      window.open(response.data.url, "_self");
     })
     .catch((error) => {
       alert(error.response.data.error);

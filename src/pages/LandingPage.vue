@@ -117,9 +117,13 @@ import ResetSuccess from "@/components/mailables/ResetSuccess.vue";
 
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import axios from "@/config/axios/index.js";
-const route = useRoute();
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 
+const router = useRouter();
+const route = useRoute();
 const SignUpModal = ref(false);
 const LogInModal = ref(false);
 const ForgotPasswordModal = ref(false);
@@ -130,7 +134,22 @@ const NewPasswordModal = ref(false);
 const ResetSuccessModal = ref(false);
 
 let firstMovie = ref(null);
-
+if (route.query.code) {
+  axios
+    .get("auth/callback" + route.fullPath)
+    .then((response) => {
+      console.log(response);
+      if (response.data.status === "created") {
+        VerifiedModal.value = true;
+      } else {
+        authStore.authenticated = true;
+        router.push({ name: "news-feed" });
+      }
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+}
 if (route.query.token) {
   NewPasswordModal.value = true;
 }

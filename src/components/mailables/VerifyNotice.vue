@@ -13,7 +13,7 @@
         Please check your email and follow the instructions to activate your
         account.
       </p>
-      <button class="bg-[#E31221] rounded mt-10 h-[38px]">
+      <button class="bg-[#E31221] rounded mt-10 h-[38px]" @click="openMail">
         Go to my email
       </button>
     </div>
@@ -22,4 +22,9 @@
 
 <script setup>
 import MailSentIcon from "@/components/icons/MailSentIcon.vue";
+import { useUserStore } from "@/stores/user.js";
+const user = useUserStore();
+function openMail(){
+  window.open("https://www." + user.mailDomain, "_blank");
+}
 </script>
