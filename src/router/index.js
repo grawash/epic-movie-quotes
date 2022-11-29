@@ -1,7 +1,9 @@
 /* eslint-disable no-unsafe-finally */
 import { createRouter, createWebHistory } from "vue-router";
 import LandingPage from "@/pages/LandingPage.vue";
+import FeedPage from "@/pages/FeedPage.vue";
 import NewsFeed from "@/pages/NewsFeed.vue";
+import ProfilePage from "@/pages/ProfilePage.vue";
 import { isAuthenticated } from "@/helpers/authorization/index.js";
 import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
@@ -17,10 +19,22 @@ const router = createRouter({
       component: LandingPage,
     },
     {
-      path: "/news-feed",
-      name: "news-feed",
-      component: NewsFeed,
+      path: "/feed",
+      name: "feed",
+      component: FeedPage,
       beforeEnter: [isAuthenticated],
+      children: [
+        {
+          path: "/news-feed",
+          name: "news-feed",
+          component: NewsFeed,
+        },
+        {
+          path: "/profile",
+          name: "profile",
+          component: ProfilePage,
+        },
+      ],
     },
   ],
 });
