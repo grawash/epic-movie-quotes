@@ -4,6 +4,7 @@ import axios from "@/config/axios/index.js";
 
 export const useUserStore = defineStore("user", () => {
   const name = ref("");
+  const mailDomain = ref("");
   // const email = ref("");
   function fetchUser() {
     axios
@@ -18,5 +19,5 @@ export const useUserStore = defineStore("user", () => {
       });
   }
 
-  return { name, fetchUser };
+  return { name, mailDomain, fetchUser };
 });

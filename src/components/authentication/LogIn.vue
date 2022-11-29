@@ -46,6 +46,7 @@
       <button
         type="button"
         class="text-white mt-6 rounded border-[#CED4DA] border w-[360px] h-[38px] flex justify-center items-center gap-2"
+        @click="googleAuthentication"
       >
         <img
           src="@/components/icons/icons8-google.svg"
@@ -93,6 +94,20 @@ function onSubmit(values) {
       router.push({ name: "news-feed" });
       authStore.authenticated = true;
       emit("closeModals");
+    })
+    .catch((error) => {
+      alert(error.response.data.error);
+    });
+}
+function googleAuthentication() {
+  axios
+    .get("auth/redirect")
+    .then((response) => {
+      console.log(response.data.url);
+      window.open(response.data.url, "_self");
+
+      // emit("closeModals");
+      // emit("verifyNoticeModalOn");
     })
     .catch((error) => {
       alert(error.response.data.error);
