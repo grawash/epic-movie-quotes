@@ -1,7 +1,7 @@
 <template>
   <the-header page="newsFeed" @LogOut="logOut"></the-header>
   <div
-    class="grid bg-defaultTheme text-white h-screen grid-cols-12 gap-[20px] pt-[32px] pl-[70px] pr-[70px]"
+    class="grid bg-defaultTheme text-white min-h-screen grid-cols-12 gap-[20px] pt-[32px] pl-[70px] pr-[70px]"
   >
     <div class="col-start-1 col-end-3 flex flex-col">
       <div class="flex items-center gap-6">
@@ -18,14 +18,18 @@
         </div>
         <div class="basis-0 grow-[3]">
           <p class="font-normal text-2xl leading-[36px]">{{ user.name }}</p>
-          <a href="" class="text-[#CED4DA] text-base font-normal"
-            >Edit your profile</a
+          <router-link
+            :to="{ name: 'profile' }"
+            class="text-[#CED4DA] text-base font-normal"
+            >Edit your profile</router-link
           >
         </div>
       </div>
       <div class="flex gap-6 pt-10 items-center">
         <home-icon class="basis-0 grow" />
-        <a href="" class="basis-0 grow-[3]">News feed</a>
+        <router-link :to="{ name: 'news-feed' }" class="basis-0 grow-[3]"
+          >News feed</router-link
+        >
       </div>
       <div class="flex gap-6 pt-10 items-center">
         <movies-icon class="basis-0 grow" />
