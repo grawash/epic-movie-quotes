@@ -29,7 +29,7 @@
           name="username"
           type="text"
           id="name"
-          placeholder="Nino Tabagari"
+          :placeholder="user.name"
           label="username"
           @usernameReadOnly="usernameReadOnly = !usernameReadOnly"
           :readonly="true"
@@ -52,7 +52,7 @@
           name="email"
           type="email"
           id="email"
-          placeholder="ninotabagari@gmail.com"
+          :placeholder="user.email"
           label="email"
         />
         <button
@@ -160,18 +160,34 @@ import AddMailIcon from "@/components/icons/AddMailIcon.vue";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import axios from "@/config/axios/index.js";
+import { useUserStore } from "@/stores/user.js";
+
+const user = useUserStore();
 
 const route = useRoute();
 const usernameReadOnly = ref(false);
 const passwordReadOnly = ref(false);
 const passwordValue = ref("");
 const changed = ref(false);
+const emit = defineEmits(["profileNotice"]);
 if (route.query.token) {
   passwordReadOnly.value = !passwordReadOnly.value;
 }
 function resetPassword() {
   if (route.query.token) {
     passwordReadOnly.value = !passwordReadOnly.value;
+  } else {
+    axios
+      .post("new-password", { email: user.email })
+      .then((response) => {
+        console.log(response);
+        passwordReadOnly.value = !passwordReadOnly.value;
+        const message = "Please check email to reset your password";
+        emit("profileNotice", message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 }
 
@@ -179,6 +195,7 @@ function onSubmit(values) {
   console.log(values);
   const password = values.password;
   const password_confirmation = values.password_confirmation;
+  const name = values.name;
 
   let data = {
     password: password,
@@ -186,14 +203,33 @@ function onSubmit(values) {
     email: route.query.email,
     token: route.query.token,
   };
-  axios
-    .post("reset-password", { ...data })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  if (passwordReadOnly.value === true) {
+    axios
+      .post("reset-password", { ...data })
+      .then((response) => {
+        console.log(response);
+        passwordReadOnly.value = !passwordReadOnly.value;
+        const message = "Changes updated succsessfully";
+        emit("profileNotice", message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  if (usernameReadOnly.value === true) {
+    axios
+      .post("update-name", { name: name })
+      .then((response) => {
+        console.log(response);
+        usernameReadOnly.value = !usernameReadOnly.value;
+        const message = "Changes updated succsessfully";
+        emit("profileNotice", message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  user.fetchUser();
 }
 
 let fileInput = ref(null);

@@ -1,5 +1,19 @@
 <template>
-  <the-header page="newsFeed" @LogOut="logOut"></the-header>
+  <the-header page="newsFeed" @LogOut="logOut"> </the-header>
+  <div
+    v-if="profileUpdateNotification"
+    class="w-[400px] h-[130px] bg-[#BADBCC] absolute rounded-lg top-[110px] right-32 z-50"
+  >
+    <div class="flex items-center h-6 m-4 mb-[19px] gap-2">
+      <check-mark-icon class="grow-0 scale-125" />
+      <p class="text-[#0F5132] grow">A simple alert—check it out!</p>
+      <cross-icon
+        class="grow-0 hover:cursor-pointer"
+        @click="profileUpdateNotification = false"
+      />
+    </div>
+    <p class="text-center">{{ profileNotificationMessage }}</p>
+  </div>
   <div
     class="grid bg-defaultTheme text-white min-h-screen grid-cols-12 gap-[20px] pt-[32px] pl-[70px] pr-[70px]"
   >
@@ -36,7 +50,7 @@
         <a href="" class="basis-0 grow-[3]">List of movies</a>
       </div>
     </div>
-    <RouterView />
+    <RouterView @profileNotice="(message) => profileNoticeUpdate(message)" />
     <!-- <div class="bg-green-500 col-start-4 col-end-10">aaa</div>
     <div class="bg-black col-start-11 col-end-13">aaa</div> -->
   </div>
@@ -45,8 +59,10 @@
 import TheHeader from "@/components/TheHeader.vue";
 import HomeIcon from "@/components/icons/HomeIcon.vue";
 import MoviesIcon from "@/components/icons/MoviesIcon.vue";
+import CrossIcon from "@/components/icons/CrossIcon.vue";
+import CheckMarkIcon from "@/components/icons/CheckMarkIcon.vue";
 import { useRouter } from "vue-router";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user.js";
 import { useAuthStore } from "@/stores/auth";
@@ -55,6 +71,14 @@ import { RouterView } from "vue-router";
 const authStore = useAuthStore();
 
 const router = useRouter();
+
+const profileUpdateNotification = ref(false);
+const profileNotificationMessage = ref("");
+
+function profileNoticeUpdate(message) {
+  profileUpdateNotification.value = true;
+  profileNotificationMessage.value = message;
+}
 
 const user = computed(() => {
   return useUserStore();
