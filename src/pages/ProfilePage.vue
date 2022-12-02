@@ -46,7 +46,8 @@
           @input="changed = true"
         />
         <div
-          class="mt-14 mb-10 max-w-[532px] h-[1px] bg-[#CED4DA] bg-opacity-30"
+          v-if="!user.google_authenticated"
+          class="mt-14 max-w-[532px] h-[1px] bg-[#CED4DA] bg-opacity-30"
         ></div>
         <profile-page-input
           name="email"
@@ -54,8 +55,10 @@
           id="email"
           :placeholder="user.email"
           label="email"
+          class="mt-10"
         />
         <button
+          v-if="!user.google_authenticated"
           type="button"
           class="mr-auto mt-10 mb-10 pl-4 pr-4 p-2 border rounded-md border-[#D9D9D9] flex items-center"
         >
@@ -72,6 +75,7 @@
           placeholder="Nino Tabagari"
           label="password"
           @passwordReadOnly="resetPassword"
+          :editable="!user.google_authenticated"
           :readonly="true"
         />
         <div

@@ -6,6 +6,8 @@ export const useUserStore = defineStore("user", () => {
   const name = ref("");
   const mailDomain = ref("");
   const email = ref("");
+  const google_authenticated = ref(false);
+
   // const email = ref("");
   function fetchUser() {
     axios
@@ -14,12 +16,12 @@ export const useUserStore = defineStore("user", () => {
         console.log(response);
         name.value = response.data.user.name;
         email.value = response.data.user.email;
-        // email.value = response.data.email;
+        google_authenticated.value = response.data.user.google_authenticated;
       })
       .catch((error) => {
         console.log(error.response.data);
       });
   }
 
-  return { name, mailDomain, email, fetchUser };
+  return { name, mailDomain, email, google_authenticated, fetchUser };
 });

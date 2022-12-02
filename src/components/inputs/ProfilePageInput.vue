@@ -30,7 +30,7 @@
       </button>
       <button
         type="button"
-        v-if="id === 'password'"
+        v-if="id === 'password' && editable"
         @click="$emit('passwordReadOnly')"
         class="ml-8"
       >
@@ -73,6 +73,10 @@ export default {
       required: false,
     },
     readonly: {
+      type: Boolean,
+      required: false,
+    },
+    editable: {
       type: Boolean,
       required: false,
     },
