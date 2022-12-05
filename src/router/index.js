@@ -1,7 +1,7 @@
 /* eslint-disable no-unsafe-finally */
 import { createRouter, createWebHistory } from "vue-router";
 import LandingPage from "@/pages/LandingPage.vue";
-import FeedPage from "@/pages/FeedPage.vue";
+import FeedLayout from "@/pages/FeedLayout.vue";
 import NewsFeed from "@/pages/NewsFeed.vue";
 import ProfilePage from "@/pages/ProfilePage.vue";
 import { isAuthenticated } from "@/helpers/authorization/index.js";
@@ -21,7 +21,7 @@ const router = createRouter({
     {
       path: "/feed",
       name: "feed",
-      component: FeedPage,
+      component: FeedLayout,
       beforeEnter: [isAuthenticated],
       children: [
         {

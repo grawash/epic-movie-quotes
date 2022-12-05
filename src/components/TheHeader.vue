@@ -24,7 +24,7 @@
       </button>
       <button
         v-if="props.page === 'newsFeed'"
-        @click="$emit('LogOut')"
+        @click="logOut"
         class="text-white ml-4 p-2 pl-6 pr-6 border rounded-lg"
       >
         Log Out
@@ -42,6 +42,25 @@ const props = defineProps(["page"]);
 // function SignUpModalToggle() {
 //   SignUpModal.value = !SignUpModal.value;
 // }
+import { useRouter } from "vue-router";
+import axios from "@/config/axios/index.js";
+import { useAuthStore } from "@/stores/auth";
+
+
+const authStore = useAuthStore();
+
+const router = useRouter();
+
+const logOut = async () => {
+  try {
+    await axios.post("/logout");
+    authStore.authenticated = false;
+  } catch (err) {
+    console.log(err);
+  } finally {
+    router.push("/");
+  }
+};
 </script>
 <style scoped>
 .gradientHeader {

@@ -2,23 +2,7 @@
   <div class="col-start-4 col-end-10 flex flex-col">
     <p class="font-medium text-2xl mb-[54px]">My profile</p>
     <div class="bg-[#11101A] h-min shrink flex flex-col relative">
-      <div
-        class="w-[188px] h-[188px] bg-black absolute ml-auto mr-auto left-0 right-0 -top-[94px] rounded-full"
-      >
-        <p
-          class="absolute -bottom-10 w-full text-center font-normal text-base hover:cursor-pointer"
-          @click="chooseImage"
-        >
-          Upload new photo
-        </p>
-        <input
-          type="file"
-          name=""
-          id=""
-          ref="fileInput"
-          class="absolute hidden -bottom-10"
-        />
-      </div>
+      <photo-input @chooseImage="chooseImage" />
       <Form
         id="update"
         v-slot="{ values }"
@@ -31,11 +15,11 @@
           id="name"
           :placeholder="user.name"
           label="username"
-          @usernameReadOnly="usernameReadOnly = !usernameReadOnly"
+          @usernameReadOnly="canChangeUsername = !canChangeUsername"
           :readonly="true"
         />
         <profile-page-input
-          v-if="usernameReadOnly"
+          v-if="canChangeUsername"
           name="name"
           type="text"
           id="newName"
@@ -137,14 +121,7 @@
       </Form>
     </div>
     <div v-if="changed === true" class="mt-10 ml-auto mb-10">
-      <button
-        class="font-normal text-xl mr-8"
-        @click="
-          (usernameReadOnly = false),
-            (changed = false),
-            (passwordReadOnly = false)
-        "
-      >
+      <button class="font-normal text-xl mr-8" @click="closeEditInputs">
         Cancel
       </button>
       <button
@@ -160,6 +137,7 @@
 <script setup>
 import { Form } from "vee-validate";
 import ProfilePageInput from "@/components/inputs/ProfilePageInput.vue";
+import PhotoInput from "@/components/inputs/PhotoInput.vue";
 import AddMailIcon from "@/components/icons/AddMailIcon.vue";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
@@ -169,7 +147,7 @@ import { useUserStore } from "@/stores/user.js";
 const user = useUserStore();
 
 const route = useRoute();
-const usernameReadOnly = ref(false);
+const canChangeUsername = ref(false);
 const passwordReadOnly = ref(false);
 const passwordValue = ref("");
 const changed = ref(false);
@@ -182,10 +160,10 @@ function resetPassword() {
     passwordReadOnly.value = !passwordReadOnly.value;
   } else {
     axios
-      .post("new-password", { email: user.email })
+      .post("reset-password", { email: user.email })
       .then((response) => {
         console.log(response);
-        passwordReadOnly.value = !passwordReadOnly.value;
+        // passwordReadOnly.value = !passwordReadOnly.value;
         const message = "Please check email to reset your password";
         emit("profileNotice", message);
       })
@@ -194,7 +172,11 @@ function resetPassword() {
       });
   }
 }
-
+function closeEditInputs() {
+  canChangeUsername.value = false;
+  changed.value = false;
+  passwordReadOnly.value = false;
+}
 function onSubmit(values) {
   console.log(values);
   const password = values.password;
@@ -202,37 +184,22 @@ function onSubmit(values) {
   const name = values.name;
 
   let data = {
+    name: name,
     password: password,
     password_confirmation: password_confirmation,
     email: route.query.email,
     token: route.query.token,
   };
-  if (passwordReadOnly.value === true) {
-    axios
-      .post("reset-password", { ...data })
-      .then((response) => {
-        console.log(response);
-        passwordReadOnly.value = !passwordReadOnly.value;
-        const message = "Changes updated succsessfully";
-        emit("profileNotice", message);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-  if (usernameReadOnly.value === true) {
-    axios
-      .post("update-name", { name: name })
-      .then((response) => {
-        console.log(response);
-        usernameReadOnly.value = !usernameReadOnly.value;
-        const message = "Changes updated succsessfully";
-        emit("profileNotice", message);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  axios
+    .post("update-user", { ...data })
+    .then((response) => {
+      console.log(response);
+      const message = "Changes updated succsessfully";
+      emit("profileNotice", message);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   user.fetchUser();
 }
 

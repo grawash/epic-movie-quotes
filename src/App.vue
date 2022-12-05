@@ -9,7 +9,7 @@ const user = useUserStore();
 watch(
   () => authStore.authenticated,
   (value) => {
-    if (value) {
+    if (value === true) {
       user.fetchUser();
     }
   }

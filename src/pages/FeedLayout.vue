@@ -1,5 +1,5 @@
 <template>
-  <the-header page="newsFeed" @LogOut="logOut"> </the-header>
+  <the-header page="newsFeed"> </the-header>
   <div
     v-if="profileUpdateNotification"
     class="w-[400px] h-[130px] bg-[#BADBCC] absolute rounded-lg top-[110px] right-32 z-50"
@@ -61,16 +61,8 @@ import HomeIcon from "@/components/icons/HomeIcon.vue";
 import MoviesIcon from "@/components/icons/MoviesIcon.vue";
 import CrossIcon from "@/components/icons/CrossIcon.vue";
 import CheckMarkIcon from "@/components/icons/CheckMarkIcon.vue";
-import { useRouter } from "vue-router";
 import { computed, ref } from "vue";
-import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user.js";
-import { useAuthStore } from "@/stores/auth";
-import { RouterView } from "vue-router";
-
-const authStore = useAuthStore();
-
-const router = useRouter();
 
 const profileUpdateNotification = ref(false);
 const profileNotificationMessage = ref("");
@@ -83,14 +75,4 @@ function profileNoticeUpdate(message) {
 const user = computed(() => {
   return useUserStore();
 });
-const logOut = async () => {
-  try {
-    await axios.get("/logout");
-    authStore.authenticated = false;
-  } catch (err) {
-    console.log(err);
-  } finally {
-    router.push("/");
-  }
-};
 </script>
