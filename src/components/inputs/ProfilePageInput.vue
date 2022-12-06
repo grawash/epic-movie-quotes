@@ -15,7 +15,7 @@
         :name="name"
         :rules="rule"
         :placeholder="placeholder"
-        :readonly="readonly"
+        :readOnly="readOnly"
         class="border text-black border-black bg-[#CED4DA] placeholder-[#6C757D] h-[48px] grow min-w-0 max-w-[528px] rounded p-2 pl-3 pr-5 mt-2"
       />
       <i v-if="type === 'password'" class="text-black -ml-5 self-center">a</i>
@@ -23,7 +23,7 @@
       <button
         type="button"
         v-if="id === 'name'"
-        @click="$emit('usernameReadOnly')"
+        @click="$emit('toggleChangeUsermane')"
         class="ml-8"
       >
         Edit
@@ -31,7 +31,7 @@
       <button
         type="button"
         v-if="id === 'password' && editable"
-        @click="$emit('passwordReadOnly')"
+        @click="$emit('toggleChangePassword')"
         class="ml-8"
       >
         Edit
@@ -72,7 +72,7 @@ export default {
       type: String,
       required: false,
     },
-    readonly: {
+    readOnly: {
       type: Boolean,
       required: false,
     },

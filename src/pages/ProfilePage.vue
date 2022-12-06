@@ -2,7 +2,7 @@
   <div class="col-start-4 col-end-10 flex flex-col">
     <p class="font-medium text-2xl mb-[54px]">My profile</p>
     <div class="bg-[#11101A] h-min shrink flex flex-col relative">
-      <photo-input @chooseImage="chooseImage" />
+      <photo-input />
       <Form
         id="update"
         v-slot="{ values }"
@@ -13,10 +13,10 @@
           name="username"
           type="text"
           id="name"
-          :placeholder="user.name"
+          :placeholder="name"
           label="username"
-          @usernameReadOnly="canChangeUsername = !canChangeUsername"
-          :readonly="true"
+          @toggleChangeUsermane="canChangeUsername = !canChangeUsername"
+          :readOnly="true"
         />
         <profile-page-input
           v-if="canChangeUsername"
@@ -24,25 +24,25 @@
           type="text"
           id="newName"
           rule="required|min:2"
-          :placeholder="user.name"
+          :placeholder="name"
           label="new username"
           class="pt-10"
           @input="changed = true"
         />
         <div
-          v-if="!user.google_authenticated"
+          v-if="!google_authenticated"
           class="mt-14 max-w-[532px] h-[1px] bg-[#CED4DA] bg-opacity-30"
         ></div>
         <profile-page-input
           name="email"
           type="email"
           id="email"
-          :placeholder="user.email"
+          :placeholder="email"
           label="email"
           class="mt-10"
         />
         <button
-          v-if="!user.google_authenticated"
+          v-if="!google_authenticated"
           type="button"
           class="mr-auto mt-10 mb-10 pl-4 pr-4 p-2 border rounded-md border-[#D9D9D9] flex items-center"
         >
@@ -58,16 +58,16 @@
           id="password"
           placeholder="Nino Tabagari"
           label="password"
-          @passwordReadOnly="resetPassword"
-          :editable="!user.google_authenticated"
-          :readonly="true"
+          @toggleChangePassword="canChangePassword = !canChangePassword"
+          :editable="!google_authenticated"
+          :readOnly="true"
         />
         <password-rule-notice
-          v-if="passwordReadOnly"
+          v-if="canChangePassword"
           :passwordValue="passwordValue"
         />
         <profile-page-input
-          v-if="passwordReadOnly"
+          v-if="canChangePassword"
           name="password"
           type="password"
           id="newPassword"
@@ -78,7 +78,7 @@
           @input="(passwordValue = values.password), (changed = true)"
         />
         <profile-page-input
-          v-if="passwordReadOnly"
+          v-if="canChangePassword"
           name="password_confirmation"
           type="password"
           id="newPasswordConfirmation"
@@ -111,45 +111,25 @@ import PhotoInput from "@/components/inputs/PhotoInput.vue";
 import PasswordRuleNotice from "@/components/PasswordRuleNotice.vue";
 import AddMailIcon from "@/components/icons/AddMailIcon.vue";
 import { ref } from "vue";
-import { useRoute } from "vue-router";
 import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user.js";
+import { storeToRefs } from "pinia";
 
-const user = useUserStore();
+let user = useUserStore();
 
-const route = useRoute();
+const { name, email, google_authenticated } = storeToRefs(user);
+
 const canChangeUsername = ref(false);
-const passwordReadOnly = ref(false);
+const canChangePassword = ref(false);
 const passwordValue = ref("");
 const changed = ref(false);
 const emit = defineEmits(["profileNotice"]);
-if (route.query.token) {
-  passwordReadOnly.value = !passwordReadOnly.value;
-}
-function resetPassword() {
-  if (route.query.token) {
-    passwordReadOnly.value = !passwordReadOnly.value;
-  } else {
-    axios
-      .post("reset-password", { email: user.email })
-      .then((response) => {
-        console.log(response);
-        // passwordReadOnly.value = !passwordReadOnly.value;
-        const message = "Please check email to reset your password";
-        emit("profileNotice", message);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-}
 function closeEditInputs() {
   canChangeUsername.value = false;
   changed.value = false;
-  passwordReadOnly.value = false;
+  canChangePassword.value = false;
 }
 function onSubmit(values) {
-  console.log(values);
   const password = values.password;
   const password_confirmation = values.password_confirmation;
   const name = values.name;
@@ -158,8 +138,6 @@ function onSubmit(values) {
     name: name,
     password: password,
     password_confirmation: password_confirmation,
-    email: route.query.email,
-    token: route.query.token,
   };
   axios
     .post("update-user", { ...data })
@@ -167,26 +145,11 @@ function onSubmit(values) {
       console.log(response);
       const message = "Changes updated succsessfully";
       emit("profileNotice", message);
+      closeEditInputs();
+      user.fetchUser();
     })
     .catch((error) => {
       console.log(error);
     });
-  user.fetchUser();
-}
-
-let fileInput = ref(null);
-function chooseImage() {
-  fileInput.value.click();
 }
 </script>
-<style scoped>
-.valid {
-  color: green;
-}
-.neutral {
-  color: grey;
-}
-.invalid {
-  color: red;
-}
-</style>
