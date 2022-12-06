@@ -35,13 +35,6 @@
 <script setup>
 import ButtonArrow from "@/components/icons/ButtonArrow.vue";
 const props = defineProps(["page"]);
-// import { ref } from "vue";
-
-// const SignUpModal = ref(false);
-
-// function SignUpModalToggle() {
-//   SignUpModal.value = !SignUpModal.value;
-// }
 import { useRouter } from "vue-router";
 import axios from "@/config/axios/index.js";
 import { useAuthStore } from "@/stores/auth";

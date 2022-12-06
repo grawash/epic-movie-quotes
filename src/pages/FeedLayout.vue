@@ -20,15 +20,7 @@
     <div class="col-start-1 col-end-3 flex flex-col">
       <div class="flex items-center gap-6">
         <div class="basis-0 grow">
-          <div
-            class="w-[60px] h-[60px] rounded-full overflow-hidden bg-gray-500"
-          >
-            <img
-              src="src/components/icons/image 1.jpg"
-              alt="smth"
-              class="h-full w-full"
-            />
-          </div>
+          <profile-picture />
         </div>
         <div class="basis-0 grow-[3]">
           <p class="font-normal text-2xl leading-[36px]">{{ user.name }}</p>
@@ -57,6 +49,7 @@
 </template>
 <script setup>
 import TheHeader from "@/components/TheHeader.vue";
+import ProfilePicture from "@/components/ProfilePicture.vue";
 import HomeIcon from "@/components/icons/HomeIcon.vue";
 import MoviesIcon from "@/components/icons/MoviesIcon.vue";
 import CrossIcon from "@/components/icons/CrossIcon.vue";
