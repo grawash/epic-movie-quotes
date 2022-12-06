@@ -10,12 +10,10 @@ export const useUserStore = defineStore("user", () => {
   function fetchUser() {
     axios
       .get("user")
-      .then((response) => {
-        console.log(response);
-        name.value = response.data.user.name;
-        email.value = response.data.user.email;
-        google_authenticated.value = response.data.user.google_authenticated;
-        console.log(name.value);
+      .then(({ data }) => {
+        name.value = data.user.name;
+        email.value = data.user.email;
+        google_authenticated.value = data.user.google_authenticated;
       })
       .catch((error) => {
         console.log(error.response.data);
