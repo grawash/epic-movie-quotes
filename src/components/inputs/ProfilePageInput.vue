@@ -36,7 +36,6 @@
       >
         Edit
       </button>
-      <!-- <div v-if="type === 'email'" class="ml-8 grow basis-1/6 shrink-0"></div> -->
     </div>
     <ErrorMessage :name="name" class="text-red-500" />
   </div>
