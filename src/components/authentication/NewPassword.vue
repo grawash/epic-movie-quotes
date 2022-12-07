@@ -66,7 +66,7 @@ function onSubmit(values) {
   let data = { ...values, email: route.query.email, token: route.query.token };
   console.log(data);
   axios
-    .post("reset-password", {
+    .post("password-recovery", {
       ...data,
     })
     .then((response) => {

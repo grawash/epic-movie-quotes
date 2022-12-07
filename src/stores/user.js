@@ -5,19 +5,20 @@ import axios from "@/config/axios/index.js";
 export const useUserStore = defineStore("user", () => {
   const name = ref("");
   const mailDomain = ref("");
-  // const email = ref("");
+  const email = ref("");
+  const google_authenticated = ref(false);
   function fetchUser() {
     axios
       .get("user")
-      .then((response) => {
-        console.log(response);
-        name.value = response.data.user.name;
-        // email.value = response.data.email;
+      .then(({ data }) => {
+        name.value = data.user.name;
+        email.value = data.user.email;
+        google_authenticated.value = data.user.google_authenticated;
       })
       .catch((error) => {
         console.log(error.response.data);
       });
   }
 
-  return { name, mailDomain, fetchUser };
+  return { name, mailDomain, email, google_authenticated, fetchUser };
 });
