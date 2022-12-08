@@ -25,6 +25,7 @@
       <div
         v-for="movie in movieList"
         class="flex flex-col hover:scale-105 cursor-pointer"
+        @click="showMovieDescription(movie.id)"
       >
         <div
           class="backdrop-blur-3xl bg-neutral-700 bg-opacity-20 max-h-[350px] flex grow justify-center items-center rounded-lg"
@@ -45,6 +46,10 @@ import CommentIcon from "@/components/icons/CommentIcon.vue";
 import AddMovieForm from "@/components/AddMovieForm.vue";
 import axios from "@/config/axios/index.js";
 import { ref } from "vue";
+import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const route = useRoute();
 const emit = defineEmits(["profileNotice"]);
 const movieList = ref([]);
 const addMovieModal = ref(false);
@@ -54,6 +59,9 @@ function getImageUrl(movie) {
 }
 function closeModals() {
   addMovieModal.value = false;
+}
+function showMovieDescription(movieId) {
+  router.push({ name: "movie-description", params: { movieId: movieId } });
 }
 axios
   .get("movies-list")
