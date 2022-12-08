@@ -123,7 +123,7 @@ const canChangeUsername = ref(false);
 const canChangePassword = ref(false);
 const passwordValue = ref("");
 const changed = ref(false);
-const emit = defineEmits(["profileNotice"]);
+const emit = defineEmits("profileNotice");
 function closeEditInputs() {
   canChangeUsername.value = false;
   changed.value = false;

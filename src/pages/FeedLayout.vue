@@ -17,7 +17,7 @@
   <div
     class="grid bg-defaultTheme text-white min-h-screen grid-cols-12 gap-[20px] pt-[32px] pl-[70px] pr-[70px]"
   >
-    <div class="col-start-1 col-end-3 flex flex-col">
+    <div class="col-start-1 col-end-3 row-span-full flex flex-col">
       <div class="flex items-center gap-6">
         <div class="basis-0 grow">
           <profile-picture />
@@ -39,7 +39,9 @@
       </div>
       <div class="flex gap-6 pt-10 items-center">
         <movies-icon class="basis-0 grow" />
-        <a href="" class="basis-0 grow-[3]">List of movies</a>
+        <router-link :to="{ name: 'movies-list' }" class="basis-0 grow-[3]"
+          >List of movies</router-link
+        >
       </div>
     </div>
     <RouterView @profileNotice="(message) => profileNoticeUpdate(message)" />

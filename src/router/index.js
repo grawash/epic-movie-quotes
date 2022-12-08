@@ -4,6 +4,8 @@ import LandingPage from "@/pages/LandingPage.vue";
 import FeedLayout from "@/pages/FeedLayout.vue";
 import NewsFeed from "@/pages/NewsFeed.vue";
 import ProfilePage from "@/pages/ProfilePage.vue";
+import MoviesList from "@/pages/MoviesList.vue";
+import MovieDescription from "@/pages/MovieDescription.vue";
 import { isAuthenticated } from "@/helpers/authorization/index.js";
 import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
@@ -33,6 +35,16 @@ const router = createRouter({
           path: "/profile",
           name: "profile",
           component: ProfilePage,
+        },
+        {
+          path: "/movies-list",
+          name: "movies-list",
+          component: MoviesList,
+        },
+        {
+          path: "/movie/:movieId",
+          name: "movie-description",
+          component: MovieDescription,
         },
       ],
     },
