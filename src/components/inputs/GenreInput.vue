@@ -44,6 +44,7 @@ const emit = defineEmits(["getGenres"]);
 storedMovie.genres.forEach((element) => {
   genres.value.push(element.name);
 });
+emit("getGenres", genres.value);
 
 function storeGenres() {
   if (text.value != "") {

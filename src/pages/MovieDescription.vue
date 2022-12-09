@@ -73,21 +73,24 @@ const movie = ref({});
 const genres = ref([]);
 const editMovieModal = ref(false);
 const storedMovie = useMovieStore();
-axios
-  .get("movie/" + movieId)
-  .then(({ data }) => {
-    movie.value = data.movie;
-    genres.value = data.movie.genres;
-    storedMovie.movie = data.movie;
-    storedMovie.genres = data.movie.genres;
-    storedMovie.movie.thumbnail = data.movie.thumbnail.replace(
-      "public",
-      "storage"
-    );
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
+async function fetchMovie() {
+  axios
+    .get("movie/" + movieId)
+    .then(({ data }) => {
+      movie.value = data.movie;
+      genres.value = data.movie.genres;
+      storedMovie.movie = data.movie;
+      storedMovie.genres = data.movie.genres;
+      storedMovie.movie.thumbnail = data.movie.thumbnail.replace(
+        "public",
+        "storage"
+      );
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+}
+fetchMovie();
 const getImageUrl = computed(() => {
   if (movie.value.thumbnail) {
     let replaced = movie.value.thumbnail.replace("public", "storage");
@@ -96,6 +99,7 @@ const getImageUrl = computed(() => {
 });
 function closeModals() {
   editMovieModal.value = false;
+  fetchMovie();
 }
 function deleteMovie() {
   axios
