@@ -17,6 +17,7 @@
         ref="fileInput"
         @input="getImage"
         @change="handleChange"
+        :value="value"
         class="hidden bg-transparent w-full rounded p-2 pl-3 pr-3"
       />
     </Field>
@@ -28,7 +29,7 @@
       choose file
     </button>
     <img
-      :src="file"
+      :src="file ? file : source"
       alt=" "
       class="ml-auto h-full w-auto border-none rounded-r outline-none"
     />
@@ -59,6 +60,7 @@ defineProps({
   name: String,
   type: String,
   id: String,
+  source: String,
   rule: String,
   placeholder: String,
 });

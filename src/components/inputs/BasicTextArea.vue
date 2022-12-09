@@ -6,6 +6,7 @@
       :id="id"
       :placeholder="placeholder"
       :rules="rule"
+      :value="value"
       class="placeholder-white bg-transparent h-[86px] w-full p-3"
     />
   </div>
@@ -20,6 +21,7 @@ defineProps({
   name: String,
   id: String,
   rule: String,
+  value: String,
   placeholder: String,
 });
 </script>

@@ -8,7 +8,7 @@
       @click.stop=""
     >
       <p class="font-medium text-[32px] text-white text-center pb-3">
-        Add movie
+        Edit movie
       </p>
       <div class="h-[1px] bg-[#EFEFEF33]"></div>
       <Form class="w-full flex flex-col p-10" @submit="onSubmit">
@@ -17,6 +17,7 @@
           type="text"
           id="title"
           rule="required|min:2"
+          :value="storedMovie.movie.title"
           placeholder="Movie name"
         ></add-movie-input>
         <genre-input
@@ -31,22 +32,24 @@
           type="text"
           id="director"
           rule="required|min:2"
+          :value="storedMovie.movie.director"
           placeholder="Director"
         ></add-movie-input>
         <basic-text-area
           name="description"
           id="description"
           placeholder="Movie description"
+          :value="storedMovie.movie.description"
           rule="required|min:2"
         >
         </basic-text-area>
         <movie-image-input
           name="movie_image"
           id="movie_image"
-          rule="required"
+          :source="'http://127.0.0.1:8000/' + storedMovie.movie.thumbnail"
         />
         <button class="text-white mt-6 bg-[#E31221] rounded w-full h-[38px]">
-          Add movie
+          Edit movie
         </button>
       </Form>
     </div>
@@ -62,6 +65,13 @@ import MovieImageInput from "@/components/inputs/MovieImageInput.vue";
 import { ref } from "vue";
 import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user";
+import { useRoute } from "vue-router";
+import { useMovieStore } from "@/stores/movie";
+
+const storedMovie = useMovieStore();
+console.log(storedMovie.movie);
+const route = useRoute();
+const movieId = route.params.movieId;
 const user = useUserStore();
 const storedGenres = ref("");
 const emit = defineEmits([
@@ -82,9 +92,9 @@ function onSubmit(values) {
   formData.append("director", values.director);
   formData.append("description", values.description);
   formData.append("thumbnail", values.file);
-
+  console.log(formData);
   axios
-    .post("create-movie/" + user.userId, formData)
+    .post("update-movie/" + movieId, formData)
     .then((response) => {
       console.log(response);
       emit("closeModals");

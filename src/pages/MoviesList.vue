@@ -53,9 +53,11 @@ import CommentIcon from "@/components/icons/CommentIcon.vue";
 
 import AddMovieForm from "@/components/AddMovieForm.vue";
 import axios from "@/config/axios/index.js";
-import { ref, onUnmounted, computed } from "vue";
+import { ref, onUnmounted, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
+const user = useUserStore();
 const router = useRouter();
 const route = useRoute();
 const emit = defineEmits(["profileNotice"]);
@@ -72,6 +74,7 @@ function getImageUrl(movie) {
   return "http://127.0.0.1:8000/" + replaced;
 }
 function closeModals() {
+  fetchMovies();
   addMovieModal.value = false;
 }
 function showMovieDescription(movieId) {
@@ -88,13 +91,25 @@ const filteredMovies = computed(() => {
     return filtered;
   } else return movieList.value;
 });
-axios
-  .get("movies-list")
-  .then(({ data }) => {
-    console.log(data);
-    movieList.value = data;
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
+watch(
+  () => user.userId,
+  (value) => {
+    if (value != null) {
+      fetchMovies();
+    }
+  }
+);
+if (user.userId != null) {
+  fetchMovies();
+}
+async function fetchMovies() {
+  axios
+    .get("movies-list/" + user.userId)
+    .then(({ data }) => {
+      movieList.value = data;
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+}
 </script>

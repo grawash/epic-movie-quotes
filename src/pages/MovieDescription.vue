@@ -1,4 +1,5 @@
 <template>
+  <edit-movie-form v-if="editMovieModal" @closeModals="closeModals" />
   <div class="col-start-4 col-end-13 grid auto-rows-min gap-[33px] grid-cols-9">
     <div class="col-span-9 font-medium text-2xl">Movie discription</div>
     <div class="col-start-1 col-end-6 flex flex-col">
@@ -21,9 +22,15 @@
           <div
             class="bg-[#24222F] flex ml-auto p-[10px] pl-7 pr-7 gap-[25px] items-center rounded-lg"
           >
-            <pencil-icon class="cursor-pointer hover:scale-110" />
+            <pencil-icon
+              class="cursor-pointer hover:scale-110"
+              @click="editMovieModal = true"
+            />
             <div class="h-[16px] w-[1px] bg-[#6C757D]"></div>
-            <trash-can-icon class="cursor-pointer hover:scale-110" />
+            <trash-can-icon
+              class="cursor-pointer hover:scale-110"
+              @click="deleteMovie"
+            />
           </div>
         </div>
         <div class="flex flex-wrap mt-6">
@@ -50,27 +57,33 @@
 import AddMailIcon from "@/components/icons/AddMailIcon.vue";
 import TrashCanIcon from "@/components/icons/TrashCanIcon.vue";
 import PencilIcon from "@/components/icons/PencilIcon.vue";
+import EditMovieForm from "@/components/EditMovieForm.vue";
 // import CommentIcon from "@/components/icons/CommentIcon.vue";
-
 // import AddMovieForm from "@/components/AddMovieForm.vue";
 import axios from "@/config/axios/index.js";
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
+import { useMovieStore } from "@/stores/movie";
 const router = useRouter();
 const route = useRoute();
 const emit = defineEmits(["profileNotice"]);
 const movieId = route.params.movieId;
 const movie = ref({});
 const genres = ref([]);
-// const movieList = ref([]);
-// const addMovieModal = ref(false);
+const editMovieModal = ref(false);
+const storedMovie = useMovieStore();
 axios
   .get("movie/" + movieId)
   .then(({ data }) => {
-    console.log(data);
     movie.value = data.movie;
-    genres.value = data.genres;
+    genres.value = data.movie.genres;
+    storedMovie.movie = data.movie;
+    storedMovie.genres = data.movie.genres;
+    storedMovie.movie.thumbnail = data.movie.thumbnail.replace(
+      "public",
+      "storage"
+    );
   })
   .catch((error) => {
     console.log(error.response.data);
@@ -81,10 +94,18 @@ const getImageUrl = computed(() => {
     return "http://127.0.0.1:8000/" + replaced;
   } else return "";
 });
-// function closeModals() {
-//   addMovieModal.value = false;
-// }
-// function showMovieDescription(movieId) {
-//   router.push({ name: "movie-description", params: { movieId: movieId } });
-// }
+function closeModals() {
+  editMovieModal.value = false;
+}
+function deleteMovie() {
+  axios
+    .get("delete-movie/" + movieId)
+    .then(({ response }) => {
+      console.log(response);
+      router.push({ name: "movies-list" });
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+}
 </script>

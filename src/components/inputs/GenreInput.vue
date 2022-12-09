@@ -36,9 +36,14 @@
 import { Field, ErrorMessage } from "vee-validate";
 import CrossIcon from "@/components/icons/CrossIcon.vue";
 import { ref } from "vue";
+import { useMovieStore } from "@/stores/movie";
+const storedMovie = useMovieStore();
 const text = ref("");
 const genres = ref([]);
 const emit = defineEmits(["getGenres"]);
+storedMovie.genres.forEach((element) => {
+  genres.value.push(element.name);
+});
 
 function storeGenres() {
   if (text.value != "") {
@@ -55,6 +60,7 @@ defineProps({
   name: String,
   type: String,
   id: String,
+  value: String,
   rule: String,
   placeholder: String,
 });
