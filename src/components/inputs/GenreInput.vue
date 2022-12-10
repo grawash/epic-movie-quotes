@@ -8,7 +8,7 @@
         class="grow items-center flex basis-auto shrink-0 p-[2px] pl-[6px] pr-[6px] rounded-sm mr-1 w-max bg-[#6C757D]"
       >
         <p>
-          {{ genre }}
+          {{ genre.name }}
         </p>
         <cross-icon
           class="h-2 ml-2 cursor-pointer"
@@ -41,9 +41,11 @@ const storedMovie = useMovieStore();
 const text = ref("");
 const genres = ref([]);
 const emit = defineEmits(["getGenres"]);
-storedMovie.genres.forEach((element) => {
-  genres.value.push(element.name);
-});
+if (storedMovie.genres) {
+  storedMovie.genres.forEach((element) => {
+    genres.value.push(element);
+  });
+}
 emit("getGenres", genres.value);
 
 function storeGenres() {

@@ -97,7 +97,7 @@ function onSubmit(values) {
       emit("verifyNoticeModalOn");
     })
     .catch((error) => {
-      alert(error.response.data.error);
+      console.log(error.response.data);
     });
 }
 function googleAuthentication() {

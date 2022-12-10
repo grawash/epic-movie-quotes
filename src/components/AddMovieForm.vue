@@ -82,15 +82,16 @@ function onSubmit(values) {
   formData.append("director", values.director);
   formData.append("description", values.description);
   formData.append("thumbnail", values.file);
+  formData.append("userId", user.userId);
 
   axios
-    .post("create-movie/" + user.userId, formData)
+    .post("movie/store", formData)
     .then((response) => {
       console.log(response);
       emit("closeModals");
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error.response.data);
     });
 }
 </script>

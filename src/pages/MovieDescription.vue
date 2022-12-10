@@ -75,12 +75,14 @@ const editMovieModal = ref(false);
 const storedMovie = useMovieStore();
 async function fetchMovie() {
   axios
-    .get("movie/" + movieId)
+    .get("movie/show/" + movieId)
     .then(({ data }) => {
+      console.log(data);
       movie.value = data.movie;
       genres.value = data.movie.genres;
       storedMovie.movie = data.movie;
       storedMovie.genres = data.movie.genres;
+      console.log(genres.value[0]);
       storedMovie.movie.thumbnail = data.movie.thumbnail.replace(
         "public",
         "storage"
@@ -103,7 +105,7 @@ function closeModals() {
 }
 function deleteMovie() {
   axios
-    .get("delete-movie/" + movieId)
+    .get("movie/destroy/" + movieId)
     .then(({ response }) => {
       console.log(response);
       router.push({ name: "movies-list" });

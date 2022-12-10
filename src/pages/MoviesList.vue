@@ -65,6 +65,11 @@ const movieList = ref([]);
 const addMovieModal = ref(false);
 const searchInput = ref(false);
 const searchValue = ref("");
+import { useMovieStore } from "@/stores/movie";
+const storedMovie = useMovieStore();
+if (storedMovie.genres) {
+  storedMovie.genres = [];
+}
 window.onclick = removeSearch;
 onUnmounted(() => {
   window.onclick = "";
@@ -104,7 +109,7 @@ if (user.userId != null) {
 }
 async function fetchMovies() {
   axios
-    .get("movies-list/" + user.userId)
+    .get("movie/index", { params: { userId: user.userId } })
     .then(({ data }) => {
       movieList.value = data;
     })

@@ -91,16 +91,18 @@ function onSubmit(values) {
   }
   formData.append("director", values.director);
   formData.append("description", values.description);
-  formData.append("thumbnail", values.file);
-  console.log(formData);
+  if (values.file) {
+    formData.append("thumbnail", values.file);
+  }
+  formData.append("_method", "PATCH");
   axios
-    .post("update-movie/" + movieId, formData)
+    .post("movie/update/" + movieId, formData)
     .then((response) => {
       console.log(response);
       emit("closeModals");
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error.response.data);
     });
 }
 </script>
