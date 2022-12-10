@@ -76,16 +76,17 @@ function storeGenres(genres) {
 function onSubmit(values) {
   const formData = new FormData();
   formData.append("title", values.title);
-  for (var i = 0; i < storedGenres.value.length; i++) {
-    formData.append("genre[]", storedGenres.value[i]);
-  }
+  // for (var i = 0; i < storedGenres.value.length; i++) {
+  //   formData.append("genre[]", storedGenres.value[i]);
+  // }
+  formData.append("genre", JSON.stringify(storedGenres.value));
   formData.append("director", values.director);
   formData.append("description", values.description);
   formData.append("thumbnail", values.file);
-  formData.append("userId", user.userId);
+  formData.append("user_id", user.userId);
 
   axios
-    .post("movie/store", formData)
+    .post("movies", formData)
     .then((response) => {
       console.log(response);
       emit("closeModals");

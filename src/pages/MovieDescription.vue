@@ -75,7 +75,7 @@ const editMovieModal = ref(false);
 const storedMovie = useMovieStore();
 async function fetchMovie() {
   axios
-    .get("movie/show/" + movieId)
+    .get(`movies/${movieId}`)
     .then(({ data }) => {
       console.log(data);
       movie.value = data.movie;
@@ -105,7 +105,7 @@ function closeModals() {
 }
 function deleteMovie() {
   axios
-    .get("movie/destroy/" + movieId)
+    .get(`movies/destroy/${movieId}`)
     .then(({ response }) => {
       console.log(response);
       router.push({ name: "movies-list" });

@@ -109,7 +109,7 @@ if (user.userId != null) {
 }
 async function fetchMovies() {
   axios
-    .get("movie/index", { params: { userId: user.userId } })
+    .get("movies", { params: { user_id: user.userId } })
     .then(({ data }) => {
       movieList.value = data;
     })

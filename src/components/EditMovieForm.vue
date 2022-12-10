@@ -96,7 +96,7 @@ function onSubmit(values) {
   }
   formData.append("_method", "PATCH");
   axios
-    .post("movie/update/" + movieId, formData)
+    .post(`movies/${movieId}`, formData)
     .then((response) => {
       console.log(response);
       emit("closeModals");
