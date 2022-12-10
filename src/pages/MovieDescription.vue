@@ -73,6 +73,7 @@ const movie = ref({});
 const genres = ref([]);
 const editMovieModal = ref(false);
 const storedMovie = useMovieStore();
+const baseUrl = import.meta.env.VITE_BASE_URL;
 async function fetchMovie() {
   axios
     .get(`movies/${movieId}`)
@@ -96,7 +97,7 @@ fetchMovie();
 const getImageUrl = computed(() => {
   if (movie.value.thumbnail) {
     let replaced = movie.value.thumbnail.replace("public", "storage");
-    return "http://127.0.0.1:8000/" + replaced;
+    return baseUrl + replaced;
   } else return "";
 });
 function closeModals() {

@@ -46,7 +46,7 @@
         <movie-image-input
           name="movie_image"
           id="movie_image"
-          :source="'http://127.0.0.1:8000/' + storedMovie.movie.thumbnail"
+          :source="baseUrl + storedMovie.movie.thumbnail"
         />
         <button class="text-white mt-6 bg-[#E31221] rounded w-full h-[38px]">
           Edit movie
@@ -70,6 +70,7 @@ import { useMovieStore } from "@/stores/movie";
 
 const storedMovie = useMovieStore();
 console.log(storedMovie.movie);
+const baseUrl = import.meta.env.VITE_BASE_URL;
 const route = useRoute();
 const movieId = route.params.movieId;
 const user = useUserStore();

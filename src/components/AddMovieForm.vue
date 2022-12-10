@@ -76,9 +76,6 @@ function storeGenres(genres) {
 function onSubmit(values) {
   const formData = new FormData();
   formData.append("title", values.title);
-  // for (var i = 0; i < storedGenres.value.length; i++) {
-  //   formData.append("genre[]", storedGenres.value[i]);
-  // }
   formData.append("genre", JSON.stringify(storedGenres.value));
   formData.append("director", values.director);
   formData.append("description", values.description);

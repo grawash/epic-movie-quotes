@@ -50,21 +50,20 @@
 import AddMailIcon from "@/components/icons/AddMailIcon.vue";
 import LoopIcon from "@/components/icons/LoopIcon.vue";
 import CommentIcon from "@/components/icons/CommentIcon.vue";
-
 import AddMovieForm from "@/components/AddMovieForm.vue";
 import axios from "@/config/axios/index.js";
 import { ref, onUnmounted, computed, watch } from "vue";
-import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
 const user = useUserStore();
 const router = useRouter();
-const route = useRoute();
 const emit = defineEmits(["profileNotice"]);
 const movieList = ref([]);
 const addMovieModal = ref(false);
 const searchInput = ref(false);
 const searchValue = ref("");
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
 import { useMovieStore } from "@/stores/movie";
 const storedMovie = useMovieStore();
 if (storedMovie.genres) {
@@ -76,7 +75,7 @@ onUnmounted(() => {
 });
 function getImageUrl(movie) {
   let replaced = movie.replace("public", "storage");
-  return "http://127.0.0.1:8000/" + replaced;
+  return baseUrl + replaced;
 }
 function closeModals() {
   fetchMovies();
