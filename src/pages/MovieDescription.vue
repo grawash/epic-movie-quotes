@@ -105,7 +105,7 @@ function closeModals() {
 }
 function deleteMovie() {
   axios
-    .get(`movies/destroy/${movieId}`)
+    .delete(`movies/${movieId}`)
     .then(({ response }) => {
       console.log(response);
       router.push({ name: "movies-list" });
