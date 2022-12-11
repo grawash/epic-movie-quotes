@@ -1,4 +1,9 @@
 <template>
+  <new-quote-form
+    v-if="newQuoteModal"
+    :imgUrl="getImageUrl"
+    @closeModals="closeModals"
+  />
   <edit-movie-form v-if="editMovieModal" @closeModals="closeModals" />
   <div class="col-start-4 col-end-13 grid auto-rows-min gap-[33px] grid-cols-9">
     <div class="col-span-9 font-medium text-2xl">Movie discription</div>
@@ -8,6 +13,7 @@
         <p class="font-bold text-2xl">Quotes (Total 7)</p>
         <div class="h-[80%] w-[1px] bg-[#6C757D]"></div>
         <button
+          @click="newQuoteModal = true"
           class="text-xl bg-[#E31221] p-2 pl-4 pr-4 rounded flex items-center"
         >
           <add-mail-icon class="scale-125 mr-2" />
@@ -58,6 +64,7 @@ import AddMailIcon from "@/components/icons/AddMailIcon.vue";
 import TrashCanIcon from "@/components/icons/TrashCanIcon.vue";
 import PencilIcon from "@/components/icons/PencilIcon.vue";
 import EditMovieForm from "@/components/EditMovieForm.vue";
+import NewQuoteForm from "@/components/NewQuoteForm.vue";
 // import CommentIcon from "@/components/icons/CommentIcon.vue";
 // import AddMovieForm from "@/components/AddMovieForm.vue";
 import axios from "@/config/axios/index.js";
@@ -68,6 +75,7 @@ import { useMovieStore } from "@/stores/movie";
 const router = useRouter();
 const route = useRoute();
 const emit = defineEmits(["profileNotice"]);
+const newQuoteModal = ref(false);
 const movieId = route.params.movieId;
 const movie = ref({});
 const genres = ref([]);
@@ -102,6 +110,7 @@ const getImageUrl = computed(() => {
 });
 function closeModals() {
   editMovieModal.value = false;
+  newQuoteModal.value = false;
   fetchMovie();
 }
 function deleteMovie() {

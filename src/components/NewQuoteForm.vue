@@ -19,7 +19,35 @@
         </div>
       </div>
       <div class="h-[1px] bg-[#EFEFEF33]"></div>
-      <Form class="w-full flex flex-col p-10" @submit="onSubmit">
+      <Form class="w-full flex flex-col p-8" @submit="onSubmit">
+        <div class="flex items-center mb-7">
+          <profile-picture />
+          <p class="ml-4 text-xl">{{ user.name }}</p>
+        </div>
+        <div v-if="movieId" class="flex items-center">
+          <img :src="imgUrl" alt="" class="max-w-[30%] rounded-xl" />
+          <div class="flex flex-col gap-5 ml-8 text-white">
+            <p class="grow font-bold text-2xl text-[#DDCCAA]">
+              {{ storedMovie.movie.title }}
+            </p>
+            <div class="flex">
+              <div
+                v-for="genre in storedMovie.genres"
+                class="items-center h-min p-[2px] pl-[6px] mb-2 pr-[6px] rounded mr-2 bg-[#6C757D]"
+              >
+                <p class="capitalize font-bold text-lg">
+                  {{ genre.name }}
+                </p>
+              </div>
+            </div>
+            <p class="text-[#CED4DA] font-bold text-lg">
+              Director:
+              <span class="text-white font-medium ml-2">{{
+                storedMovie.movie.director
+              }}</span>
+            </p>
+          </div>
+        </div>
         <basic-text-area
           name="quote"
           id="quote"
@@ -43,13 +71,16 @@ import BasicTextArea from "@/components/inputs/BasicTextArea.vue";
 import MovieDropdown from "@/components/MovieDropdown.vue";
 import ImageInput from "@/components/inputs/ImageInput.vue";
 import CrossIcon from "@/components/icons/CrossIcon.vue";
+import ProfilePicture from "@/components/ProfilePicture.vue";
 import { ref } from "vue";
 import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user";
-// import { useRoute } from "vue-router";
+import { useRoute } from "vue-router";
+import { useMovieStore } from "@/stores/movie";
+const route = useRoute();
+const storedMovie = useMovieStore();
 
 // const baseUrl = import.meta.env.VITE_BASE_URL;
-// const route = useRoute();
 const user = useUserStore();
 // const storedGenres = ref("");
 const emit = defineEmits([
@@ -59,6 +90,9 @@ const emit = defineEmits([
 ]);
 const chosenMovieId = ref(null);
 const chosenMovieTitle = ref(null);
+const movieId = ref("");
+movieId.value = route.params.movieId;
+console.log(movieId.value);
 
 function appendMovie(movie) {
   chosenMovieId.value = movie.id;
@@ -85,4 +119,7 @@ function onSubmit(values) {
       console.log(error.response.data);
     });
 }
+defineProps({
+  imgUrl: String,
+});
 </script>
