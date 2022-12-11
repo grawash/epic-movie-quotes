@@ -54,7 +54,7 @@ import LoopIcon from "@/components/icons/LoopIcon.vue";
 import AddQuoteIcon from "@/components/icons/AddQuoteIcon.vue";
 import DisplayAllQuotes from "@/components/DisplayAllQuotes.vue";
 import axios from "@/config/axios/index.js";
-import { ref } from "vue";
+import { ref, onUnmounted, onMounted } from "vue";
 const searchInput = ref(false);
 const seachbutton = ref(true);
 const searchLabel = ref(true);
@@ -70,13 +70,18 @@ axios
   .catch((error) => {
     console.log(error.response.data);
   });
-
+onMounted(() => {
+  window.onclick = removeSearch;
+});
 window.onclick = removeSearch;
 function removeSearch() {
   if (searchValue.value === "") {
     searchInput.value = false;
   }
 }
+onUnmounted(() => {
+  window.onclick = "";
+});
 function addSearch() {
   searchInput.value = true;
   searchLabel.value = true;

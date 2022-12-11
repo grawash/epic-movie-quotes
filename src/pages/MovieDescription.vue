@@ -20,6 +20,57 @@
           Add quote
         </button>
       </div>
+      <div class="flex flex-col mt-14">
+        <div
+          v-for="quote in quotes"
+          class="bg-[#11101A] rounded-xl mb-10 p-6 pl-8 pr-8"
+        >
+          <div class="flex gap-8 pb-6 border-b border-[#EFEFEF33]">
+            <img
+              :src="quoteImageUrl(quote.thumbnail)"
+              alt=""
+              class="w-[30%] rounded-lg shrink-0"
+            />
+            <div class="flex flex-col w-full">
+              <div class="ml-auto relative">
+                <more-options-icon
+                  class="cursor-pointer"
+                  @click.stop=""
+                  @click="editToggled = quote.id"
+                />
+                <div
+                  v-if="editToggled === quote.id"
+                  @click.stop=""
+                  class="absolute bg-[#24222F] mt-2 w-[200px] rounded-lg items-start flex flex-col gap-8 p-10"
+                >
+                  <button class="flex items-center hover:scale-110">
+                    <eye-icon class="mr-4" />view quote
+                  </button>
+                  <button class="flex items-center hover:scale-110">
+                    <pencil-icon class="mr-4" />Edit
+                  </button>
+                  <button class="flex items-center hover:scale-110">
+                    <trash-can-icon class="mr-4" /> Delete
+                  </button>
+                </div>
+              </div>
+              <p class="italic text-2xl text-[#CED4DA] mt-auto mb-auto">
+                "{{ quote.quote }}"
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-6 mt-6 text-xl">
+            <div class="flex items-center">
+              <span class="mr-3">3</span>
+              <quote-comment-icon />
+            </div>
+            <div class="flex items-center">
+              <span class="mr-3">3</span>
+              <love-icon />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-start-6 col-end-10 flex flex-col">
       <div class="flex flex-col">
@@ -65,10 +116,13 @@ import TrashCanIcon from "@/components/icons/TrashCanIcon.vue";
 import PencilIcon from "@/components/icons/PencilIcon.vue";
 import EditMovieForm from "@/components/EditMovieForm.vue";
 import NewQuoteForm from "@/components/NewQuoteForm.vue";
-// import CommentIcon from "@/components/icons/CommentIcon.vue";
+import QuoteCommentIcon from "@/components/icons/QuoteCommentIcon.vue";
+import LoveIcon from "@/components/icons/LoveIcon.vue";
+import MoreOptionsIcon from "@/components/icons/MoreOptionsIcon.vue";
+import EyeIcon from "@/components/icons/EyeIcon.vue";
 // import AddMovieForm from "@/components/AddMovieForm.vue";
 import axios from "@/config/axios/index.js";
-import { ref, computed } from "vue";
+import { ref, computed, onUnmounted, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
 import { useMovieStore } from "@/stores/movie";
@@ -79,9 +133,18 @@ const newQuoteModal = ref(false);
 const movieId = route.params.movieId;
 const movie = ref({});
 const genres = ref([]);
+const quotes = ref([]);
+const editToggled = ref("");
 const editMovieModal = ref(false);
 const storedMovie = useMovieStore();
 const baseUrl = import.meta.env.VITE_BASE_URL;
+
+onMounted(() => {
+  window.onclick = editMenuOff;
+});
+onUnmounted(() => {
+  window.onclick = "";
+});
 async function fetchMovie() {
   axios
     .get(`movies/${movieId}`)
@@ -89,6 +152,7 @@ async function fetchMovie() {
       console.log(data);
       movie.value = data.movie;
       genres.value = data.movie.genres;
+      quotes.value = data.movie.quotes;
       storedMovie.movie = data.movie;
       storedMovie.genres = data.movie.genres;
       console.log(genres.value[0]);
@@ -108,10 +172,17 @@ const getImageUrl = computed(() => {
     return baseUrl + replaced;
   } else return "";
 });
+function quoteImageUrl(path) {
+  let replaced = path.replace("public", "storage");
+  return baseUrl + replaced;
+}
 function closeModals() {
   editMovieModal.value = false;
   newQuoteModal.value = false;
   fetchMovie();
+}
+function editMenuOff() {
+  editToggled.value = "";
 }
 function deleteMovie() {
   axios
