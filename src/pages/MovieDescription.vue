@@ -4,6 +4,12 @@
     :imgUrl="getImageUrl"
     @closeModals="closeModals"
   />
+  <edit-quote
+    v-if="editQuoteModal"
+    :quoteId="quoteId"
+    :quote="quoteObj"
+    @closeModals="closeModals"
+  />
   <edit-movie-form v-if="editMovieModal" @closeModals="closeModals" />
   <div class="col-start-4 col-end-13 grid auto-rows-min gap-[33px] grid-cols-9">
     <div class="col-span-9 font-medium text-2xl">Movie discription</div>
@@ -46,7 +52,10 @@
                   <button class="flex items-center hover:scale-110">
                     <eye-icon class="mr-4" />view quote
                   </button>
-                  <button class="flex items-center hover:scale-110">
+                  <button
+                    @click="editQuoteOpen(quote)"
+                    class="flex items-center hover:scale-110"
+                  >
                     <pencil-icon class="mr-4" />Edit
                   </button>
                   <button
@@ -125,7 +134,7 @@ import QuoteCommentIcon from "@/components/icons/QuoteCommentIcon.vue";
 import LoveIcon from "@/components/icons/LoveIcon.vue";
 import MoreOptionsIcon from "@/components/icons/MoreOptionsIcon.vue";
 import EyeIcon from "@/components/icons/EyeIcon.vue";
-// import AddMovieForm from "@/components/AddMovieForm.vue";
+import EditQuote from "@/components/EditQuote.vue";
 import axios from "@/config/axios/index.js";
 import { ref, computed, onUnmounted, onMounted } from "vue";
 import { useRoute } from "vue-router";
@@ -141,6 +150,9 @@ const genres = ref([]);
 const quotes = ref([]);
 const editToggled = ref("");
 const editMovieModal = ref(false);
+const editQuoteModal = ref(false);
+const quoteId = ref("");
+const quoteObj = ref({});
 const storedMovie = useMovieStore();
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -177,13 +189,19 @@ const getImageUrl = computed(() => {
     return baseUrl + replaced;
   } else return "";
 });
-function quoteImageUrl(path) {
-  let replaced = path.replace("public", "storage");
+function quoteImageUrl(thumbnail) {
+  let replaced = thumbnail.replace("public", "storage");
   return baseUrl + replaced;
+}
+function editQuoteOpen(quote) {
+  // quoteId.value = id;
+  quoteObj.value = quote;
+  editQuoteModal.value = true;
 }
 function closeModals() {
   editMovieModal.value = false;
   newQuoteModal.value = false;
+  editQuoteModal.value = false;
   fetchMovie();
 }
 function deleteQuote(quote) {
