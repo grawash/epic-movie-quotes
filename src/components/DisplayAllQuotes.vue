@@ -8,10 +8,10 @@
         <profile-picture />
         <p class="ml-4 text-xl">{{ user.name }}</p>
       </div>
-      <p class="font-medium text-xl">
-        "{{ quote.quote }}"
+      <div class="font-medium text-xl h-max overflow-hidden">
+        <p>"{{ quote.quote }}"</p>
         <span class="text-[#DDCCAA] ml-2">{{ quote.movie_title }}</span>
-      </p>
+      </div>
       <img
         :src="getImageUrl(quote.thumbnail)"
         class="w-full mt-7 mb-6 rounded-xl"

@@ -49,12 +49,17 @@
                   <button class="flex items-center hover:scale-110">
                     <pencil-icon class="mr-4" />Edit
                   </button>
-                  <button class="flex items-center hover:scale-110">
+                  <button
+                    @click="deleteQuote(quote.id)"
+                    class="flex items-center hover:scale-110"
+                  >
                     <trash-can-icon class="mr-4" /> Delete
                   </button>
                 </div>
               </div>
-              <p class="italic text-2xl text-[#CED4DA] mt-auto mb-auto">
+              <p
+                class="italic text-2xl text-[#CED4DA] mt-auto mb-auto break-words max-w-full overflow-hidden"
+              >
                 "{{ quote.quote }}"
               </p>
             </div>
@@ -181,13 +186,24 @@ function closeModals() {
   newQuoteModal.value = false;
   fetchMovie();
 }
+function deleteQuote(quote) {
+  axios
+    .delete(`quotes/${quote}`)
+    .then((response) => {
+      console.log(response);
+      fetchMovie();
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+}
 function editMenuOff() {
   editToggled.value = "";
 }
 function deleteMovie() {
   axios
     .delete(`movies/${movieId}`)
-    .then(({ response }) => {
+    .then((response) => {
       console.log(response);
       router.push({ name: "movies-list" });
     })

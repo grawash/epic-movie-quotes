@@ -56,7 +56,7 @@
         >
         </basic-text-area>
         <image-input name="thumbnail" rule="required" id="quote_image" />
-        <movie-dropdown @setMovieValue="appendMovie" />
+        <movie-dropdown v-if="!movieId" @setMovieValue="appendMovie" />
         <button class="text-white mt-6 bg-[#E31221] rounded w-full h-[38px]">
           Edit movie
         </button>
@@ -92,8 +92,10 @@ const chosenMovieId = ref(null);
 const chosenMovieTitle = ref(null);
 const movieId = ref("");
 movieId.value = route.params.movieId;
-console.log(movieId.value);
-
+if (movieId.value != "") {
+  chosenMovieId.value = storedMovie.movie.id;
+  chosenMovieTitle.value = storedMovie.movie.title;
+}
 function appendMovie(movie) {
   chosenMovieId.value = movie.id;
   chosenMovieTitle.value = movie.title;
