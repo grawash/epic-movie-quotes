@@ -6,7 +6,7 @@
     <div>
       <div class="flex items-center mb-4">
         <profile-picture />
-        <p class="ml-4 text-xl">{{ user.name }}</p>
+        <p class="ml-4 text-xl">{{ quote.user.name }}</p>
       </div>
       <div class="font-medium text-xl h-max overflow-hidden">
         <p>"{{ quote.quote }}"</p>
