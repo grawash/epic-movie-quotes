@@ -58,7 +58,7 @@
         <image-input name="thumbnail" rule="required" id="quote_image" />
         <movie-dropdown v-if="!movieId" @setMovieValue="appendMovie" />
         <button class="text-white mt-6 bg-[#E31221] rounded w-full h-[38px]">
-          Edit movie
+          Add quote
         </button>
       </Form>
     </div>

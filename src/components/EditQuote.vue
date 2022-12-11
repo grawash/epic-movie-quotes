@@ -45,7 +45,7 @@
           />
         </div>
         <button class="text-white mt-6 bg-[#E31221] rounded w-full h-[38px]">
-          Edit movie
+          Save changes
         </button>
       </Form>
     </div>
@@ -104,7 +104,7 @@ function onSubmit(values) {
   formData.append("_method", "PATCH");
 
   axios
-    .post(`quotes/${props.quote.movie_id}`, formData)
+    .post(`quotes/${props.quote.id}`, formData)
     .then((response) => {
       console.log(response);
       emit("closeModals");

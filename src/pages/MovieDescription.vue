@@ -10,6 +10,14 @@
     :quote="quoteObj"
     @closeModals="closeModals"
   />
+  <view-quote
+    v-if="viewQuoteModal"
+    :quoteId="quoteId"
+    :quote="quoteObj"
+    @editQuote="editQuoteOpen"
+    @deleteQuote="deleteQuote"
+    @closeModals="closeModals"
+  />
   <edit-movie-form v-if="editMovieModal" @closeModals="closeModals" />
   <div class="col-start-4 col-end-13 grid auto-rows-min gap-[33px] grid-cols-9">
     <div class="col-span-9 font-medium text-2xl">Movie discription</div>
@@ -49,7 +57,10 @@
                   @click.stop=""
                   class="absolute bg-[#24222F] mt-2 w-[200px] rounded-lg items-start flex flex-col gap-8 p-10"
                 >
-                  <button class="flex items-center hover:scale-110">
+                  <button
+                    @click="openViewModal(quote)"
+                    class="flex items-center hover:scale-110"
+                  >
                     <eye-icon class="mr-4" />view quote
                   </button>
                   <button
@@ -130,6 +141,7 @@ import TrashCanIcon from "@/components/icons/TrashCanIcon.vue";
 import PencilIcon from "@/components/icons/PencilIcon.vue";
 import EditMovieForm from "@/components/EditMovieForm.vue";
 import NewQuoteForm from "@/components/NewQuoteForm.vue";
+import ViewQuote from "@/components/ViewQuote.vue";
 import QuoteCommentIcon from "@/components/icons/QuoteCommentIcon.vue";
 import LoveIcon from "@/components/icons/LoveIcon.vue";
 import MoreOptionsIcon from "@/components/icons/MoreOptionsIcon.vue";
@@ -151,6 +163,7 @@ const quotes = ref([]);
 const editToggled = ref("");
 const editMovieModal = ref(false);
 const editQuoteModal = ref(false);
+const viewQuoteModal = ref(false);
 const quoteId = ref("");
 const quoteObj = ref({});
 const storedMovie = useMovieStore();
@@ -194,14 +207,19 @@ function quoteImageUrl(thumbnail) {
   return baseUrl + replaced;
 }
 function editQuoteOpen(quote) {
-  // quoteId.value = id;
+  closeModals();
   quoteObj.value = quote;
   editQuoteModal.value = true;
+}
+function openViewModal(quote) {
+  quoteObj.value = quote;
+  viewQuoteModal.value = true;
 }
 function closeModals() {
   editMovieModal.value = false;
   newQuoteModal.value = false;
   editQuoteModal.value = false;
+  viewQuoteModal.value = false;
   fetchMovie();
 }
 function deleteQuote(quote) {
