@@ -52,7 +52,7 @@ import LoopIcon from "@/components/icons/LoopIcon.vue";
 import CommentIcon from "@/components/icons/CommentIcon.vue";
 import AddMovieForm from "@/components/AddMovieForm.vue";
 import axios from "@/config/axios/index.js";
-import { ref, onUnmounted, computed, watch } from "vue";
+import { ref, onUnmounted, computed, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
 const user = useUserStore();
@@ -69,6 +69,9 @@ const storedMovie = useMovieStore();
 if (storedMovie.genres) {
   storedMovie.genres = [];
 }
+onUnmounted(() => {
+  window.onclick = removeSearch;
+});
 window.onclick = removeSearch;
 onUnmounted(() => {
   window.onclick = "";

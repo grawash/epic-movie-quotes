@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex relative border border-[#6C757D] items-center item h-[84px] rounded mt-2"
+    class="flex relative border border-[#6C757D] items-center item h-[84px] rounded mt-6"
   >
     <camera-icon class="ml-3" />
     <p class="ml-2 text-xl">Drag & drop your image here or</p>

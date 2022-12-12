@@ -43,7 +43,7 @@
           rule="required|min:2"
         >
         </basic-text-area>
-        <movie-image-input
+        <image-input
           name="movie_image"
           id="movie_image"
           :source="baseUrl + storedMovie.movie.thumbnail"
@@ -61,10 +61,9 @@ import { Form } from "vee-validate";
 import AddMovieInput from "@/components/inputs/AddMovieInput.vue";
 import BasicTextArea from "@/components/inputs/BasicTextArea.vue";
 import GenreInput from "@/components/inputs/GenreInput.vue";
-import MovieImageInput from "@/components/inputs/MovieImageInput.vue";
+import ImageInput from "@/components/inputs/ImageInput.vue";
 import { ref } from "vue";
 import axios from "@/config/axios/index.js";
-import { useUserStore } from "@/stores/user";
 import { useRoute } from "vue-router";
 import { useMovieStore } from "@/stores/movie";
 
@@ -73,7 +72,6 @@ console.log(storedMovie.movie);
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const route = useRoute();
 const movieId = route.params.movieId;
-const user = useUserStore();
 const storedGenres = ref("");
 const emit = defineEmits([
   "closeModals",

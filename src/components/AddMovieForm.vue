@@ -40,11 +40,7 @@
           rule="required|min:2"
         >
         </basic-text-area>
-        <movie-image-input
-          name="movie_image"
-          id="movie_image"
-          rule="required"
-        />
+        <image-input name="movie_image" id="movie_image" rule="required" />
         <button class="text-white mt-6 bg-[#E31221] rounded w-full h-[38px]">
           Add movie
         </button>
@@ -58,7 +54,7 @@ import { Form } from "vee-validate";
 import AddMovieInput from "@/components/inputs/AddMovieInput.vue";
 import BasicTextArea from "@/components/inputs/BasicTextArea.vue";
 import GenreInput from "@/components/inputs/GenreInput.vue";
-import MovieImageInput from "@/components/inputs/MovieImageInput.vue";
+import ImageInput from "@/components/inputs/ImageInput.vue";
 import { ref } from "vue";
 import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user";
