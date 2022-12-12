@@ -34,7 +34,6 @@ const comments = ref([]);
 axios
   .get(`comments/index`, { params: { quote_id: quoteId.value } })
   .then(({ data }) => {
-    console.log(data);
     comments.value = data;
   })
   .catch((error) => {

@@ -9,8 +9,11 @@
         <p class="ml-4 text-xl">{{ quote.user.name }}</p>
       </div>
       <div class="font-medium text-xl h-max overflow-hidden">
-        <p>"{{ quote.quote }}"</p>
-        <span class="text-[#DDCCAA] ml-2">{{ quote.movie_title }}</span>
+        <p>
+          "{{ quote.quote }}"<span class="text-[#DDCCAA] ml-2">{{
+            quote.movie.title
+          }}</span>
+        </p>
       </div>
       <img
         :src="getImageUrl(quote.thumbnail)"
@@ -60,7 +63,6 @@ function getImageUrl(quote) {
 axios
   .get(`quotes`)
   .then(({ data }) => {
-    console.log(data);
     quotes.value = data;
   })
   .catch((error) => {
