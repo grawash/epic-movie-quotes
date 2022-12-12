@@ -28,6 +28,9 @@
           <love-icon />
         </div>
       </div>
+      <div>
+        <display-all-comments :quoteId="quote.id" />
+      </div>
       <div class="flex items-center">
         <profile-picture />
         <create-comment-input :quoteId="quote.id" />
@@ -39,6 +42,7 @@
 import QuoteCommentIcon from "@/components/icons/QuoteCommentIcon.vue";
 import LoveIcon from "@/components/icons/LoveIcon.vue";
 import ProfilePicture from "@/components/ProfilePicture.vue";
+import DisplayAllComments from "@/components/DisplayAllComments.vue";
 import CreateCommentInput from "@/components/inputs/CreateCommentInput.vue";
 import axios from "@/config/axios/index.js";
 
