@@ -108,7 +108,6 @@ function onSubmit(values) {
     formData.append("thumbnail", values.file);
   }
   formData.append("movie_id", chosenMovieId.value);
-  formData.append("movie_title", chosenMovieTitle.value);
   formData.append("user_id", user.userId);
 
   axios

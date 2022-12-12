@@ -17,7 +17,7 @@
         class="w-full mt-7 mb-6 rounded-xl"
       />
       <div
-        class="flex items-center gap-6 pb-6 border-b border-[#EFEFEF4D] text-xl"
+        class="flex items-center gap-6 pb-6 mb-6 border-b border-[#EFEFEF4D] text-xl"
       >
         <div class="flex items-center">
           <span class="mr-3">3</span>
@@ -28,6 +28,10 @@
           <love-icon />
         </div>
       </div>
+      <div class="flex items-center">
+        <profile-picture />
+        <create-comment-input :quoteId="quote.id" />
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +39,9 @@
 import QuoteCommentIcon from "@/components/icons/QuoteCommentIcon.vue";
 import LoveIcon from "@/components/icons/LoveIcon.vue";
 import ProfilePicture from "@/components/ProfilePicture.vue";
+import CreateCommentInput from "@/components/inputs/CreateCommentInput.vue";
 import axios from "@/config/axios/index.js";
+
 import { ref } from "vue";
 import { useUserStore } from "@/stores/user";
 
@@ -46,6 +52,7 @@ function getImageUrl(quote) {
   let replaced = quote.replace("public", "storage");
   return baseUrl + replaced;
 }
+
 axios
   .get(`quotes`)
   .then(({ data }) => {
