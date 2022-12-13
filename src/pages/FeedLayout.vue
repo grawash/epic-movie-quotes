@@ -66,8 +66,9 @@ function profileNoticeUpdate(message) {
   profileUpdateNotification.value = true;
   profileNotificationMessage.value = message;
 }
+const user = useUserStore();
+// const user = computed(() => {
+//   return useUserStore();
+// });
 
-const user = computed(() => {
-  return useUserStore();
-});
 </script>

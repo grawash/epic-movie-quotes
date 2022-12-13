@@ -8,7 +8,7 @@ export const useUserStore = defineStore("user", () => {
   const email = ref("");
   const userId = ref(null);
   const google_authenticated = ref(false);
-  function fetchUser() {
+  async function fetchUser() {
     axios
       .get("user")
       .then(({ data }) => {

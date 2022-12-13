@@ -55,6 +55,10 @@ import AddQuoteIcon from "@/components/icons/AddQuoteIcon.vue";
 import DisplayAllQuotes from "@/components/DisplayAllQuotes.vue";
 import axios from "@/config/axios/index.js";
 import { ref, onUnmounted, onMounted } from "vue";
+import { useUserStore } from "@/stores/user";
+
+const user = useUserStore();
+
 const searchInput = ref(false);
 const seachbutton = ref(true);
 const searchLabel = ref(true);
