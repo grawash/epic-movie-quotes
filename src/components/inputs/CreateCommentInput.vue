@@ -20,17 +20,30 @@ const user = useUserStore();
 const comment = ref("");
 const props = defineProps({
   quoteId: Number,
+  quoteUser: Number,
 });
 function onSubmit(values) {
   const formData = new FormData();
   formData.append("quote_id", props.quoteId);
   formData.append("user_id", user.userId);
+  formData.append("sender_id", user.userId);
   formData.append("comment", values.comment);
+  formData.append("action", "comment");
+  formData.append("reciever_id", props.quoteUser);
+  formData.append("read_status", 1);
   axios
     .post(`comments/store`, formData)
     .then((response) => {
       console.log(response);
       comment.value = "";
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+  axios
+    .post(`notifications`, formData)
+    .then((response) => {
+      console.log(response);
     })
     .catch((error) => {
       console.log(error.response.data);

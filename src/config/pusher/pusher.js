@@ -1,4 +1,3 @@
-import axios from "@/config/axios/index.js";
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 Pusher.Runtime.createXHR = function () {
@@ -7,7 +6,7 @@ Pusher.Runtime.createXHR = function () {
   return xhr;
 };
 window.Pusher = Pusher;
-const EchoInstance = window.Echo = new Echo({
+const EchoInstance = (window.Echo = new Echo({
   broadcaster: "pusher",
   authEndpoint: import.meta.env.VITE_API_BASE_URL + "broadcasting/auth",
   key: import.meta.env.VITE_PUSHER_APP_KEY,
@@ -15,5 +14,5 @@ const EchoInstance = window.Echo = new Echo({
   withCredentials: true,
   forceTLS: true,
   enableTransports: ["ws", "wss"],
-});
+}));
 export default EchoInstance;

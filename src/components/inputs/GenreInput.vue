@@ -1,7 +1,7 @@
 <template>
   <div class="flex relative item flex-col pt-4">
     <div
-      class="flex border border-[#6C757D] items-center p-2 pl-2 pr-3 mt-2 h-[48px] rounded overflow-scroll"
+      class="flex border border-[#6C757D] items-center p-2 pl-2 pr-3 mt-2 h-[48px] rounded overflow-x-auto"
     >
       <div
         v-for="genre in genres"

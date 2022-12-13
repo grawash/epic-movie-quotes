@@ -58,7 +58,6 @@ import { ref, onUnmounted, onMounted } from "vue";
 import { useUserStore } from "@/stores/user";
 
 const user = useUserStore();
-
 const searchInput = ref(false);
 const seachbutton = ref(true);
 const searchLabel = ref(true);
@@ -82,6 +81,7 @@ function removeSearch() {
   if (searchValue.value === "") {
     searchInput.value = false;
   }
+  user.notificationWindow = false;
 }
 onUnmounted(() => {
   window.onclick = "";

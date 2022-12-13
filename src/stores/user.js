@@ -6,6 +6,8 @@ export const useUserStore = defineStore("user", () => {
   const name = ref("");
   const mailDomain = ref("");
   const email = ref("");
+  const notifications = ref([]);
+  const notificationWindow = ref(false);
   const userId = ref(null);
   const google_authenticated = ref(false);
   async function fetchUser() {
@@ -22,5 +24,14 @@ export const useUserStore = defineStore("user", () => {
       });
   }
 
-  return { name, userId, mailDomain, email, google_authenticated, fetchUser };
+  return {
+    name,
+    notifications,
+    notificationWindow,
+    userId,
+    mailDomain,
+    email,
+    google_authenticated,
+    fetchUser,
+  };
 });

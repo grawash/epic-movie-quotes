@@ -21,7 +21,7 @@
       </div>
       <div class="flex items-center">
         <profile-picture />
-        <create-comment-input :quoteId="quote.id" />
+        <create-comment-input :quoteId="quote.id" :quoteUser="quote.user_id" />
       </div>
     </div>
   </div>

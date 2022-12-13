@@ -85,6 +85,7 @@ function showMovieDescription(movieId) {
 }
 function removeSearch() {
   searchInput.value = false;
+  user.notificationWindow = false;
 }
 const filteredMovies = computed(() => {
   if (movieList.value.length != 0) {

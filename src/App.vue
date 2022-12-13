@@ -4,6 +4,7 @@ import { useUserStore } from "@/stores/user.js";
 import { useAuthStore } from "@/stores/auth";
 import { watch } from "vue";
 import EchoInstance from "@/config/pusher/pusher.js";
+import axios from "@/config/axios/index.js";
 
 const authStore = useAuthStore();
 const user = useUserStore();
@@ -16,7 +17,6 @@ watch(
   }
 );
 
-
 watch(
   () => user.userId,
   (value) => {
@@ -24,11 +24,29 @@ watch(
       EchoInstance.private(`NotifyUser.${user.userId}`).listen(
         "NotifyUser",
         (e) => {
-          console.log("here");
           console.log(e);
+          console.log("here");
+          axios
+            .get(`notifications`, { params: { user_id: user.userId } })
+            .then(({ data }) => {
+              user.notifications = data;
+              console.log(user.notifications);
+            })
+            .catch((error) => {
+              console.log(error.response.data);
+            });
         }
       );
     }
+    axios
+      .get(`notifications`, { params: { user_id: user.userId } })
+      .then(({ data }) => {
+        user.notifications = data;
+        console.log(user.notifications);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
   }
 );
 </script>
