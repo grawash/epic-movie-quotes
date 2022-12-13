@@ -26,11 +26,13 @@
 <script setup>
 import { ref } from "vue";
 
+const emit = defineEmits(["changeImage"]);
 const file = ref(null);
 let fileInput = ref(null);
 let reader = new FileReader();
 reader.onloadend = function () {
   file.value = reader.result;
+  emit("changeImage", reader.result);
 };
 function chooseImage() {
   fileInput.value.click();

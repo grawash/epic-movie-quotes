@@ -24,7 +24,7 @@
     <div class="col-start-1 col-end-6 flex flex-col">
       <img :src="getImageUrl" alt="" class="w-full h-auto rounded-2xl" />
       <div class="mt-12 flex items-center gap-4">
-        <p class="font-bold text-2xl">Quotes (Total 7)</p>
+        <p class="font-bold text-2xl">Quotes ({{ quotes.length }})</p>
         <div class="h-[80%] w-[1px] bg-[#6C757D]"></div>
         <button
           @click="newQuoteModal = true"

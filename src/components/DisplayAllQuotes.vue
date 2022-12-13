@@ -19,18 +19,6 @@
         :src="getImageUrl(quote.thumbnail)"
         class="w-full mt-7 mb-6 rounded-xl"
       />
-      <div
-        class="flex items-center gap-6 pb-6 mb-6 border-b border-[#EFEFEF4D] text-xl"
-      >
-        <div class="flex items-center">
-          <span class="mr-3">3</span>
-          <quote-comment-icon />
-        </div>
-        <div class="flex items-center">
-          <span class="mr-3">3</span>
-          <love-icon />
-        </div>
-      </div>
       <div>
         <display-all-comments :quoteId="quote.id" />
       </div>
@@ -64,6 +52,7 @@ axios
   .get(`quotes`)
   .then(({ data }) => {
     quotes.value = data;
+    console.log(data);
   })
   .catch((error) => {
     console.log(error.response.data);

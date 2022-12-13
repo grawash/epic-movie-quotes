@@ -2,7 +2,7 @@
   <div class="col-start-4 col-end-10 flex flex-col">
     <p class="font-medium text-2xl mb-[54px]">My profile</p>
     <div class="bg-[#11101A] h-min shrink flex flex-col relative">
-      <photo-input />
+      <photo-input @changeImage="changeImage" />
       <Form
         id="update"
         v-slot="{ values }"
