@@ -32,7 +32,7 @@ function onSubmit(values) {
   formData.append("reciever_id", props.quoteUser);
   formData.append("read_status", 1);
   axios
-    .post(`comments/store`, formData)
+    .post(`comments`, formData)
     .then((response) => {
       console.log(response);
       comment.value = "";

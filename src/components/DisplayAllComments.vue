@@ -41,7 +41,7 @@ const quoteId = ref(props.quoteId);
 const comments = ref([]);
 
 axios
-  .get(`comments/index`, { params: { quote_id: quoteId.value } })
+  .get(`comments`, { params: { quote_id: quoteId.value } })
   .then(({ data }) => {
     comments.value = data;
   })
