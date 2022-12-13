@@ -39,7 +39,7 @@
           <span class="ml-auto text-xl text-[#6C757D]">ENG</span>
         </div>
         <img
-          :src="getImageUrl(quote.thumbnail)"
+          :src="quote.thumbnail"
           class="max-h-[35%] ml-auto mr-auto mt-7 mb-6 rounded-xl"
         />
         <div
@@ -72,10 +72,5 @@ import { useUserStore } from "@/stores/user";
 const props = defineProps({
   quote: Object,
 });
-const baseUrl = import.meta.env.VITE_BASE_URL;
 const user = useUserStore();
-function getImageUrl(quote) {
-  let replaced = quote.replace("public", "storage");
-  return baseUrl + replaced;
-}
 </script>

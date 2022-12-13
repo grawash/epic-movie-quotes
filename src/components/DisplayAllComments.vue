@@ -33,18 +33,12 @@ import { defineProps } from "vue";
 import { ref } from "vue";
 import QuoteCommentIcon from "@/components/icons/QuoteCommentIcon.vue";
 import LoveIcon from "@/components/icons/LoveIcon.vue";
-// import { useUserStore } from "@/stores/user";
 
 const props = defineProps({
   quoteId: Number,
 });
-const emit = defineEmits(["commentlength"]);
 const quoteId = ref(props.quoteId);
 const comments = ref([]);
-// const baseUrl = import.meta.env.VITE_BASE_URL;
-// function getImageUrl(quote) {
-//   let replaced = quote.replace("public", "storage");
-//   return baseUrl + replaced;
 
 axios
   .get(`comments/index`, { params: { quote_id: quoteId.value } })

@@ -15,10 +15,7 @@
           }}</span>
         </p>
       </div>
-      <img
-        :src="getImageUrl(quote.thumbnail)"
-        class="w-full mt-7 mb-6 rounded-xl"
-      />
+      <img :src="quote.thumbnail" class="w-full mt-7 mb-6 rounded-xl" />
       <div>
         <display-all-comments :quoteId="quote.id" />
       </div>
@@ -30,8 +27,6 @@
   </div>
 </template>
 <script setup>
-import QuoteCommentIcon from "@/components/icons/QuoteCommentIcon.vue";
-import LoveIcon from "@/components/icons/LoveIcon.vue";
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import DisplayAllComments from "@/components/DisplayAllComments.vue";
 import CreateCommentInput from "@/components/inputs/CreateCommentInput.vue";
@@ -40,19 +35,13 @@ import axios from "@/config/axios/index.js";
 import { ref } from "vue";
 import { useUserStore } from "@/stores/user";
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
 const user = useUserStore();
 const quotes = ref([]);
-function getImageUrl(quote) {
-  let replaced = quote.replace("public", "storage");
-  return baseUrl + replaced;
-}
 
 axios
   .get(`quotes`)
   .then(({ data }) => {
     quotes.value = data;
-    console.log(data);
   })
   .catch((error) => {
     console.log(error.response.data);

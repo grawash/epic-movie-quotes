@@ -68,7 +68,6 @@ const route = useRoute();
 const storedMovie = useMovieStore();
 
 const user = useUserStore();
-// const storedGenres = ref("");
 const emit = defineEmits([
   "closeModals",
   "toggleSignUp",
@@ -80,7 +79,6 @@ const props = defineProps({
 const chosenMovieId = ref(null);
 const chosenMovieTitle = ref(null);
 const movieId = ref("");
-const baseUrl = import.meta.env.VITE_BASE_URL;
 
 movieId.value = route.params.movieId;
 if (movieId.value != "") {
@@ -89,8 +87,7 @@ if (movieId.value != "") {
 }
 const getImageUrl = computed(() => {
   if (props.quote.thumbnail) {
-    let replaced = props.quote.thumbnail.replace("public", "storage");
-    return baseUrl + replaced;
+    return props.quote.thumbnail;
   } else return "";
 });
 function onSubmit(values) {

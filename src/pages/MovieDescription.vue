@@ -1,7 +1,7 @@
 <template>
   <new-quote-form
     v-if="newQuoteModal"
-    :imgUrl="getImageUrl"
+    :imgUrl="movie.thumbnail"
     @closeModals="closeModals"
   />
   <edit-quote
@@ -22,7 +22,7 @@
   <div class="col-start-4 col-end-13 grid auto-rows-min gap-[33px] grid-cols-9">
     <div class="col-span-9 font-medium text-2xl">Movie discription</div>
     <div class="col-start-1 col-end-6 flex flex-col">
-      <img :src="getImageUrl" alt="" class="w-full h-auto rounded-2xl" />
+      <img :src="movie.thumbnail" alt="" class="w-full h-auto rounded-2xl" />
       <div class="mt-12 flex items-center gap-4">
         <p class="font-bold text-2xl">Quotes ({{ quotes.length }})</p>
         <div class="h-[80%] w-[1px] bg-[#6C757D]"></div>
@@ -41,7 +41,7 @@
         >
           <div class="flex gap-8 pb-6 border-b border-[#EFEFEF33]">
             <img
-              :src="quoteImageUrl(quote.thumbnail)"
+              :src="quote.thumbnail"
               alt=""
               class="w-[30%] rounded-lg shrink-0"
             />
@@ -167,7 +167,6 @@ const viewQuoteModal = ref(false);
 const quoteId = ref("");
 const quoteObj = ref({});
 const storedMovie = useMovieStore();
-const baseUrl = import.meta.env.VITE_BASE_URL;
 
 onMounted(() => {
   window.onclick = editMenuOff;
@@ -196,16 +195,6 @@ async function fetchMovie() {
     });
 }
 fetchMovie();
-const getImageUrl = computed(() => {
-  if (movie.value.thumbnail) {
-    let replaced = movie.value.thumbnail.replace("public", "storage");
-    return baseUrl + replaced;
-  } else return "";
-});
-function quoteImageUrl(thumbnail) {
-  let replaced = thumbnail.replace("public", "storage");
-  return baseUrl + replaced;
-}
 function editQuoteOpen(quote) {
   closeModals();
   quoteObj.value = quote;

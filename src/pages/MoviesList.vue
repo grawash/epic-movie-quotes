@@ -38,7 +38,7 @@
         <div
           class="backdrop-blur-3xl bg-neutral-700 bg-opacity-20 max-h-[350px] flex grow justify-center items-center rounded-lg"
         >
-          <img :src="getImageUrl(movie.thumbnail)" alt="" />
+          <img :src="movie.thumbnail" alt="" />
         </div>
         <p class="mt-[10px] font-medium text-2xl">{{ movie.title }}</p>
         <comment-icon class="mt-5" />
@@ -62,7 +62,6 @@ const movieList = ref([]);
 const addMovieModal = ref(false);
 const searchInput = ref(false);
 const searchValue = ref("");
-const baseUrl = import.meta.env.VITE_BASE_URL;
 
 import { useMovieStore } from "@/stores/movie";
 const storedMovie = useMovieStore();
@@ -76,10 +75,7 @@ window.onclick = removeSearch;
 onUnmounted(() => {
   window.onclick = "";
 });
-function getImageUrl(movie) {
-  let replaced = movie.replace("public", "storage");
-  return baseUrl + replaced;
-}
+
 function closeModals() {
   fetchMovies();
   addMovieModal.value = false;

@@ -15,24 +15,5 @@ const EchoInstance = window.Echo = new Echo({
   withCredentials: true,
   forceTLS: true,
   enableTransports: ["ws", "wss"],
-  // transports: ["websocket", "polling", "flashsocket"],
-  // authorizer: (channel, options) => {
-  //   return {
-  //     authorize: (socketId, callback) => {
-  //       axios
-  //         .post("http://127.0.0.1:8000/api/broadcasting/auth", {
-  //           socket_id: socketId,
-  //           channel_name: channel.name,
-  //         })
-  //         .then((response) => {
-  //           callback(null, response.data);
-  //           console.log("it worked");
-  //         })
-  //         .catch((error) => {
-  //           callback(error);
-  //         });
-  //     },
-  //   };
-  // },
 });
 export default EchoInstance;
