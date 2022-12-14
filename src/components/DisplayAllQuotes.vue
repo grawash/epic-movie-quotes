@@ -1,6 +1,6 @@
 <template>
   <div
-    v-for="quote in quotes"
+    v-for="quote in filteredQuotes"
     class="flex flex-col rounded-xl bg-black p-6 mb-10"
   >
     <div>
@@ -32,15 +32,37 @@ import DisplayAllComments from "@/components/DisplayAllComments.vue";
 import CreateCommentInput from "@/components/inputs/CreateCommentInput.vue";
 import axios from "@/config/axios/index.js";
 
-import { ref } from "vue";
+import { ref, computed, defineProps } from "vue";
 import { useUserStore } from "@/stores/user";
-
+const props = defineProps({
+  searchValue: String,
+});
 const user = useUserStore();
 const quotes = ref([]);
+
+const filteredQuotes = computed(() => {
+  console.log(props.searchValue[0]);
+  if (quotes.value.length != 0 && props.searchValue[0] === "@") {
+    let filtered = quotes.value.filter((quote) =>
+      quote.movie.title
+        .toLowerCase()
+        .includes(props.searchValue.substring(1).toLowerCase())
+    );
+    return filtered;
+  } else if (quotes.value.length != 0 && props.searchValue[0] === "#") {
+    let filtered = quotes.value.filter((quote) =>
+      quote.quote
+        .toLowerCase()
+        .includes(props.searchValue.substring(1).toLowerCase())
+    );
+    return filtered;
+  } else return quotes.value;
+});
 
 axios
   .get(`quotes`)
   .then(({ data }) => {
+    console.log("quotes:", data);
     quotes.value = data;
   })
   .catch((error) => {

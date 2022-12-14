@@ -44,7 +44,7 @@
       </transition>
     </div>
     <div class="flex flex-col mt-4">
-      <display-all-quotes />
+      <display-all-quotes :searchValue="searchValue" />
     </div>
   </div>
 </template>
