@@ -17,7 +17,7 @@
       </div>
       <img :src="quote.thumbnail" class="w-full mt-7 mb-6 rounded-xl" />
       <div>
-        <display-all-comments :quoteId="quote.id" />
+        <display-all-comments :quoteId="quote.id" :quoteUser="quote.user_id" />
       </div>
       <div class="flex items-center">
         <profile-picture />

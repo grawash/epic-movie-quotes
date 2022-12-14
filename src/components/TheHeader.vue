@@ -5,16 +5,16 @@
   >
     <p class="text-[#DDCCAA] font-medium text-base uppercase">Movie quotes</p>
     <div class="ml-auto flex items-center">
-      <div class="relative">
+      <div v-if="props.page !== 'landing'" class="relative">
         <bell-icon
           @click.stop=""
           @click="user.notificationWindow = true"
           class="cursor-pointer"
         />
         <span
-          v-if="filteredMovies.length > 0"
+          v-if="filteredNotifications.length > 0"
           class="rounded-full absolute -top-2 left-3 text-center text-white h-6 w-6 bg-[#E33812]"
-          >3</span
+          >{{ filteredNotifications.length }}</span
         >
         <div
           @click.stop=""
@@ -73,10 +73,9 @@ const router = useRouter();
 //   window.onclick = "";
 // });
 function closeNotifications() {
-  console.log("yep");
   notificationWindow.value = false;
 }
-const filteredMovies = computed(() => {
+const filteredNotifications = computed(() => {
   if (user.notifications != 0) {
     let unread = user.notifications.filter((notif) => notif.read_status === 1);
     console.log(unread);

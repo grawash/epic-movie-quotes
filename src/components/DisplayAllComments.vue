@@ -8,8 +8,12 @@
         <quote-comment-icon />
       </div>
       <div class="flex items-center">
-        <span class="mr-3">3</span>
-        <love-icon />
+        <span class="mr-3">{{ likes.length }}</span>
+        <love-icon
+          @click="toggleLike"
+          :fill="likeColor"
+          class="cursor-pointer"
+        />
       </div>
     </div>
     <div v-for="comment in comments" class="mb-6 text-xl flex flex-col">
@@ -29,16 +33,21 @@
 <script setup>
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import axios from "@/config/axios/index.js";
-import { defineProps } from "vue";
+import { defineProps, withDirectives } from "vue";
 import { ref } from "vue";
 import QuoteCommentIcon from "@/components/icons/QuoteCommentIcon.vue";
 import LoveIcon from "@/components/icons/LoveIcon.vue";
+import { useUserStore } from "@/stores/user";
 
 const props = defineProps({
   quoteId: Number,
+  quoteUser: Number,
 });
+const user = useUserStore();
 const quoteId = ref(props.quoteId);
 const comments = ref([]);
+const likes = ref([]);
+const likeStatus = ref(false);
 
 axios
   .get(`comments`, { params: { quote_id: quoteId.value } })
@@ -48,4 +57,79 @@ axios
   .catch((error) => {
     console.log(error.response.data);
   });
+axios
+  .post(`likes/chekQuoteLikeStatus`, {
+    quote_id: quoteId.value,
+    sender_id: user.userId,
+  })
+  .then(({ data }) => {
+    console.log(data.length);
+    if (data.length === 0) {
+      likeStatus.value = true;
+    } else {
+      likeStatus.value = false;
+    }
+  })
+  .catch((error) => {
+    console.log(error.response.data);
+  });
+function fetchLikes() {
+  axios
+    .get(`likes`, { params: { quote_id: quoteId.value } })
+    .then(({ data }) => {
+      likes.value = data;
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+}
+fetchLikes();
+function toggleLike() {
+  if (likeStatus.value === true) {
+    likeStatus.value = false;
+    axios
+      .post(`likes`, {
+        quote_id: quoteId.value,
+        user_id: user.userId,
+      })
+      .then(({ data }) => {
+        likes.value = data;
+        fetchLikes();
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+    axios
+      .post(`notifications`, {
+        quote_id: quoteId.value,
+        sender_id: user.userId,
+        reciever_id: props.quoteUser,
+        action: "like",
+        read_status: 1,
+      })
+      .then(({ data }) => {
+        likes.value = data;
+        fetchLikes();
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  } else {
+    likeStatus.value = true;
+    axios
+      .delete(`likes`, {
+        params: {
+          quote_id: quoteId.value,
+          sender_id: user.userId,
+        },
+      })
+      .then(({ data }) => {
+        likes.value = data;
+        fetchLikes();
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  }
+}
 </script>
