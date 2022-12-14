@@ -9,45 +9,45 @@
       @submit="onSubmit"
     >
       <p class="font-medium text-[32px] text-white text-center">
-        Create an account
+        {{ $t("authorization.register_header") }}
       </p>
       <p class="font-normal text-base text-[#6C757D] text-center pb-6">
-        Start your journey!
+        {{ $t("authorization.registration_welcome") }}
       </p>
       <basic-input
         name="name"
         type="text"
         id="name"
         rule="required|min:2"
-        placeholder="At least 3 & max.15 lower case characters"
-        label="Name"
+        :placeholder="$t('authorization.name.placeholder')"
+        :label="$t('authorization.name.label')"
       ></basic-input>
       <basic-input
         name="email"
         type="email"
         id="email"
         rule="required|min:2"
-        placeholder="Enter your email"
-        label="Email"
+        :placeholder="$t('authorization.email.placeholder')"
+        :label="$t('authorization.email.label')"
       ></basic-input>
       <basic-input
         name="password"
         type="password"
         id="password"
         rule="required|min:2"
-        placeholder="At least 8 & max.15 lower case characters"
-        label="Password"
+        :placeholder="$t('authorization.register_password.placeholder')"
+        :label="$t('authorization.register_password.label')"
       ></basic-input>
       <basic-input
         name="password_confirmation"
         type="password"
         id="password_confirmation"
         rule="required|min:2"
-        placeholder="Confirm password"
-        label="Confirm password"
+        :placeholder="$t('authorization.confirm_password.placeholder')"
+        :label="$t('authorization.confirm_password.label')"
       ></basic-input>
       <button class="text-white mt-6 bg-[#E31221] rounded w-[360px] h-[38px]">
-        Get started
+        {{ $t("authorization.register_button") }}
       </button>
       <button
         type="button"
@@ -59,16 +59,17 @@
           alt="google icon"
           class="inline h-5 w-auto"
         />
-        Sign up with Google
+        {{ $t("authorization.google_signup") }}
       </button>
       <p class="pt-8 text-white text-center">
-        Already have an account?
+        {{ $t("authorization.already_registered") }}
         <a
           href="#"
           class="text-blue-600 underline"
           @click="$emit('toggleLogIn')"
-          >Log in</a
         >
+          {{ $t("authorization.login") }}
+        </a>
       </p>
     </Form>
   </div>
@@ -91,7 +92,7 @@ function onSubmit(values) {
     })
     .then((response) => {
       console.log(response);
-      const getDomain = values.email.substring(values.email.indexOf('@') + 1);
+      const getDomain = values.email.substring(values.email.indexOf("@") + 1);
       user.mailDomain = getDomain;
       emit("closeModals");
       emit("verifyNoticeModalOn");

@@ -9,39 +9,43 @@
       @submit="onSubmit"
     >
       <p class="font-medium text-[32px] text-white text-center pb-3">
-        Log in to your account
+        {{ $t("authorization.login_header") }}
       </p>
       <p class="font-normal text-base text-[#6C757D] text-center pb-6">
-        Welcome back! Please enter your details.
+        {{ $t("authorization.login_welcome") }}
       </p>
       <basic-input
         name="email"
         type="email"
         id="email"
         rule="required|min:2"
-        placeholder="Enter your email"
-        label="Email"
+        :placeholder="$t('authorization.email.placeholder')"
+        :label="$t('authorization.email.label')"
       ></basic-input>
       <basic-input
         name="password"
         type="password"
         id="password"
         rule="required|min:2"
-        placeholder="Password"
-        label="Password"
+        :placeholder="$t('authorization.password.placeholder')"
+        :label="$t('authorization.password.label')"
       ></basic-input>
       <div class="mt-4 flex">
-        <check-box name="remember" id="remember" label="Rememer me" />
+        <check-box
+          name="remember"
+          id="remember"
+          :label="$t('authorization.remember')"
+        />
         <button
           type="button"
           class="underline font-normal text-base text-[#0D6EFD] ml-auto"
           @click="$emit('toggleForgotPassword')"
         >
-          Forgot password
+          {{ $t("authorization.forgot_password") }}
         </button>
       </div>
       <button class="text-white mt-6 bg-[#E31221] rounded w-[360px] h-[38px]">
-        Sign in
+        {{ $t("authorization.signin") }}
       </button>
       <button
         type="button"
@@ -53,15 +57,17 @@
           alt="google icon"
           class="inline h-5 w-auto"
         />
-        Sign up with Google
+        {{ $t("authorization.google_sign") }}
       </button>
       <p class="pt-8 text-white text-center">
-        Don't have an account yet?
+        {{ $t("authorization.no_account") }}
+
         <a
           href="#"
           class="text-blue-600 underline"
           @click="$emit('toggleSignUp')"
-          >Sign up</a
+        >
+          {{ $t("authorization.signup") }}</a
         >
       </p>
     </Form>

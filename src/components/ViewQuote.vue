@@ -16,7 +16,7 @@
           </button>
         </div>
         <p class="justify-center grow basis-0 font-medium text-2xl">
-          View quote
+          {{ $t("movieDescription.view_quote") }}
         </p>
         <div class="grow basis-0">
           <cross-icon

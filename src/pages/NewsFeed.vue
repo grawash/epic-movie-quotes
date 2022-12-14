@@ -7,14 +7,14 @@
         class="flex bg-[#24222F] mr-6 rounded-lg p-3 pl-4 items-center grow"
       >
         <add-quote-icon class="mr-4" />
-        <p class="font-normal text-xl">Write new quote</p>
+        <p class="font-normal text-xl">{{ $t("newsFeed.new_quote") }}</p>
       </button>
       <div class="ml-auto" v-if="seachbutton" @click.stop="">
         <button
           @click="addSearch"
           class="flex items-center font-normal text-xl"
         >
-          <loop-icon class="mr-4 scale-90" />Search by
+          <loop-icon class="mr-4 scale-90" />{{ $t("newsFeed.new_quote") }}
         </button>
       </div>
       <transition name="bounce" @after-leave="onAfterLeave">

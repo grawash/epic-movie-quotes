@@ -24,29 +24,45 @@
           <display-all-notifications class="" />
         </div>
       </div>
-      <button class="text-white ml-4 p-2 pl-6 pr-6">
-        Eng <button-arrow class="inline ml-[10px]" />
-      </button>
+      <!-- <button class="text-white ml-4 p-2 pl-6 pr-6">
+        {{ $t("header.language.en") }}
+        <button-arrow class="inline ml-[10px]" />
+      </button> -->
+      <div class="bg-transparent ml-4 p-2 pl-6 pr-6">
+        <select
+          v-model="$i18n.locale"
+          class="bg-transparent text-xl text-white"
+          @change="changeLocale($i18n.locale)"
+        >
+          <option
+            v-for="locale in $i18n.availableLocales"
+            :key="`locale-${locale}`"
+            :value="locale"
+          >
+            {{ locale }}
+          </option>
+        </select>
+      </div>
       <button
         v-if="props.page === 'landing'"
         @click="$emit('toggleSignUp')"
         class="text-white ml-4 p-2 pl-6 pr-6 bg-[#E31221] rounded-lg"
       >
-        Sign Up
+        {{ $t("header.signup") }}
       </button>
       <button
         v-if="props.page === 'landing'"
         @click="$emit('toggleLogIn')"
         class="text-white ml-4 p-2 pl-6 pr-6 border rounded-lg"
       >
-        Log In
+        {{ $t("header.login") }}
       </button>
       <button
         v-if="props.page === 'newsFeed'"
         @click="logOut"
         class="text-white ml-4 p-2 pl-6 pr-6 border rounded-lg"
       >
-        Log Out
+        {{ $t("header.logout") }}
       </button>
     </div>
   </div>
@@ -58,22 +74,20 @@ import { useRouter } from "vue-router";
 import axios from "@/config/axios/index.js";
 import { useAuthStore } from "@/stores/auth";
 import { useUserStore } from "@/stores/user";
+import { useLocaleStore } from "@/stores/locale";
 import { computed, ref } from "vue";
 import BellIcon from "@/components/icons/BellIcon.vue";
 import DisplayAllNotifications from "@/components/DisplayAllNotifications.vue";
 
 const authStore = useAuthStore();
 const user = useUserStore();
+const locale = useLocaleStore();
 const notificationWindow = ref(false);
 const router = useRouter();
-// onMounted(() => {
-//   window.onclick = closeNotifications;
-// });
-// onUnmounted(() => {
-//   window.onclick = "";
-// });
-function closeNotifications() {
-  notificationWindow.value = false;
+
+function changeLocale(val) {
+  locale.locale=val;
+  console.log(locale.locale);
 }
 const filteredNotifications = computed(() => {
   if (user.notifications != 0) {

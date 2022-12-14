@@ -1,0 +1,12 @@
+{
+  "verification": {
+    "header": "Thank you",
+    "message": "Please check your email and follow the instructions to activate your account.",
+    "button": "Go to my email"
+  },
+  "activated": {
+    "header": "Thank you",
+    "message": "Your account has been activated.",
+    "button": "Go to my news feed"
+  }
+}

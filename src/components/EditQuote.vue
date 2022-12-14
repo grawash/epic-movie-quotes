@@ -11,10 +11,12 @@
         <div class="grow basis-0 ml-10 mr-auto text-base">
           <button @click="deleteQuote(quote.id)" class="flex items-center">
             <trash-can-icon class="mr-2" />
-            <p class="text-[#CED4DA]">Delete</p>
+            <p class="text-[#CED4DA]">{{ $t("movieDescription.delete") }}</p>
           </button>
         </div>
-        <p class="justify-center grow basis-0">Edit quote</p>
+        <p class="justify-center grow basis-0">
+          {{ $t("movieDescription.edit_quote") }}
+        </p>
         <div class="grow basis-0 mr-10">
           <cross-icon
             fill="white"
@@ -45,7 +47,7 @@
           />
         </div>
         <button class="text-white mt-6 bg-[#E31221] rounded w-full h-[38px]">
-          Save changes
+          {{ $t("movieDescription.save_changes") }}
         </button>
       </Form>
     </div>

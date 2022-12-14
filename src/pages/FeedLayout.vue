@@ -6,7 +6,7 @@
   >
     <div class="flex items-center h-6 m-4 mb-[19px] gap-2">
       <check-mark-icon class="grow-0 scale-125" />
-      <p class="text-[#0F5132] grow">A simple alert—check it out!</p>
+      <p class="text-[#0F5132] grow">{{ $t("newsFeed.profile_updated") }}</p>
       <cross-icon
         class="grow-0 hover:cursor-pointer"
         @click="profileUpdateNotification = false"
@@ -27,21 +27,22 @@
           <router-link
             :to="{ name: 'profile' }"
             class="text-[#CED4DA] text-base font-normal"
-            >Edit your profile</router-link
           >
+            {{ $t("newsFeed.edit_profile") }}
+          </router-link>
         </div>
       </div>
       <div class="flex gap-6 pt-10 items-center">
         <home-icon class="basis-0 grow" />
-        <router-link :to="{ name: 'news-feed' }" class="basis-0 grow-[3]"
-          >News feed</router-link
-        >
+        <router-link :to="{ name: 'news-feed' }" class="basis-0 grow-[3]">
+          {{ $t("newsFeed.news_feed") }}
+        </router-link>
       </div>
       <div class="flex gap-6 pt-10 items-center">
         <movies-icon class="basis-0 grow" />
-        <router-link :to="{ name: 'movies-list' }" class="basis-0 grow-[3]"
-          >List of movies</router-link
-        >
+        <router-link :to="{ name: 'movies-list' }" class="basis-0 grow-[3]">
+          {{ $t("newsFeed.movie_list") }}
+        </router-link>
       </div>
     </div>
     <RouterView @profileNotice="(message) => profileNoticeUpdate(message)" />
@@ -70,5 +71,4 @@ const user = useUserStore();
 // const user = computed(() => {
 //   return useUserStore();
 // });
-
 </script>

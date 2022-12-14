@@ -3,7 +3,7 @@
     <Field
       type="text"
       name="comment"
-      placeholder="Write a comment"
+      :placeholder="$t('newsFeed.comment')"
       v-model="comment"
       rules="required"
       class="rounded bg-[#24222F] outline-none w-full p-3 pl-7 pr-7 text-xl placeholder-white"

@@ -1,9 +1,11 @@
 <template>
   <div class="text-white flex flex flex-col max-h-[600px]">
     <div class="flex items-center mb-6">
-      <p class="text-3xl font-medium mr-auto">Notifications</p>
+      <p class="text-3xl font-medium mr-auto">
+        {{ $t("notifications.notifications") }}
+      </p>
       <button class="text-xl underline ml-auto" @click="markNotificationsRead">
-        Mark as all read
+        {{ $t("notifications.mark_read") }}
       </button>
     </div>
     <div v-if="user.notifications" class="overflow-scroll flex flex-col gap-4">
@@ -20,21 +22,21 @@
           <p>{{ notification.sender.name }}</p>
           <div class="flex items-center w-full">
             <p v-if="notification.action === 'comment'">
-              Commented to your movie quote
+              {{ $t("notifications.comment_notification") }}
             </p>
-            <p v-else>Liked your movie quote</p>
+            <p v-else>{{ $t("notifications.react_notification") }}</p>
             <p
               v-if="notification.read_status === 1"
               class="text-[#198754] ml-auto"
             >
-              New
+              {{ $t("notifications.new") }}
             </p>
           </div>
         </div>
       </div>
     </div>
     <p v-else class="text-center text-neutral-400">
-      you don't have new notifications
+      {{ $t("notifications.no_notifications") }}
     </p>
   </div>
 </template>

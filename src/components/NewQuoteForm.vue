@@ -9,7 +9,9 @@
         class="font-medium text-[32px] flex items-center text-white text-center pb-6"
       >
         <div class="grow"></div>
-        <p class="justify-center ml-10">write new quote</p>
+        <p class="justify-center ml-10">
+          {{ $t("newsFeed.new_quote_header") }}
+        </p>
         <div class="grow">
           <cross-icon
             fill="white"
@@ -24,7 +26,7 @@
           <profile-picture />
           <p class="ml-4 text-xl">{{ user.name }}</p>
         </div>
-        <div v-if="movieId" class="flex items-center">
+        <div v-if="movieId !== undefined" class="flex items-center">
           <img :src="imgUrl" alt="" class="max-w-[30%] rounded-xl" />
           <div class="flex flex-col gap-5 ml-8 text-white">
             <p class="grow font-bold text-2xl text-[#DDCCAA]">
@@ -41,7 +43,7 @@
               </div>
             </div>
             <p class="text-[#CED4DA] font-bold text-lg">
-              Director:
+              {{ $t("newsFeed.director") }}:
               <span class="text-white font-medium ml-2">{{
                 storedMovie.movie.director
               }}</span>
@@ -58,7 +60,7 @@
         <image-input name="thumbnail" rule="required" id="quote_image" />
         <movie-dropdown v-if="!movieId" @setMovieValue="appendMovie" />
         <button class="text-white mt-6 bg-[#E31221] rounded w-full h-[38px]">
-          Add quote
+          {{ $t("newsFeed.post") }}
         </button>
       </Form>
     </div>
@@ -92,7 +94,7 @@ const chosenMovieId = ref(null);
 const chosenMovieTitle = ref(null);
 const movieId = ref("");
 movieId.value = route.params.movieId;
-if (movieId.value != "") {
+if (movieId.value !== undefined) {
   chosenMovieId.value = storedMovie.movie.id;
   chosenMovieTitle.value = storedMovie.movie.title;
 }

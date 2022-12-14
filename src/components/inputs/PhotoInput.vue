@@ -11,7 +11,7 @@
       class="absolute -bottom-10 w-full text-center font-normal text-base hover:cursor-pointer"
       @click="chooseImage"
     >
-      Upload new photo
+      {{ $t("profilePage.upload_picture") }}
     </p>
     <input
       type="file"

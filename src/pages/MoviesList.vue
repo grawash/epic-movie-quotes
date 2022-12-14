@@ -4,7 +4,7 @@
   <div class="col-start-4 col-end-13 flex flex-col gap-14">
     <div class="flex items-center">
       <p class="font-medium text-2xl">
-        My list of movies ({{ movieList.length }})
+        {{ $t("movieList.my_list") }} ({{ movieList.length }})
       </p>
       <div class="ml-auto flex" @click.stop="">
         <button
@@ -12,7 +12,7 @@
           @click="searchInput = true"
         >
           <loop-icon class="mr-2" />
-          Search
+          {{ $t("movieList.search") }}
         </button>
         <input
           v-if="searchInput"
@@ -25,7 +25,7 @@
           class="rounded-lg font-normal text-xl p-[9px] pl-4 pr-4 bg-[#E31221] flex items-center"
         >
           <add-mail-icon class="mr-2 scale-125" />
-          Add movie
+          {{ $t("movieList.add_movie") }}
         </button>
       </div>
     </div>
@@ -40,7 +40,7 @@
         >
           <img :src="movie.thumbnail" alt="" />
         </div>
-        <p class="mt-[10px] font-medium text-2xl">{{ movie.title }}</p>
+        <p class="mt-[10px] font-medium text-2xl">{{ movie.title.en }}</p>
         <comment-icon class="mt-5" />
       </div>
     </div>
@@ -68,10 +68,9 @@ const storedMovie = useMovieStore();
 if (storedMovie.genres) {
   storedMovie.genres = [];
 }
-onUnmounted(() => {
+onMounted(() => {
   window.onclick = removeSearch;
 });
-window.onclick = removeSearch;
 onUnmounted(() => {
   window.onclick = "";
 });
@@ -90,7 +89,7 @@ function removeSearch() {
 const filteredMovies = computed(() => {
   if (movieList.value.length != 0) {
     let filtered = movieList.value.filter((movie) =>
-      movie.title.toLowerCase().includes(searchValue.value.toLowerCase())
+      movie.title.en.toLowerCase().includes(searchValue.value.toLowerCase())
     );
     return filtered;
   } else return movieList.value;

@@ -2,7 +2,7 @@
   <div
     class="p-6 border border-[#CED4DA] rounded-lg border-opacity-50 mt-9 max-w-[528px]"
   >
-    <p>Passwords should contain:</p>
+    <p>{{ $t("profilePage.should_contain") }}</p>
     <ul>
       <li class="flex items-center pt-4">
         <span
@@ -14,8 +14,8 @@
               invalid: passwordValue.length < 8,
             },
           ]"
-        ></span
-        >8 or more characters
+        ></span>
+        {{ $t("profilePage.min") }}
       </li>
       <li class="flex items-center pt-1">
         <span
@@ -27,8 +27,8 @@
               invalid: passwordValue.length > 15,
             },
           ]"
-        ></span
-        >max 15 lowercase characters
+        ></span>
+        {{ $t("profilePage.max") }}
       </li>
     </ul>
   </div>

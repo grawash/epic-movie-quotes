@@ -1,0 +1,37 @@
+{
+    "login_header": "შედი შენს ანგარიშზე",
+    "login_welcome": "გამარჯობა! გთხოვთ შეიყვანოთ თქვენი მონაცემები.",
+    "email": {
+      "label": "მეილი",
+      "placeholder": "შეიყვანე შენი მეილი"
+    },
+    "password": {
+      "label": "პაროლი",
+      "placeholder": "პაროლი"
+    },
+    "remember": "დამიმახსოვრე",
+    "forgot_password": "დაგავიწყდა პაროლი",
+    "signin": "შესვლა",
+    "google_sign": "შესვლა გუგლის მეშვეობით",
+    "no_account": "ჯერ არ გაქვს ანგარიში?",
+    "signup": "დარეგისტრირდი",
+    "register_header": "შექმენი ანგარიში",
+    "registration_welcome": "დაიწყე შენი თავგადასავალი!",
+    "name": {
+      "label": "სახელი",
+      "placeholder": "შეიყვანე 3_დან 15_მდე სიმბოლო"
+    },
+    "register_password": {
+      "label": "პაროლი",
+      "placeholder": "შეიყვანე 8_დან 15_მდე სიმბოლო"
+    },
+    "confirm_password": {
+      "label": "დაადასტურე პაროლი",
+      "placeholder": "დაადასტურე პაროლი"
+    },
+    "register_button": "დაწყება",
+    "google_signup": "ავტორიზირება გუგლის მეშვეობით",
+    "login": "შესვლა",
+    "already_registered": "უკვე გაქვს ანგარიში ?"
+  }
+  

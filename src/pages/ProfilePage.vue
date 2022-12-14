@@ -1,6 +1,8 @@
 <template>
   <div class="col-start-4 col-end-10 flex flex-col">
-    <p class="font-medium text-2xl mb-[54px]">My profile</p>
+    <p class="font-medium text-2xl mb-[54px]">
+      {{ $t("profilePage.my_profile") }}
+    </p>
     <div class="bg-[#11101A] h-min shrink flex flex-col relative">
       <photo-input @changeImage="changeImage" />
       <Form
@@ -14,7 +16,7 @@
           type="text"
           id="name"
           :placeholder="name"
-          label="username"
+          :label="$t('profilePage.username')"
           @toggleChangeUsermane="canChangeUsername = !canChangeUsername"
           :readOnly="true"
         />
@@ -25,7 +27,7 @@
           id="newName"
           rule="required|min:2"
           :placeholder="name"
-          label="new username"
+          :label="$t('profilePage.new_username')"
           class="pt-10"
           @input="changed = true"
         />
@@ -38,7 +40,7 @@
           type="email"
           id="email"
           :placeholder="email"
-          label="email"
+          :label="$t('profilePage.email')"
           class="mt-10"
         />
         <button
@@ -47,7 +49,7 @@
           class="mr-auto mt-10 mb-10 pl-4 pr-4 p-2 border rounded-md border-[#D9D9D9] flex items-center"
         >
           <add-mail-icon class="mr-2" />
-          Add new email
+          {{ $t("profilePage.add_email") }}
         </button>
         <div
           class="mb-10 max-w-[532px] h-[1px] bg-[#CED4DA] bg-opacity-30 shrink grow"
@@ -57,7 +59,7 @@
           type="password"
           id="password"
           placeholder="••••••••"
-          label="password"
+          :label="$t('profilePage.password')"
           @toggleChangePassword="canChangePassword = !canChangePassword"
           :editable="!google_authenticated"
           :readOnly="true"
@@ -72,8 +74,8 @@
           type="password"
           id="newPassword"
           rule="required|min:2"
-          placeholder="New password"
-          label="New password"
+          :placeholder="$t('profilePage.new_password')"
+          :label="$t('profilePage.new_password')"
           class="pt-10"
           @input="(passwordValue = values.password), (changed = true)"
         />
@@ -83,8 +85,8 @@
           type="password"
           id="newPasswordConfirmation"
           rule="required|min:2|confirmed:@password"
-          placeholder="Confirm new password"
-          label="Confirm new password"
+          :placeholder="$t('profilePage.confirm_password')"
+          :label="$t('profilePage.confirm_password')"
           class="pt-10"
           @input="changed = true"
         />
@@ -92,14 +94,14 @@
     </div>
     <div v-if="changed === true" class="mt-10 ml-auto mb-10">
       <button class="font-normal text-xl mr-8" @click="closeEditInputs">
-        Cancel
+        {{ $t("profilePage.cancel") }}
       </button>
       <button
         form="update"
         type="submit"
         class="rounded-lg font-normal text-xl p-[9px] pl-4 pr-4 bg-[#E31221]"
       >
-        Save changes
+        {{ $t("profilePage.save_changes") }}
       </button>
     </div>
   </div>

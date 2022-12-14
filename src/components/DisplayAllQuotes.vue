@@ -11,7 +11,7 @@
       <div class="font-medium text-xl h-max overflow-hidden">
         <p>
           "{{ quote.quote }}"<span class="text-[#DDCCAA] ml-2">{{
-            quote.movie.title
+            $i18n.locale === "ka" ? quote.movie.title.ka : quote.movie.title.en
           }}</span>
         </p>
       </div>
@@ -34,17 +34,21 @@ import axios from "@/config/axios/index.js";
 
 import { ref, computed, defineProps } from "vue";
 import { useUserStore } from "@/stores/user";
+import { useLocaleStore } from "@/stores/locale";
+
 const props = defineProps({
   searchValue: String,
 });
 const user = useUserStore();
+const locale = useLocaleStore();
+
 const quotes = ref([]);
 
 const filteredQuotes = computed(() => {
   console.log(props.searchValue[0]);
   if (quotes.value.length != 0 && props.searchValue[0] === "@") {
     let filtered = quotes.value.filter((quote) =>
-      quote.movie.title
+      quote.movie.title[locale.locale]
         .toLowerCase()
         .includes(props.searchValue.substring(1).toLowerCase())
     );

@@ -20,18 +20,22 @@
   />
   <edit-movie-form v-if="editMovieModal" @closeModals="closeModals" />
   <div class="col-start-4 col-end-13 grid auto-rows-min gap-[33px] grid-cols-9">
-    <div class="col-span-9 font-medium text-2xl">Movie discription</div>
+    <div class="col-span-9 font-medium text-2xl">
+      {{ $t("movieDescription.movie_description") }}
+    </div>
     <div class="col-start-1 col-end-6 flex flex-col">
       <img :src="movie.thumbnail" alt="" class="w-full h-auto rounded-2xl" />
       <div class="mt-12 flex items-center gap-4">
-        <p class="font-bold text-2xl">Quotes ({{ quotes.length }})</p>
+        <p class="font-bold text-2xl">
+          {{ $t("movieDescription.quotes") }} ({{ quotes.length }})
+        </p>
         <div class="h-[80%] w-[1px] bg-[#6C757D]"></div>
         <button
           @click="newQuoteModal = true"
           class="text-xl bg-[#E31221] p-2 pl-4 pr-4 rounded flex items-center"
         >
           <add-mail-icon class="scale-125 mr-2" />
-          Add quote
+          {{ $t("movieDescription.add_quote") }}
         </button>
       </div>
       <div class="flex flex-col mt-14">
@@ -61,19 +65,22 @@
                     @click="openViewModal(quote)"
                     class="flex items-center hover:scale-110"
                   >
-                    <eye-icon class="mr-4" />view quote
+                    <eye-icon class="mr-4" />
+                    {{ $t("movieDescription.view_quote") }}
                   </button>
                   <button
                     @click="editQuoteOpen(quote)"
                     class="flex items-center hover:scale-110"
                   >
-                    <pencil-icon class="mr-4" />Edit
+                    <pencil-icon class="mr-4" />
+                    {{ $t("movieDescription.edit") }}
                   </button>
                   <button
                     @click="deleteQuote(quote.id)"
                     class="flex items-center hover:scale-110"
                   >
-                    <trash-can-icon class="mr-4" /> Delete
+                    <trash-can-icon class="mr-4" />
+                    {{ $t("movieDescription.delete") }}
                   </button>
                 </div>
               </div>
@@ -127,7 +134,10 @@
         </div>
         <div class="text-lg ml-3 mt-3">
           <p class="font-bold mt-5">
-            <span class="text-[#CED4DA]">Director: </span> {{ movie.director }}
+            <span class="text-[#CED4DA]"
+              >{{ $t("movieDescription.director") }}:
+            </span>
+            {{ movie.director }}
           </p>
           <p class="font-normal text-[#CED4DA] mt-5">{{ movie.description }}</p>
         </div>
