@@ -20,7 +20,7 @@
         <display-all-comments :quoteId="quote.id" :quoteUser="quote.user_id" />
       </div>
       <div class="flex items-center">
-        <profile-picture />
+        <profile-picture :source="user.thumbnail" />
         <create-comment-input :quoteId="quote.id" :quoteUser="quote.user_id" />
       </div>
     </div>
@@ -64,7 +64,22 @@ function infiniteHandler($state) {
       }
     });
 }
-
+// watch(
+//   () => user.newNotifications,
+//   (value) => {
+//     if (value === true) {
+//       axios
+//         .get(`quotes`)
+//         .then(({ data }) => {
+//           console.log(data);
+//           quotes.value = data.data;
+//         })
+//         .catch((error) => {
+//           console.log(error.response.data);
+//         });
+//     }
+//   }
+// );
 const filteredQuotes = computed(() => {
   if (quotes.value.length != 0 && props.searchValue[0] === "@") {
     let filtered = quotes.value.filter((quote) =>

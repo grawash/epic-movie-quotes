@@ -24,16 +24,18 @@ watch(
       EchoInstance.private(`NotifyUser.${user.userId}`).listen(
         "NotifyUser",
         (e) => {
-          console.log(e);
-          axios
-            .get(`notifications`, { params: { user_id: user.userId } })
-            .then(({ data }) => {
-              user.notifications = data;
-              user.newNotifications = true;
-            })
-            .catch((error) => {
-              console.log(error.response.data);
-            });
+          console.log(e.notification.sender_id);
+          if (e.notification.sender_id !== user.userId) {
+            axios
+              .get(`notifications`, { params: { user_id: user.userId } })
+              .then(({ data }) => {
+                user.notifications = data;
+                user.newNotifications = true;
+              })
+              .catch((error) => {
+                console.log(error.response.data);
+              });
+          }
         }
       );
       EchoInstance.private(`NotificationsRead.${user.userId}`).listen(

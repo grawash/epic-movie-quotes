@@ -15,9 +15,14 @@
       >
         <profile-picture
           v-if="notification.read_status === 1"
+          :source="notification.sender.thumbnail"
           class="border border-green-400 shrink-0"
         />
-        <profile-picture v-else class="shrink-0" />
+        <profile-picture
+          :source="notification.sender.thumbnail"
+          v-else
+          class="shrink-0"
+        />
         <div class="flex flex-col w-full items-start ml-6 text-xl">
           <p>{{ notification.sender.name }}</p>
           <div class="flex items-center w-full">

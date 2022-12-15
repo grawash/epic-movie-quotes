@@ -29,7 +29,7 @@
       <div class="-ml-6 -mr-6 mb-7 h-[1px] bg-[#6C757D] bg-opacity-50"></div>
       <div>
         <div class="flex items-center mb-4">
-          <profile-picture />
+          <profile-picture :source="user.thumbnail" />
           <p class="ml-4 text-xl">{{ user.name }}</p>
         </div>
         <div
@@ -38,7 +38,7 @@
           <p>"{{ quote.quote.en }}"</p>
           <span class="ml-auto text-xl text-[#6C757D]">ENG</span>
         </div>
-                <div
+        <div
           class="font-normal text-2xl h-max flex overflow-hidden border-[#6C757DB2] border p-3 rounded"
         >
           <p>"{{ quote.quote.ka }}"</p>

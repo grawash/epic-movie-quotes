@@ -28,7 +28,7 @@
       <div class="h-[1px] bg-[#EFEFEF33]"></div>
       <Form class="w-full flex flex-col p-8" @submit="onSubmit">
         <div class="flex items-center mb-7">
-          <profile-picture />
+          <profile-picture :source="user.thumbnail" />
           <p class="ml-4 text-xl">{{ user.name }}</p>
         </div>
         <basic-text-area
