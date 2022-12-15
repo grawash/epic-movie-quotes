@@ -204,10 +204,6 @@ async function fetchMovie() {
       title.value = data.movie.title;
       description.value = data.movie.description;
       director.value = data.movie.director;
-      storedMovie.movie.thumbnail = data.movie.thumbnail.replace(
-        "public",
-        "storage"
-      );
     })
     .catch((error) => {
       console.log(error.response.data);
