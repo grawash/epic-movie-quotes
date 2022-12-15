@@ -1,0 +1,36 @@
+{
+  "login_header": "Log in to your account",
+  "login_welcome": "Welcome back! Please enter your details.",
+  "email": {
+    "label": "Email",
+    "placeholder": "Enter your email"
+  },
+  "password": {
+    "label": "Password",
+    "placeholder": "Password"
+  },
+  "remember": "Remember me",
+  "forgot_password": "Forgot password",
+  "signin": "Sign in",
+  "google_sign": "Sign up with Google",
+  "no_account": "Don't have an account yet?",
+  "signup": "Sign up",
+  "register_header": "Create an account",
+  "registration_welcome": "Start your journey!",
+  "name": {
+    "label": "Name",
+    "placeholder": "At least 3 & max.15 lower case characters"
+  },
+  "register_password": {
+    "label": "Password",
+    "placeholder": "At least 8 & max.15 lower case characters"
+  },
+  "confirm_password": {
+    "label": "Confirm password",
+    "placeholder": "Confirm password"
+  },
+  "register_button": "Get started",
+  "google_signup": "Sign up with Google",
+  "login": "Log in",
+  "already_registered": "Already have an account ?"
+}

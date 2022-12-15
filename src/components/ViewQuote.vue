@@ -3,7 +3,7 @@
     class="fixed top-0 left-0 flex w-screen h-screen items-center z-30 bg-neutral-700 bg-opacity-30"
   >
     <div
-      class="ml-auto mr-auto flex flex-col min-w-[35%] max-w-[50%] max-h-[90%] rounded-xl bg-[#11101A] p-6 mb-10"
+      class="ml-auto mr-auto flex flex-col min-w-[35%] max-w-[60%] max-h-[90%] rounded-xl bg-[#11101A] p-6 mb-10"
     >
       <div class="font-medium flex items-center text-white text-center pb-6">
         <div class="grow basis-0 mr-auto flex text-base">
@@ -16,7 +16,7 @@
           </button>
         </div>
         <p class="justify-center grow basis-0 font-medium text-2xl">
-          View quote
+          {{ $t("movieDescription.view_quote") }}
         </p>
         <div class="grow basis-0">
           <cross-icon
@@ -29,17 +29,23 @@
       <div class="-ml-6 -mr-6 mb-7 h-[1px] bg-[#6C757D] bg-opacity-50"></div>
       <div>
         <div class="flex items-center mb-4">
-          <profile-picture />
+          <profile-picture :source="user.thumbnail" />
           <p class="ml-4 text-xl">{{ user.name }}</p>
+        </div>
+        <div
+          class="font-normal text-2xl h-max flex overflow-hidden mb-2 border-[#6C757DB2] border p-3 rounded"
+        >
+          <p>"{{ quote.quote.en }}"</p>
+          <span class="ml-auto text-xl text-[#6C757D]">ENG</span>
         </div>
         <div
           class="font-normal text-2xl h-max flex overflow-hidden border-[#6C757DB2] border p-3 rounded"
         >
-          <p>"{{ quote.quote }}"</p>
-          <span class="ml-auto text-xl text-[#6C757D]">ENG</span>
+          <p>"{{ quote.quote.ka }}"</p>
+          <span class="ml-auto text-xl text-[#6C757D]">KA</span>
         </div>
         <img
-          :src="getImageUrl(quote.thumbnail)"
+          :src="quote.thumbnail"
           class="max-h-[35%] ml-auto mr-auto mt-7 mb-6 rounded-xl"
         />
         <div
@@ -72,10 +78,5 @@ import { useUserStore } from "@/stores/user";
 const props = defineProps({
   quote: Object,
 });
-const baseUrl = import.meta.env.VITE_BASE_URL;
 const user = useUserStore();
-function getImageUrl(quote) {
-  let replaced = quote.replace("public", "storage");
-  return baseUrl + replaced;
-}
 </script>

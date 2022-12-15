@@ -4,7 +4,7 @@
   <div class="col-start-4 col-end-13 flex flex-col gap-14">
     <div class="flex items-center">
       <p class="font-medium text-2xl">
-        My list of movies ({{ movieList.length }})
+        {{ $t("movieList.my_list") }} ({{ movieList.length }})
       </p>
       <div class="ml-auto flex" @click.stop="">
         <button
@@ -12,7 +12,7 @@
           @click="searchInput = true"
         >
           <loop-icon class="mr-2" />
-          Search
+          {{ $t("movieList.search") }}
         </button>
         <input
           v-if="searchInput"
@@ -25,7 +25,7 @@
           class="rounded-lg font-normal text-xl p-[9px] pl-4 pr-4 bg-[#E31221] flex items-center"
         >
           <add-mail-icon class="mr-2 scale-125" />
-          Add movie
+          {{ $t("movieList.add_movie") }}
         </button>
       </div>
     </div>
@@ -38,9 +38,11 @@
         <div
           class="backdrop-blur-3xl bg-neutral-700 bg-opacity-20 max-h-[350px] flex grow justify-center items-center rounded-lg"
         >
-          <img :src="getImageUrl(movie.thumbnail)" alt="" />
+          <img :src="movie.thumbnail" alt="" />
         </div>
-        <p class="mt-[10px] font-medium text-2xl">{{ movie.title }}</p>
+        <p class="mt-[10px] font-medium text-2xl">
+          {{ movie.title[$i18n.locale] }}
+        </p>
         <comment-icon class="mt-5" />
       </div>
     </div>
@@ -62,24 +64,19 @@ const movieList = ref([]);
 const addMovieModal = ref(false);
 const searchInput = ref(false);
 const searchValue = ref("");
-const baseUrl = import.meta.env.VITE_BASE_URL;
 
 import { useMovieStore } from "@/stores/movie";
 const storedMovie = useMovieStore();
 if (storedMovie.genres) {
   storedMovie.genres = [];
 }
-onUnmounted(() => {
+onMounted(() => {
   window.onclick = removeSearch;
 });
-window.onclick = removeSearch;
 onUnmounted(() => {
   window.onclick = "";
 });
-function getImageUrl(movie) {
-  let replaced = movie.replace("public", "storage");
-  return baseUrl + replaced;
-}
+
 function closeModals() {
   fetchMovies();
   addMovieModal.value = false;
@@ -89,11 +86,12 @@ function showMovieDescription(movieId) {
 }
 function removeSearch() {
   searchInput.value = false;
+  user.notificationWindow = false;
 }
 const filteredMovies = computed(() => {
   if (movieList.value.length != 0) {
     let filtered = movieList.value.filter((movie) =>
-      movie.title.toLowerCase().includes(searchValue.value.toLowerCase())
+      movie.title.en.toLowerCase().includes(searchValue.value.toLowerCase())
     );
     return filtered;
   } else return movieList.value;
@@ -106,6 +104,7 @@ watch(
     }
   }
 );
+
 if (user.userId != null) {
   fetchMovies();
 }

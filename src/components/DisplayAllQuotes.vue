@@ -1,58 +1,100 @@
 <template>
   <div
-    v-for="quote in quotes"
+    v-for="quote in filteredQuotes"
     class="flex flex-col rounded-xl bg-black p-6 mb-10"
   >
     <div>
       <div class="flex items-center mb-4">
-        <profile-picture />
+        <profile-picture :source="quote.user.thumbnail" />
         <p class="ml-4 text-xl">{{ quote.user.name }}</p>
       </div>
       <div class="font-medium text-xl h-max overflow-hidden">
-        <p>"{{ quote.quote }}"</p>
-        <span class="text-[#DDCCAA] ml-2">{{ quote.movie_title }}</span>
+        <p>
+          "{{ quote.quote[$i18n.locale] }}"<span class="text-[#DDCCAA] ml-2">{{
+            $i18n.locale === "ka" ? quote.movie.title.ka : quote.movie.title.en
+          }}</span>
+        </p>
       </div>
-      <img
-        :src="getImageUrl(quote.thumbnail)"
-        class="w-full mt-7 mb-6 rounded-xl"
-      />
-      <div
-        class="flex items-center gap-6 pb-6 border-b border-[#EFEFEF4D] text-xl"
-      >
-        <div class="flex items-center">
-          <span class="mr-3">3</span>
-          <quote-comment-icon />
-        </div>
-        <div class="flex items-center">
-          <span class="mr-3">3</span>
-          <love-icon />
-        </div>
+      <img :src="quote.thumbnail" class="w-full mt-7 mb-6 rounded-xl" />
+      <div>
+        <display-all-comments :quoteId="quote.id" :quoteUser="quote.user_id" />
       </div>
+      <!-- <div class="flex items-center">
+        <profile-picture :source="user.thumbnail" />
+        <create-comment-input :quoteId="quote.id" :quoteUser="quote.user_id" />
+      </div> -->
     </div>
   </div>
+  <infinite-loading @infinite="infiniteHandler"></infinite-loading>
 </template>
 <script setup>
-import QuoteCommentIcon from "@/components/icons/QuoteCommentIcon.vue";
-import LoveIcon from "@/components/icons/LoveIcon.vue";
 import ProfilePicture from "@/components/ProfilePicture.vue";
+import DisplayAllComments from "@/components/DisplayAllComments.vue";
+import CreateCommentInput from "@/components/inputs/CreateCommentInput.vue";
 import axios from "@/config/axios/index.js";
-import { ref } from "vue";
+import InfiniteLoading from "v3-infinite-loading";
+import "v3-infinite-loading/lib/style.css";
+import { ref, computed, defineProps, watch } from "vue";
 import { useUserStore } from "@/stores/user";
+import { useLocaleStore } from "@/stores/locale";
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const props = defineProps({
+  searchValue: String,
+});
 const user = useUserStore();
+const locale = useLocaleStore();
+
 const quotes = ref([]);
-function getImageUrl(quote) {
-  let replaced = quote.replace("public", "storage");
-  return baseUrl + replaced;
+let page = 1;
+function infiniteHandler($state) {
+  axios
+    .get("quotes", {
+      params: {
+        page: page,
+      },
+    })
+    .then(({ data }) => {
+      if (data.data.length) {
+        page += 1;
+        quotes.value.push(...data.data);
+        console.log(quotes.value);
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
+    });
 }
-axios
-  .get(`quotes`)
-  .then(({ data }) => {
-    console.log(data);
-    quotes.value = data;
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
+// watch(
+//   () => user.newNotifications,
+//   (value) => {
+//     if (value === true) {
+//       axios
+//         .get(`quotes`)
+//         .then(({ data }) => {
+//           console.log(data);
+//           quotes.value = data.data;
+//         })
+//         .catch((error) => {
+//           console.log(error.response.data);
+//         });
+//     }
+//   }
+// );
+const filteredQuotes = computed(() => {
+  if (quotes.value.length != 0 && props.searchValue[0] === "@") {
+    let filtered = quotes.value.filter((quote) =>
+      quote.movie.title[locale.locale]
+        .toLowerCase()
+        .includes(props.searchValue.substring(1).toLowerCase())
+    );
+    return filtered;
+  } else if (quotes.value.length != 0 && props.searchValue[0] === "#") {
+    let filtered = quotes.value.filter((quote) =>
+      quote.quote[locale.locale]
+        .toLowerCase()
+        .includes(props.searchValue.substring(1).toLowerCase())
+    );
+    return filtered;
+  } else return quotes.value;
+});
 </script>

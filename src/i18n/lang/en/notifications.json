@@ -1,0 +1,8 @@
+{
+  "notifications": "Notifications",
+  "comment_notification": "Commented to your movie quote",
+  "react_notification": "Reacted to your quote",
+  "mark_read": "Mark  as all read",
+  "new": "New",
+  "no_notifications": "You don't have new notifications"
+}

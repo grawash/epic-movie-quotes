@@ -11,10 +11,12 @@
         <div class="grow basis-0 ml-10 mr-auto text-base">
           <button @click="deleteQuote(quote.id)" class="flex items-center">
             <trash-can-icon class="mr-2" />
-            <p class="text-[#CED4DA]">Delete</p>
+            <p class="text-[#CED4DA]">{{ $t("movieDescription.delete") }}</p>
           </button>
         </div>
-        <p class="justify-center grow basis-0">Edit quote</p>
+        <p class="justify-center grow basis-0">
+          {{ $t("movieDescription.edit_quote") }}
+        </p>
         <div class="grow basis-0 mr-10">
           <cross-icon
             fill="white"
@@ -26,14 +28,22 @@
       <div class="h-[1px] bg-[#EFEFEF33]"></div>
       <Form class="w-full flex flex-col p-8" @submit="onSubmit">
         <div class="flex items-center mb-7">
-          <profile-picture />
+          <profile-picture :source="user.thumbnail" />
           <p class="ml-4 text-xl">{{ user.name }}</p>
         </div>
         <basic-text-area
-          name="quote"
+          name="quote_en"
           id="quote"
           placeholder="Start create new quote"
-          :value="quote.quote"
+          :value="quote.quote.en"
+          rule="required|min:2"
+        >
+        </basic-text-area>
+        <basic-text-area
+          name="quote_ka"
+          id="quote"
+          placeholder="Start create new quote"
+          :value="quote.quote.ka"
           rule="required|min:2"
         >
         </basic-text-area>
@@ -45,7 +55,7 @@
           />
         </div>
         <button class="text-white mt-6 bg-[#E31221] rounded w-full h-[38px]">
-          Save changes
+          {{ $t("movieDescription.save_changes") }}
         </button>
       </Form>
     </div>
@@ -68,7 +78,6 @@ const route = useRoute();
 const storedMovie = useMovieStore();
 
 const user = useUserStore();
-// const storedGenres = ref("");
 const emit = defineEmits([
   "closeModals",
   "toggleSignUp",
@@ -80,7 +89,6 @@ const props = defineProps({
 const chosenMovieId = ref(null);
 const chosenMovieTitle = ref(null);
 const movieId = ref("");
-const baseUrl = import.meta.env.VITE_BASE_URL;
 
 movieId.value = route.params.movieId;
 if (movieId.value != "") {
@@ -89,14 +97,14 @@ if (movieId.value != "") {
 }
 const getImageUrl = computed(() => {
   if (props.quote.thumbnail) {
-    let replaced = props.quote.thumbnail.replace("public", "storage");
-    return baseUrl + replaced;
+    return props.quote.thumbnail;
   } else return "";
 });
 function onSubmit(values) {
   chosenMovieId.value = props.quote.movie_id;
   const formData = new FormData();
-  formData.append("quote", values.quote);
+  formData.append("quote_en", values.quote_en);
+  formData.append("quote_ka", values.quote_ka);
   if (values.file) {
     formData.append("thumbnail", values.file);
   }

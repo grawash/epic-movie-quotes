@@ -11,11 +11,11 @@
       class="absolute -bottom-10 w-full text-center font-normal text-base hover:cursor-pointer"
       @click="chooseImage"
     >
-      Upload new photo
+      {{ $t("profilePage.upload_picture") }}
     </p>
     <input
       type="file"
-      name=""
+      name="file"
       id=""
       ref="fileInput"
       class="absolute hidden -bottom-10"
@@ -26,11 +26,13 @@
 <script setup>
 import { ref } from "vue";
 
+const emit = defineEmits(["changeImage"]);
 const file = ref(null);
 let fileInput = ref(null);
 let reader = new FileReader();
 reader.onloadend = function () {
   file.value = reader.result;
+  emit("changeImage", reader.result);
 };
 function chooseImage() {
   fileInput.value.click();

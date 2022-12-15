@@ -1,5 +1,6 @@
 <template>
   <new-quote-form v-if="newQuoteModal" @closeModals="closeModals" />
+
   <div class="col-start-4 col-end-10">
     <div class="flex items-center">
       <button
@@ -7,14 +8,14 @@
         class="flex bg-[#24222F] mr-6 rounded-lg p-3 pl-4 items-center grow"
       >
         <add-quote-icon class="mr-4" />
-        <p class="font-normal text-xl">Write new quote</p>
+        <p class="font-normal text-xl">{{ $t("newsFeed.new_quote") }}</p>
       </button>
       <div class="ml-auto" v-if="seachbutton" @click.stop="">
         <button
           @click="addSearch"
           class="flex items-center font-normal text-xl"
         >
-          <loop-icon class="mr-4 scale-90" />Search by
+          <loop-icon class="mr-4 scale-90" />{{ $t("newsFeed.search_by") }}
         </button>
       </div>
       <transition name="bounce" @after-leave="onAfterLeave">
@@ -44,7 +45,7 @@
       </transition>
     </div>
     <div class="flex flex-col mt-4">
-      <display-all-quotes />
+      <display-all-quotes :searchValue="searchValue" />
     </div>
   </div>
 </template>
@@ -55,6 +56,9 @@ import AddQuoteIcon from "@/components/icons/AddQuoteIcon.vue";
 import DisplayAllQuotes from "@/components/DisplayAllQuotes.vue";
 import axios from "@/config/axios/index.js";
 import { ref, onUnmounted, onMounted } from "vue";
+import { useUserStore } from "@/stores/user";
+
+const user = useUserStore();
 const searchInput = ref(false);
 const seachbutton = ref(true);
 const searchLabel = ref(true);
@@ -62,14 +66,6 @@ const searchValue = ref("");
 const newQuoteModal = ref(false);
 let searchRef = ref(null);
 
-axios
-  .get(`quotes`)
-  .then((response) => {
-    console.log(response);
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
 onMounted(() => {
   window.onclick = removeSearch;
 });
@@ -78,6 +74,7 @@ function removeSearch() {
   if (searchValue.value === "") {
     searchInput.value = false;
   }
+  user.notificationWindow = false;
 }
 onUnmounted(() => {
   window.onclick = "";

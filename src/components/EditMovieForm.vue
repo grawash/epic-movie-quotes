@@ -13,11 +13,19 @@
       <div class="h-[1px] bg-[#EFEFEF33]"></div>
       <Form class="w-full flex flex-col p-10" @submit="onSubmit">
         <add-movie-input
-          name="title"
+          name="title_en"
           type="text"
           id="title"
           rule="required|min:2"
-          :value="storedMovie.movie.title"
+          :value="storedMovie.movie.title.en"
+          placeholder="Movie name"
+        ></add-movie-input>
+        <add-movie-input
+          name="title_ka"
+          type="text"
+          id="title"
+          rule="required|min:2"
+          :value="storedMovie.movie.title.ka"
           placeholder="Movie name"
         ></add-movie-input>
         <genre-input
@@ -28,25 +36,41 @@
           label="Movie genre"
         />
         <add-movie-input
-          name="director"
+          name="director_en"
           type="text"
           id="director"
           rule="required|min:2"
-          :value="storedMovie.movie.director"
+          :value="storedMovie.movie.director.en"
+          placeholder="Director"
+        ></add-movie-input>
+        <add-movie-input
+          name="director_ka"
+          type="text"
+          id="director"
+          rule="required|min:2"
+          :value="storedMovie.movie.director.ka"
           placeholder="Director"
         ></add-movie-input>
         <basic-text-area
-          name="description"
+          name="description_en"
           id="description"
           placeholder="Movie description"
-          :value="storedMovie.movie.description"
+          :value="storedMovie.movie.description.en"
+          rule="required|min:2"
+        >
+        </basic-text-area>
+        <basic-text-area
+          name="description_ka"
+          id="description"
+          placeholder="Movie description"
+          :value="storedMovie.movie.description.ka"
           rule="required|min:2"
         >
         </basic-text-area>
         <image-input
           name="movie_image"
           id="movie_image"
-          :source="baseUrl + storedMovie.movie.thumbnail"
+          :source="storedMovie.movie.thumbnail"
         />
         <button class="text-white mt-6 bg-[#E31221] rounded w-full h-[38px]">
           Edit movie
@@ -69,7 +93,6 @@ import { useMovieStore } from "@/stores/movie";
 
 const storedMovie = useMovieStore();
 console.log(storedMovie.movie);
-const baseUrl = import.meta.env.VITE_BASE_URL;
 const route = useRoute();
 const movieId = route.params.movieId;
 const storedGenres = ref("");
@@ -84,12 +107,15 @@ function storeGenres(genres) {
 
 function onSubmit(values) {
   const formData = new FormData();
-  formData.append("title", values.title);
+  formData.append("title_en", values.title_en);
+  formData.append("title_ka", values.title_ka);
   for (var i = 0; i < storedGenres.value.length; i++) {
     formData.append("genre[]", storedGenres.value[i]);
   }
-  formData.append("director", values.director);
-  formData.append("description", values.description);
+  formData.append("director_en", values.director_en);
+  formData.append("director_ka", values.director_ka);
+  formData.append("description_en", values.description_en);
+  formData.append("description_ka", values.description_ka);
   if (values.file) {
     formData.append("thumbnail", values.file);
   }

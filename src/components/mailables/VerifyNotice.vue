@@ -8,13 +8,14 @@
       @click.stop=""
     >
       <mail-sent-icon class="self-center" />
-      <p class="text-[32px] font-medium text-center mt-5">Thank you</p>
+      <p class="text-[32px] font-medium text-center mt-5">
+        {{ $t("mailables.verification.header") }}
+      </p>
       <p class="text-base font-normal text-center mt-8">
-        Please check your email and follow the instructions to activate your
-        account.
+        {{ $t("mailables.verification.message") }}
       </p>
       <button class="bg-[#E31221] rounded mt-10 h-[38px]" @click="openMail">
-        Go to my email
+        {{ $t("mailables.verification.button") }}
       </button>
     </div>
   </div>
@@ -24,7 +25,7 @@
 import MailSentIcon from "@/components/icons/MailSentIcon.vue";
 import { useUserStore } from "@/stores/user.js";
 const user = useUserStore();
-function openMail(){
+function openMail() {
   window.open("https://www." + user.mailDomain, "_blank");
 }
 </script>

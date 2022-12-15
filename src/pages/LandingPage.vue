@@ -42,7 +42,7 @@
           class="text-white p-2 pl-4 pr-4 text-xl font-normal mt-6 bg-[#E31221] ml-auto mr-auto rounded-lg"
           @click="scrollToFirst"
         >
-          Get started
+          {{ $t("landing.get_started") }}
         </button>
       </div>
     </div>

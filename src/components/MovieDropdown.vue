@@ -6,7 +6,7 @@
     <div class="flex items-center">
       <movie-icon class="mr-3" />
       <p v-if="chosenMovie === ''" class="font-normal text-2xl">Choose movie</p>
-      <p v-else class="font-normal text-2xl">{{ chosenMovie }}</p>
+      <p v-else class="font-normal text-2xl">{{ chosenMovie[$i18n.locale] }}</p>
     </div>
     <expand-icon class="ml-auto" />
   </div>
@@ -27,7 +27,7 @@
       @click="chooseMovie(movie)"
       class="text-white text-center cursor-pointer hover:bg-white hover:bg-opacity-20 rounded-xl text-2xl p-3 w-full"
     >
-      {{ movie.title }}
+      {{ movie.title[$i18n.locale] }}
     </p>
   </div>
 </template>

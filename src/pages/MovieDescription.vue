@@ -1,7 +1,7 @@
 <template>
   <new-quote-form
     v-if="newQuoteModal"
-    :imgUrl="getImageUrl"
+    :imgUrl="movie.thumbnail"
     @closeModals="closeModals"
   />
   <edit-quote
@@ -20,18 +20,22 @@
   />
   <edit-movie-form v-if="editMovieModal" @closeModals="closeModals" />
   <div class="col-start-4 col-end-13 grid auto-rows-min gap-[33px] grid-cols-9">
-    <div class="col-span-9 font-medium text-2xl">Movie discription</div>
+    <div class="col-span-9 font-medium text-2xl">
+      {{ $t("movieDescription.movie_description") }}
+    </div>
     <div class="col-start-1 col-end-6 flex flex-col">
-      <img :src="getImageUrl" alt="" class="w-full h-auto rounded-2xl" />
+      <img :src="movie.thumbnail" alt="" class="w-full h-auto rounded-2xl" />
       <div class="mt-12 flex items-center gap-4">
-        <p class="font-bold text-2xl">Quotes (Total 7)</p>
+        <p class="font-bold text-2xl">
+          {{ $t("movieDescription.quotes") }} ({{ quotes.length }})
+        </p>
         <div class="h-[80%] w-[1px] bg-[#6C757D]"></div>
         <button
           @click="newQuoteModal = true"
           class="text-xl bg-[#E31221] p-2 pl-4 pr-4 rounded flex items-center"
         >
           <add-mail-icon class="scale-125 mr-2" />
-          Add quote
+          {{ $t("movieDescription.add_quote") }}
         </button>
       </div>
       <div class="flex flex-col mt-14">
@@ -41,7 +45,7 @@
         >
           <div class="flex gap-8 pb-6 border-b border-[#EFEFEF33]">
             <img
-              :src="quoteImageUrl(quote.thumbnail)"
+              :src="quote.thumbnail"
               alt=""
               class="w-[30%] rounded-lg shrink-0"
             />
@@ -61,26 +65,29 @@
                     @click="openViewModal(quote)"
                     class="flex items-center hover:scale-110"
                   >
-                    <eye-icon class="mr-4" />view quote
+                    <eye-icon class="mr-4" />
+                    {{ $t("movieDescription.view_quote") }}
                   </button>
                   <button
                     @click="editQuoteOpen(quote)"
                     class="flex items-center hover:scale-110"
                   >
-                    <pencil-icon class="mr-4" />Edit
+                    <pencil-icon class="mr-4" />
+                    {{ $t("movieDescription.edit") }}
                   </button>
                   <button
                     @click="deleteQuote(quote.id)"
                     class="flex items-center hover:scale-110"
                   >
-                    <trash-can-icon class="mr-4" /> Delete
+                    <trash-can-icon class="mr-4" />
+                    {{ $t("movieDescription.delete") }}
                   </button>
                 </div>
               </div>
               <p
                 class="italic text-2xl text-[#CED4DA] mt-auto mb-auto break-words max-w-full overflow-hidden"
               >
-                "{{ quote.quote }}"
+                "{{ quote.quote[$i18n.locale] }}"
               </p>
             </div>
           </div>
@@ -98,9 +105,11 @@
       </div>
     </div>
     <div class="col-start-6 col-end-10 flex flex-col">
-      <div class="flex flex-col">
+      <div v-if="movie" class="flex flex-col">
         <div class="flex items-center">
-          <p class="font-medium text-2xl text-[#DDCCAA]">{{ movie.title }}</p>
+          <p class="font-medium text-2xl text-[#DDCCAA]">
+            {{ title[$i18n.locale] }}
+          </p>
           <div
             class="bg-[#24222F] flex ml-auto p-[10px] pl-7 pr-7 gap-[25px] items-center rounded-lg"
           >
@@ -127,9 +136,14 @@
         </div>
         <div class="text-lg ml-3 mt-3">
           <p class="font-bold mt-5">
-            <span class="text-[#CED4DA]">Director: </span> {{ movie.director }}
+            <span class="text-[#CED4DA]"
+              >{{ $t("movieDescription.director") }}:
+            </span>
+            {{ director[$i18n.locale] }}
           </p>
-          <p class="font-normal text-[#CED4DA] mt-5">{{ movie.description }}</p>
+          <p class="font-normal text-[#CED4DA] mt-5">
+            {{ description[$i18n.locale] }}
+          </p>
         </div>
       </div>
     </div>
@@ -167,7 +181,9 @@ const viewQuoteModal = ref(false);
 const quoteId = ref("");
 const quoteObj = ref({});
 const storedMovie = useMovieStore();
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const title = ref("");
+const description = ref("");
+const director = ref("");
 
 onMounted(() => {
   window.onclick = editMenuOff;
@@ -185,7 +201,9 @@ async function fetchMovie() {
       quotes.value = data.movie.quotes;
       storedMovie.movie = data.movie;
       storedMovie.genres = data.movie.genres;
-      console.log(genres.value[0]);
+      title.value = data.movie.title;
+      description.value = data.movie.description;
+      director.value = data.movie.director;
       storedMovie.movie.thumbnail = data.movie.thumbnail.replace(
         "public",
         "storage"
@@ -196,16 +214,6 @@ async function fetchMovie() {
     });
 }
 fetchMovie();
-const getImageUrl = computed(() => {
-  if (movie.value.thumbnail) {
-    let replaced = movie.value.thumbnail.replace("public", "storage");
-    return baseUrl + replaced;
-  } else return "";
-});
-function quoteImageUrl(thumbnail) {
-  let replaced = thumbnail.replace("public", "storage");
-  return baseUrl + replaced;
-}
 function editQuoteOpen(quote) {
   closeModals();
   quoteObj.value = quote;

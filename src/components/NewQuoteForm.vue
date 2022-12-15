@@ -9,7 +9,9 @@
         class="font-medium text-[32px] flex items-center text-white text-center pb-6"
       >
         <div class="grow"></div>
-        <p class="justify-center ml-10">write new quote</p>
+        <p class="justify-center ml-10">
+          {{ $t("newsFeed.new_quote_header") }}
+        </p>
         <div class="grow">
           <cross-icon
             fill="white"
@@ -21,14 +23,14 @@
       <div class="h-[1px] bg-[#EFEFEF33]"></div>
       <Form class="w-full flex flex-col p-8" @submit="onSubmit">
         <div class="flex items-center mb-7">
-          <profile-picture />
+          <profile-picture :source="user.thumbnail" />
           <p class="ml-4 text-xl">{{ user.name }}</p>
         </div>
-        <div v-if="movieId" class="flex items-center">
+        <div v-if="movieId !== undefined" class="flex items-center">
           <img :src="imgUrl" alt="" class="max-w-[30%] rounded-xl" />
           <div class="flex flex-col gap-5 ml-8 text-white">
             <p class="grow font-bold text-2xl text-[#DDCCAA]">
-              {{ storedMovie.movie.title }}
+              {{ storedMovie.movie.title[$i18n.locale] }}
             </p>
             <div class="flex">
               <div
@@ -41,24 +43,31 @@
               </div>
             </div>
             <p class="text-[#CED4DA] font-bold text-lg">
-              Director:
+              {{ $t("movieDescription.director") }}:
               <span class="text-white font-medium ml-2">{{
-                storedMovie.movie.director
+                storedMovie.movie.director[$i18n.locale]
               }}</span>
             </p>
           </div>
         </div>
         <basic-text-area
-          name="quote"
+          name="quote_en"
           id="quote"
-          placeholder="Start create new quote"
+          placeholder="Create new quote"
+          rule="required|min:2"
+        >
+        </basic-text-area>
+        <basic-text-area
+          name="quote_ka"
+          id="quote"
+          placeholder="დაწერე პოსტის შინაარსი"
           rule="required|min:2"
         >
         </basic-text-area>
         <image-input name="thumbnail" rule="required" id="quote_image" />
         <movie-dropdown v-if="!movieId" @setMovieValue="appendMovie" />
         <button class="text-white mt-6 bg-[#E31221] rounded w-full h-[38px]">
-          Add quote
+          {{ $t("newsFeed.post") }}
         </button>
       </Form>
     </div>
@@ -92,7 +101,7 @@ const chosenMovieId = ref(null);
 const chosenMovieTitle = ref(null);
 const movieId = ref("");
 movieId.value = route.params.movieId;
-if (movieId.value != "") {
+if (movieId.value !== undefined) {
   chosenMovieId.value = storedMovie.movie.id;
   chosenMovieTitle.value = storedMovie.movie.title;
 }
@@ -103,12 +112,12 @@ function appendMovie(movie) {
 
 function onSubmit(values) {
   const formData = new FormData();
-  formData.append("quote", values.quote);
+  formData.append("quote_en", values.quote_en);
+  formData.append("quote_ka", values.quote_ka);
   if (values.file) {
     formData.append("thumbnail", values.file);
   }
   formData.append("movie_id", chosenMovieId.value);
-  formData.append("movie_title", chosenMovieTitle.value);
   formData.append("user_id", user.userId);
 
   axios
