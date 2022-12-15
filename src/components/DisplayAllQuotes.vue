@@ -19,10 +19,10 @@
       <div>
         <display-all-comments :quoteId="quote.id" :quoteUser="quote.user_id" />
       </div>
-      <div class="flex items-center">
+      <!-- <div class="flex items-center">
         <profile-picture :source="user.thumbnail" />
         <create-comment-input :quoteId="quote.id" :quoteUser="quote.user_id" />
-      </div>
+      </div> -->
     </div>
   </div>
   <infinite-loading @infinite="infiniteHandler"></infinite-loading>

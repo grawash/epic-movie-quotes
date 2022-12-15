@@ -16,6 +16,7 @@ import { Field } from "vee-validate";
 import { defineProps, ref } from "vue";
 import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user";
+const emit = defineEmits(["updateComments"]);
 const user = useUserStore();
 const comment = ref("");
 const props = defineProps({
@@ -36,6 +37,7 @@ function onSubmit(values) {
     .then((response) => {
       console.log(response);
       comment.value = "";
+      emit("updateComments");
     })
     .catch((error) => {
       console.log(error.response.data);

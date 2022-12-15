@@ -28,9 +28,18 @@
       </div>
     </div>
   </div>
+  <div class="flex items-center">
+    <profile-picture :source="user.thumbnail" />
+    <create-comment-input
+      @updateComments="fetchComments"
+      :quoteId="quoteId"
+      :quoteUser="quoteUser"
+    />
+  </div>
 </template>
 <script setup>
 import ProfilePicture from "@/components/ProfilePicture.vue";
+import CreateCommentInput from "@/components/inputs/CreateCommentInput.vue";
 import axios from "@/config/axios/index.js";
 import { defineProps, watch } from "vue";
 import { ref } from "vue";
@@ -62,14 +71,17 @@ watch(
     }
   }
 );
-axios
-  .get(`comments`, { params: { quote_id: quoteId.value } })
-  .then(({ data }) => {
-    comments.value = data;
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
+function fetchComments() {
+  axios
+    .get(`comments`, { params: { quote_id: quoteId.value } })
+    .then(({ data }) => {
+      comments.value = data;
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+}
+fetchComments();
 axios
   .post(`likes/chekQuoteLikeStatus`, {
     quote_id: quoteId.value,
