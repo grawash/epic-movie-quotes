@@ -5,7 +5,7 @@
   >
     <div>
       <div class="flex items-center mb-4">
-        <profile-picture />
+        <profile-picture :source="quote.user.thumbnail" />
         <p class="ml-4 text-xl">{{ quote.user.name }}</p>
       </div>
       <div class="font-medium text-xl h-max overflow-hidden">
@@ -25,14 +25,16 @@
       </div>
     </div>
   </div>
+  <infinite-loading @infinite="infiniteHandler"></infinite-loading>
 </template>
 <script setup>
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import DisplayAllComments from "@/components/DisplayAllComments.vue";
 import CreateCommentInput from "@/components/inputs/CreateCommentInput.vue";
 import axios from "@/config/axios/index.js";
-
-import { ref, computed, defineProps } from "vue";
+import InfiniteLoading from "v3-infinite-loading";
+import "v3-infinite-loading/lib/style.css";
+import { ref, computed, defineProps, watch } from "vue";
 import { useUserStore } from "@/stores/user";
 import { useLocaleStore } from "@/stores/locale";
 
@@ -43,6 +45,25 @@ const user = useUserStore();
 const locale = useLocaleStore();
 
 const quotes = ref([]);
+let page = 1;
+function infiniteHandler($state) {
+  axios
+    .get("quotes", {
+      params: {
+        page: page,
+      },
+    })
+    .then(({ data }) => {
+      if (data.data.length) {
+        page += 1;
+        quotes.value.push(...data.data);
+        console.log(quotes.value);
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
+    });
+}
 
 const filteredQuotes = computed(() => {
   if (quotes.value.length != 0 && props.searchValue[0] === "@") {
@@ -61,14 +82,4 @@ const filteredQuotes = computed(() => {
     return filtered;
   } else return quotes.value;
 });
-
-axios
-  .get(`quotes`)
-  .then(({ data }) => {
-    console.log(data);
-    quotes.value = data.data;
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
 </script>

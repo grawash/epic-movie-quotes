@@ -14,7 +14,10 @@
     </div>
     <div v-for="comment in comments" class="mb-6 text-xl flex flex-col">
       <div class="flex items-center">
-        <profile-picture class="w-14 font-medium shrink-0 mr-6" />
+        <profile-picture
+          :source="comment.user.thumbnail"
+          class="w-14 font-medium shrink-0 mr-6"
+        />
         <p>{{ comment.user.name }}</p>
       </div>
       <div class="flex items-center">
@@ -29,7 +32,7 @@
 <script setup>
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import axios from "@/config/axios/index.js";
-import { defineProps, withDirectives } from "vue";
+import { defineProps, watch } from "vue";
 import { ref } from "vue";
 import QuoteCommentIcon from "@/components/icons/QuoteCommentIcon.vue";
 import LoveIcon from "@/components/icons/LoveIcon.vue";
@@ -44,7 +47,21 @@ const quoteId = ref(props.quoteId);
 const comments = ref([]);
 const likes = ref([]);
 const likeStatus = ref(false);
-
+watch(
+  () => user.newNotifications,
+  (value) => {
+    if (value === true) {
+      axios
+        .get(`comments`, { params: { quote_id: quoteId.value } })
+        .then(({ data }) => {
+          comments.value = data;
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    }
+  }
+);
 axios
   .get(`comments`, { params: { quote_id: quoteId.value } })
   .then(({ data }) => {
