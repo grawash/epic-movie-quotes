@@ -195,6 +195,7 @@ async function fetchMovie() {
   axios
     .get(`movies/${movieId}`)
     .then(({ data }) => {
+      console.log(data);
       movie.value = data.movie;
       genres.value = data.movie.genres;
       quotes.value = data.movie.quotes;

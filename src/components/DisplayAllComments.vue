@@ -12,19 +12,21 @@
         <love-icon @click="toggleLike" class="cursor-pointer" />
       </div>
     </div>
-    <div v-for="comment in comments" class="mb-6 text-xl flex flex-col">
-      <div class="flex items-center">
-        <profile-picture
-          :source="comment.user.thumbnail"
-          class="w-14 font-medium shrink-0 mr-6"
-        />
-        <p>{{ comment.user.name }}</p>
-      </div>
-      <div class="flex items-center">
-        <div class="w-14 shrink-0 mr-6"></div>
-        <p class="pb-6 w-full border-b border-[#EFEFEF4D] border-opacity-40">
-          {{ comment.comment }}
-        </p>
+    <div class="max-h-[400px] overflow-auto">
+      <div v-for="comment in comments" class="mb-6 text-xl flex flex-col">
+        <div class="flex items-center">
+          <profile-picture
+            :source="comment.user.thumbnail"
+            class="w-14 font-medium shrink-0 mr-6"
+          />
+          <p>{{ comment.user.name }}</p>
+        </div>
+        <div class="flex items-center">
+          <div class="w-14 shrink-0 mr-6"></div>
+          <p class="pb-6 w-full border-b border-[#EFEFEF4D] border-opacity-40">
+            {{ comment.comment }}
+          </p>
+        </div>
       </div>
     </div>
   </div>

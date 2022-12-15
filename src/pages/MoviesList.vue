@@ -113,7 +113,6 @@ async function fetchMovies() {
     .get("movies", { params: { user_id: user.userId } })
     .then(({ data }) => {
       movieList.value = data;
-      console.log(movieList.value);
     })
     .catch((error) => {
       console.log(error.response.data);
