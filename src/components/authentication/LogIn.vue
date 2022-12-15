@@ -102,7 +102,7 @@ function onSubmit(values) {
       emit("closeModals");
     })
     .catch((error) => {
-      alert(error.response.data.error);
+      console.log(error.response.data);
     });
 }
 function googleAuthentication() {

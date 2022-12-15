@@ -51,7 +51,6 @@ function markNotificationsRead() {
   const formData = new FormData();
   formData.append("user_id", user.userId);
   formData.append("_method", "PATCH");
-  console.log(formData);
   axios
     .post(`notifications`, formData)
     .then((response) => {

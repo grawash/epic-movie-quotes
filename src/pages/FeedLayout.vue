@@ -20,7 +20,7 @@
     <div class="col-start-1 col-end-3 row-span-full flex flex-col">
       <div class="flex items-center gap-6">
         <div class="basis-0 grow">
-          <profile-picture />
+          <profile-picture :source="user.thumbnail" />
         </div>
         <div class="basis-0 grow-[3]">
           <p class="font-normal text-2xl leading-[36px]">{{ user.name }}</p>

@@ -87,7 +87,7 @@
               <p
                 class="italic text-2xl text-[#CED4DA] mt-auto mb-auto break-words max-w-full overflow-hidden"
               >
-                "{{ quote.quote }}"
+                "{{ quote.quote[$i18n.locale] }}"
               </p>
             </div>
           </div>
@@ -105,9 +105,11 @@
       </div>
     </div>
     <div class="col-start-6 col-end-10 flex flex-col">
-      <div class="flex flex-col">
+      <div v-if="movie" class="flex flex-col">
         <div class="flex items-center">
-          <p class="font-medium text-2xl text-[#DDCCAA]">{{ movie.title }}</p>
+          <p class="font-medium text-2xl text-[#DDCCAA]">
+            {{ title[$i18n.locale] }}
+          </p>
           <div
             class="bg-[#24222F] flex ml-auto p-[10px] pl-7 pr-7 gap-[25px] items-center rounded-lg"
           >
@@ -137,9 +139,11 @@
             <span class="text-[#CED4DA]"
               >{{ $t("movieDescription.director") }}:
             </span>
-            {{ movie.director }}
+            {{ director[$i18n.locale] }}
           </p>
-          <p class="font-normal text-[#CED4DA] mt-5">{{ movie.description }}</p>
+          <p class="font-normal text-[#CED4DA] mt-5">
+            {{ description[$i18n.locale] }}
+          </p>
         </div>
       </div>
     </div>
@@ -177,6 +181,9 @@ const viewQuoteModal = ref(false);
 const quoteId = ref("");
 const quoteObj = ref({});
 const storedMovie = useMovieStore();
+const title = ref("");
+const description = ref("");
+const director = ref("");
 
 onMounted(() => {
   window.onclick = editMenuOff;
@@ -188,13 +195,14 @@ async function fetchMovie() {
   axios
     .get(`movies/${movieId}`)
     .then(({ data }) => {
-      console.log(data);
       movie.value = data.movie;
       genres.value = data.movie.genres;
       quotes.value = data.movie.quotes;
       storedMovie.movie = data.movie;
       storedMovie.genres = data.movie.genres;
-      console.log(genres.value[0]);
+      title.value = data.movie.title;
+      description.value = data.movie.description;
+      director.value = data.movie.director;
       storedMovie.movie.thumbnail = data.movie.thumbnail.replace(
         "public",
         "storage"

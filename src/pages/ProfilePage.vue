@@ -4,13 +4,17 @@
       {{ $t("profilePage.my_profile") }}
     </p>
     <div class="bg-[#11101A] h-min shrink flex flex-col relative">
-      <photo-input @changeImage="changeImage" />
       <Form
         id="update"
         v-slot="{ values }"
         class="pt-48 p-20 flex h-min flex-col"
         @submit="onSubmit"
       >
+        <profile-photo-input
+          :source="user.thumbnail"
+          name="thumbnail"
+          id="profile_photo"
+        />
         <profile-page-input
           name="username"
           type="text"
@@ -109,18 +113,15 @@
 <script setup>
 import { Form } from "vee-validate";
 import ProfilePageInput from "@/components/inputs/ProfilePageInput.vue";
+import ProfilePhotoInput from "@/components/inputs/ProfilePhotoInput.vue";
 import PhotoInput from "@/components/inputs/PhotoInput.vue";
 import PasswordRuleNotice from "@/components/PasswordRuleNotice.vue";
 import AddMailIcon from "@/components/icons/AddMailIcon.vue";
 import { ref } from "vue";
 import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user.js";
-import { storeToRefs } from "pinia";
 
-let user = useUserStore();
-
-const { name, email, google_authenticated } = storeToRefs(user);
-
+const user = useUserStore();
 const canChangeUsername = ref(false);
 const canChangePassword = ref(false);
 const passwordValue = ref("");
@@ -131,18 +132,31 @@ function closeEditInputs() {
   changed.value = false;
   canChangePassword.value = false;
 }
-function onSubmit(values) {
-  const password = values.password;
-  const password_confirmation = values.password_confirmation;
-  const name = values.name;
 
-  let data = {
-    name: name,
-    password: password,
-    password_confirmation: password_confirmation,
-  };
+function onSubmit(values) {
+  // const password = values.password;
+  // const password_confirmation = values.password_confirmation;
+  // const name = values.name;
+  // const thumbnail = values.file;
+  // let data = {
+  //   name: name,
+  //   passwords: password,
+  //   password_confirmation: password_confirmation,
+  //   thumbnail: thumbnail,
+  // };
+  const formData = new FormData();
+  formData.append("name", values.name);
+  if (values.file) {
+    formData.append("thumbnail", values.file);
+  }
+  if (values.password !== undefined && values.password !== null) {
+    formData.append("password", values.password);
+    formData.append("password_confirmation", values.password_confirmation);
+  }
+
+  console.log(formData);
   axios
-    .post("update-user", { ...data })
+    .post("update-user", formData)
     .then((response) => {
       console.log(response);
       const message = "Changes updated succsessfully";

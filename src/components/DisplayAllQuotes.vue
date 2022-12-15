@@ -10,7 +10,7 @@
       </div>
       <div class="font-medium text-xl h-max overflow-hidden">
         <p>
-          "{{ quote.quote }}"<span class="text-[#DDCCAA] ml-2">{{
+          "{{ quote.quote[$i18n.locale] }}"<span class="text-[#DDCCAA] ml-2">{{
             $i18n.locale === "ka" ? quote.movie.title.ka : quote.movie.title.en
           }}</span>
         </p>
@@ -45,7 +45,6 @@ const locale = useLocaleStore();
 const quotes = ref([]);
 
 const filteredQuotes = computed(() => {
-  console.log(props.searchValue[0]);
   if (quotes.value.length != 0 && props.searchValue[0] === "@") {
     let filtered = quotes.value.filter((quote) =>
       quote.movie.title[locale.locale]
@@ -55,7 +54,7 @@ const filteredQuotes = computed(() => {
     return filtered;
   } else if (quotes.value.length != 0 && props.searchValue[0] === "#") {
     let filtered = quotes.value.filter((quote) =>
-      quote.quote
+      quote.quote[locale.locale]
         .toLowerCase()
         .includes(props.searchValue.substring(1).toLowerCase())
     );
@@ -66,8 +65,8 @@ const filteredQuotes = computed(() => {
 axios
   .get(`quotes`)
   .then(({ data }) => {
-    console.log("quotes:", data);
-    quotes.value = data;
+    console.log(data);
+    quotes.value = data.data;
   })
   .catch((error) => {
     console.log(error.response.data);

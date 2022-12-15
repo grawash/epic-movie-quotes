@@ -40,7 +40,9 @@
         >
           <img :src="movie.thumbnail" alt="" />
         </div>
-        <p class="mt-[10px] font-medium text-2xl">{{ movie.title.en }}</p>
+        <p class="mt-[10px] font-medium text-2xl">
+          {{ movie.title[$i18n.locale] }}
+        </p>
         <comment-icon class="mt-5" />
       </div>
     </div>
@@ -102,6 +104,7 @@ watch(
     }
   }
 );
+
 if (user.userId != null) {
   fetchMovies();
 }
@@ -110,6 +113,7 @@ async function fetchMovies() {
     .get("movies", { params: { user_id: user.userId } })
     .then(({ data }) => {
       movieList.value = data;
+      console.log(movieList.value);
     })
     .catch((error) => {
       console.log(error.response.data);

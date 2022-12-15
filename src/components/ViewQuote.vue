@@ -3,7 +3,7 @@
     class="fixed top-0 left-0 flex w-screen h-screen items-center z-30 bg-neutral-700 bg-opacity-30"
   >
     <div
-      class="ml-auto mr-auto flex flex-col min-w-[35%] max-w-[50%] max-h-[90%] rounded-xl bg-[#11101A] p-6 mb-10"
+      class="ml-auto mr-auto flex flex-col min-w-[35%] max-w-[60%] max-h-[90%] rounded-xl bg-[#11101A] p-6 mb-10"
     >
       <div class="font-medium flex items-center text-white text-center pb-6">
         <div class="grow basis-0 mr-auto flex text-base">
@@ -33,10 +33,16 @@
           <p class="ml-4 text-xl">{{ user.name }}</p>
         </div>
         <div
+          class="font-normal text-2xl h-max flex overflow-hidden mb-2 border-[#6C757DB2] border p-3 rounded"
+        >
+          <p>"{{ quote.quote.en }}"</p>
+          <span class="ml-auto text-xl text-[#6C757D]">ENG</span>
+        </div>
+                <div
           class="font-normal text-2xl h-max flex overflow-hidden border-[#6C757DB2] border p-3 rounded"
         >
-          <p>"{{ quote.quote }}"</p>
-          <span class="ml-auto text-xl text-[#6C757D]">ENG</span>
+          <p>"{{ quote.quote.ka }}"</p>
+          <span class="ml-auto text-xl text-[#6C757D]">KA</span>
         </div>
         <img
           :src="quote.thumbnail"

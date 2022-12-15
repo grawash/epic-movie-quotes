@@ -9,11 +9,7 @@
       </div>
       <div class="flex items-center">
         <span class="mr-3">{{ likes.length }}</span>
-        <love-icon
-          @click="toggleLike"
-          :fill="likeColor"
-          class="cursor-pointer"
-        />
+        <love-icon @click="toggleLike" class="cursor-pointer" />
       </div>
     </div>
     <div v-for="comment in comments" class="mb-6 text-xl flex flex-col">
@@ -63,7 +59,6 @@ axios
     sender_id: user.userId,
   })
   .then(({ data }) => {
-    console.log(data.length);
     if (data.length === 0) {
       likeStatus.value = true;
     } else {

@@ -32,10 +32,18 @@
           <p class="ml-4 text-xl">{{ user.name }}</p>
         </div>
         <basic-text-area
-          name="quote"
+          name="quote_en"
           id="quote"
           placeholder="Start create new quote"
-          :value="quote.quote"
+          :value="quote.quote.en"
+          rule="required|min:2"
+        >
+        </basic-text-area>
+        <basic-text-area
+          name="quote_ka"
+          id="quote"
+          placeholder="Start create new quote"
+          :value="quote.quote.ka"
           rule="required|min:2"
         >
         </basic-text-area>
@@ -95,7 +103,8 @@ const getImageUrl = computed(() => {
 function onSubmit(values) {
   chosenMovieId.value = props.quote.movie_id;
   const formData = new FormData();
-  formData.append("quote", values.quote);
+  formData.append("quote_en", values.quote_en);
+  formData.append("quote_ka", values.quote_ka);
   if (values.file) {
     formData.append("thumbnail", values.file);
   }

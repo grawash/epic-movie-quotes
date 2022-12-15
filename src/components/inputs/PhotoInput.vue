@@ -15,7 +15,7 @@
     </p>
     <input
       type="file"
-      name=""
+      name="file"
       id=""
       ref="fileInput"
       class="absolute hidden -bottom-10"

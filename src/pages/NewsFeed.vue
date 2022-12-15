@@ -1,5 +1,6 @@
 <template>
   <new-quote-form v-if="newQuoteModal" @closeModals="closeModals" />
+
   <div class="col-start-4 col-end-10">
     <div class="flex items-center">
       <button
@@ -14,7 +15,7 @@
           @click="addSearch"
           class="flex items-center font-normal text-xl"
         >
-          <loop-icon class="mr-4 scale-90" />{{ $t("newsFeed.new_quote") }}
+          <loop-icon class="mr-4 scale-90" />{{ $t("newsFeed.search_by") }}
         </button>
       </div>
       <transition name="bounce" @after-leave="onAfterLeave">
@@ -65,14 +66,6 @@ const searchValue = ref("");
 const newQuoteModal = ref(false);
 let searchRef = ref(null);
 
-axios
-  .get(`quotes`)
-  .then((response) => {
-    console.log(response);
-  })
-  .catch((error) => {
-    console.log(error.response.data);
-  });
 onMounted(() => {
   window.onclick = removeSearch;
 });
